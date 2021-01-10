@@ -55,23 +55,28 @@ const handleClose = () => {
 setOpen(false);
 };
 
-const handleDelete=(e)=>{
-    console.log("delete"+e);
+const handleDelete=()=>{
+    console.log("delete");
 }
-const handleEdit=(e)=>{
-console.log("edit"+e);
+const handleEdit=()=>{
+console.log("edit");
 }
 
 
 useEffect(() => {
-  DataService.getAll().then(response => {
-        setUserData(response.data);
+retrieveUsers();
+  },[]);
 
+  const retrieveUsers = () => {
+    DataService.getAll()
+      .then(response => {
+        setUserData(response.data);
+        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-  });
+  };
 
 return (
 <>
@@ -88,7 +93,7 @@ ADD USER</Button>
 </div>
 
 
-<Table className={classes.table} stickyHeader aria-label="sticky table">
+<Table stickyHeader aria-label="sticky table">
 <TableHead>
 <TableRow>
 <TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>ID</TableCell>
@@ -98,13 +103,13 @@ ADD USER</Button>
 <TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>DOB</TableCell>
 <TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>JOIN DATE</TableCell>
 <TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>EMAIL</TableCell>
-<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>EDIT</TableCell>
-<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>DELETE</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>ACTION</TableCell>
+
 </TableRow>
 </TableHead>
 <TableBody>
 {getUser.map((row) => (
-<TableRow key={row.name}  hover role="checkbox" tabIndex={-1} key={row.code}>
+<TableRow key={row.name}  hover role="checkbox" tabIndex={-1}>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.id}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.firstName}</TableCell>
 <TableCell style={{ minWidth: row.minWidth}}  align="center">{row.lastName}</TableCell>
@@ -112,8 +117,9 @@ ADD USER</Button>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.dob}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.createdAt}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
-<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleEdit(row.id)}><EditIcon style={{color:'blue'}} /></Button></TableCell>
-<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleDelete(row.id)}><DeleteIcon style={{color:'red'}}/></Button></ TableCell>
+<div>
+<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleEdit()}><EditIcon style={{color:'blue'}} /></Button>
+<Button onClick={handleDelete()}><DeleteIcon style={{color:'red'}} /></Button></ TableCell></div>
 
 </TableRow>
 ))}
