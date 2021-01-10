@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,44 +11,42 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import EditIcon from '@material-ui/icons/Edit';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import InputFields from '../InputFieldsUser/AddUser';
+import DeleteIcon from "@material-ui/icons/Delete";
+import DataService from "../../Service/service";
 const useStyles = makeStyles((theme) => ({
-table: {
-minWidth: 650,
-},
-modal: {
-display: 'flex',
-alignItems: 'center',
-justifyContent: 'center',
-},
-paper: {
-backgroundColor: theme.palette.background.paper,
-border: '2px solid #000',
-boxShadow: theme.shadows[5],
-padding: theme.spacing(2, 4, 3),
-},
+    root: {
+        width: "100%",
+      },
+      container: {
+        maxHeight: 440,
+      },
+      modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
+
 }));
 
-function createData(name, calories, fat, carbs, protein,country,Action,Edit) {
-return { name, calories, fat, carbs, protein,country,Action,Edit };
-}
 
-const rows = [
-createData('ACTIVE', 'MADHU', '2018-08-08', 9986223399, 'KARNATAKA','INDIA',<ScheduleIcon style={{color:'blue'}}/>,<EditIcon/>),
-createData('ACTIVE', 'MADHU', '2018-08-08', 9986223399, 'KARNATAKA','INDIA',<ScheduleIcon style={{color:'blue'}}/>,<EditIcon/>),
-createData('ACTIVE', 'MADHU', '2018-08-08', 9986223399, 'KARNATAKA','INDIA',<ScheduleIcon style={{color:'blue'}}/>,<EditIcon/>),
-createData('ACTIVE', 'MADHU', '2018-08-08', 9986223399, 'KARNATAKA','INDIA',<ScheduleIcon style={{color:'blue'}}/>,<EditIcon/>),
-createData('ACTIVE', 'MADHU', '2018-08-08', 9986223399, 'KARNATAKA','INDIA',<ScheduleIcon style={{color:'blue'}}/>,<EditIcon/>),
-];
+
+
+
 
 export default function BasicTable() {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
-
+const [getUser,setUserData]=useState([]);
 const handleOpen = () => {
 setOpen(true);
 };
@@ -56,6 +54,25 @@ setOpen(true);
 const handleClose = () => {
 setOpen(false);
 };
+
+const handleDelete=(e)=>{
+    console.log("delete"+e);
+}
+const handleEdit=(e)=>{
+console.log("edit"+e);
+}
+
+
+useEffect(() => {
+  DataService.getAll().then(response => {
+        setUserData(response.data);
+
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  });
+
 return (
 <>
 <TableContainer component={Paper}>
@@ -70,29 +87,33 @@ REGISTERED USER
 ADD USER</Button>
 </div>
 
-<Table className={classes.table} aria-label="simple table">
+
+<Table className={classes.table} stickyHeader aria-label="sticky table">
 <TableHead>
 <TableRow>
-<TableCell align="center" style={{fontWeight: "bold"}}>STATUS</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>USER NAME</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>JOIN DATE</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>PHONE NO</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>STATE</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>COUNTRY</TableCell>
-<TableCell align="center" style={{fontWeight: "bold"}}>Action</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>ID</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>FIRST NAME</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>LAST NAME</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>STATUS</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>DOB</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>JOIN DATE</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>EMAIL</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>EDIT</TableCell>
+<TableCell align="center" style={{fontWeight: "bold",color: "blue"}}>DELETE</TableCell>
 </TableRow>
 </TableHead>
 <TableBody>
-{rows.map((row) => (
-<TableRow key={row.name}>
-<TableCell align="center">{row.name}</TableCell>
-<TableCell align="center">{row.calories}</TableCell>
-<TableCell align="center">{row.fat}</TableCell>
-<TableCell align="center">{row.carbs}</TableCell>
-<TableCell align="center">{row.protein}</TableCell>
-<TableCell align="center">{row.country}</TableCell>
-<TableCell align="center"><Button>{row.Action}</Button>
-<Button onClick={handleOpen} style={{color:'blue'}}>{row.Edit}</Button></TableCell>
+{getUser.map((row) => (
+<TableRow key={row.name}  hover role="checkbox" tabIndex={-1} key={row.code}>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.id}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.firstName}</TableCell>
+<TableCell style={{ minWidth: row.minWidth}}  align="center">{row.lastName}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.status}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.dob}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.createdAt}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleEdit(row.id)}><EditIcon style={{color:'blue'}} /></Button></TableCell>
+<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleDelete(row.id)}><DeleteIcon style={{color:'red'}}/></Button></ TableCell>
 
 </TableRow>
 ))}
