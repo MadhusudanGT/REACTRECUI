@@ -1,28 +1,33 @@
 import http from "./ConnectionAxios";
 
-const getAll = () => {
-  return http.get("/users");
+// async function  getAll(){
+//    return await http.get("/users");
+// };
+
+const getAll = async () => {
+
+  return await http.get("/users");
+}
+
+const get = async(id) => {
+  return await http.get(`/tutorials/${id}`);
 };
 
-const get = id => {
-  return http.get(`/tutorials/${id}`);
+const create = async(data) => {
+  return await http.post("/create", data);
 };
 
-const create = data => {
-  return http.post("/create", data);
+const update = async(id, data) => {
+  return await  http.put(`/update/${id}`, data);
 };
 
-const update = (id, data) => {
-  return http.put(`/update/${id}`, data);
-};
-
-const remove = id => {
-  return http.delete(`/users/${id}`);
+const remove = async(id) => {
+  return await http.delete(`/users/${id}`);
 };
 
 
-const search = keyword => {
-  return http.get(`/search?keyword=${keyword}`);
+const search = async(keyword) => {
+  return await http.get(`/search?keyword=${keyword}`);
 };
 
 export default {

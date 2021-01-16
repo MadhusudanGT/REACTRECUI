@@ -17,6 +17,7 @@ import Fade from '@material-ui/core/Fade';
 import InputFields from '../InputFieldsUser/AddUser';
 import DeleteIcon from "@material-ui/icons/Delete";
 import DataService from "../../Service/service";
+import adduser from "./AddUserTable";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
@@ -38,39 +39,54 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-
-
-
-
-
 export default function BasicTable() {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
+const [open1,setOpen1]=React.useState(false);
 const [getUser,setUserData]=useState([]);
+const [getData,setData]=useState('');
 const handleOpen = () => {
 setOpen(true);
 };
+
+const handleOpen1 = () => {
+  setOpen1(true);
+  };
+
+const handleClose1 = () => {
+  setOpen1(false);
+  };
 
 const handleClose = () => {
 setOpen(false);
 };
 
-const handleDelete=()=>{
-    console.log("delete");
+const handleDelete=(id)=>{
+  deleteUser(id);
+    console.log("user deleted with id:=",id);
+    
 }
-const handleEdit=()=>{
-console.log("edit");
+
+const handleEdit=(e)=>{
+console.log("edit",e);
+setData(e);
+setOpen(true);
+}
+
+const deleteUser =(id)=>{
+ DataService.remove(id);
+ console.log(getUser)
 }
 
 
 useEffect(() => {
-retrieveUsers();
+ retrieveUsers();
   },[]);
 
-  const retrieveUsers = () => {
-    DataService.getAll()
+  const retrieveUsers = async () => {
+   await DataService.getAll()
       .then(response => {
-        setUserData(response.data);
+         setUserData(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -87,7 +103,7 @@ REGISTERED USER
 </div>
 <div style={{float:'right',margin:'20px'}}>
 <Button color="primary"><GetAppIcon/></Button>
-<Button color="primary" onClick={handleOpen}>
+<Button color="primary" onClick={handleOpen1}>
 <AddIcon/>
 ADD USER</Button>
 </div>
@@ -109,7 +125,9 @@ ADD USER</Button>
 </TableHead>
 <TableBody>
 {getUser.map((row) => (
-<TableRow key={row.name}  hover role="checkbox" tabIndex={-1}>
+  <>
+  {row.status=='inActive'&&
+<TableRow key={row.id}  hover role="checkbox" tabIndex={-1}>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.id}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.firstName}</TableCell>
 <TableCell style={{ minWidth: row.minWidth}}  align="center">{row.lastName}</TableCell>
@@ -117,15 +135,19 @@ ADD USER</Button>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.dob}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.createdAt}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
-<div>
-<TableCell  style={{ minWidth: row.minWidth}} align="center"><Button onClick={handleEdit()}><EditIcon style={{color:'blue'}} /></Button>
-<Button onClick={handleDelete()}><DeleteIcon style={{color:'red'}} /></Button></ TableCell></div>
-
+<TableCell  style={{ minWidth: row.minWidth}} align="center">
+<Button onClick={() => handleEdit(row)}><EditIcon style={{color:'blue'}} /></Button>
+<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'red'}} /></Button>
+</TableCell>
 </TableRow>
+}
+</>
 ))}
 </TableBody>
+
 </Table>
 </TableContainer>
+
 <div>
 <Modal
 aria-labelledby="transition-modal-title"
@@ -141,9 +163,30 @@ timeout: 500,
 >
 <Fade in={open}>
 <div className={classes.paper}>
-<InputFields/>
+<InputFields data={getData}/>
 </div>
 </Fade>
+</Modal>
+</div>
+<div>
+<Modal
+aria-labelledby="transition-modal-title"
+aria-describedby="transition-modal-description"
+className={classes.modal}
+open={open1}
+onClose={handleClose1}
+closeAfterTransition
+BackdropComponent={Backdrop}
+BackdropProps={{
+timeout: 500,
+}}
+>
+<Fade in={open1}>
+<div className={classes.paper}>
+<adduser/>
+</div>
+</Fade>
+
 </Modal>
 </div>
 </>
