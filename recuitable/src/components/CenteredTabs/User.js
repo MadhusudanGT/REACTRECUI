@@ -77,7 +77,7 @@ export default function User() {
   // }
 
   return (
-    <div className={classes.root} style={{backgroundColor:'lightblue'}}>
+    <div className={classes.root} style={{backgroundColor:'LightGray'}}>
       <AppBar position="static" color="default">
       <Breadcrumbs aria-label="breadcrumb">
       <Link color="inherit" href="/Menu">

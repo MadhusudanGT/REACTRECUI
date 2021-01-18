@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {fade, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,7 +20,8 @@ import DataService from "../../Service/service";
 import CreateUser from "./AddUserTable";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import SearchIcon from '@material-ui/icons/Search';
+import TextField from '@material-ui/core/TextField';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -45,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
       },
-
 }));
 
 export default function BasicTable() {
@@ -54,6 +54,8 @@ const [open, setOpen] = React.useState(false);
 const [open1,setOpen1]=React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
+const [searchTerm, setSearchTerm] = React.useState("");
+const [searchResults, setSearchResults] = React.useState([]);
 const handleOpen = () => {
 setOpen(true);
 };
@@ -102,6 +104,10 @@ const deleteUser =(id)=>{
  handleClickSnackbar();
 }
 
+const handleChange = event => {
+  setSearchTerm(event.target.value);
+  console.log(event.target.value);
+}
 
 useEffect(() => {
  retrieveUsers();
@@ -123,7 +129,7 @@ return (
 <div className={classes.root}>
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success">
-         User information status become inActive now!
+         User status become inActive now!
         </Alert>
       </Snackbar>
     </div>
@@ -133,6 +139,10 @@ return (
 REGISTERED USER
 </div>
 <div style={{float:'right',margin:'20px'}}>
+
+<TextField label="Search..." variant="outlined" value={searchTerm}
+        onChange={handleChange} />
+  
 <Button color="primary"><GetAppIcon/></Button>
 <Button color="primary" onClick={handleOpen1}>
 <AddIcon/>
@@ -157,7 +167,7 @@ ADD USER</Button>
 <TableBody>
 {getUser.map((row) => (
   <>
-  {row.status=='Active' &&
+  {row.status==='Active' &&
   <TableRow key={row.id}  hover role="checkbox" tabIndex={-1}>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.id}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.firstName}</TableCell>
@@ -168,7 +178,7 @@ ADD USER</Button>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">
 <Button onClick={() => handleEdit(row)}><EditIcon style={{color:'blue'}} /></Button>
-<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'red'}} /></Button>
+<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'Orange'}} /></Button>
 </TableCell>
 </TableRow>
 }

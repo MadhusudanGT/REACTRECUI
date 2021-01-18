@@ -126,7 +126,7 @@ ADD USER</Button>
 <TableBody>
 {getUser.map((row) => (
   <>
-  {row.status=='inActive'&&
+  {row.status==='inActive'&&
 <TableRow key={row.id}  hover role="checkbox" tabIndex={-1}>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.id}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.firstName}</TableCell>
@@ -137,7 +137,7 @@ ADD USER</Button>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">
 <Button onClick={() => handleEdit(row)}><EditIcon style={{color:'blue'}} /></Button>
-<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'red'}} /></Button>
+<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'Orange'}} /></Button>
 </TableCell>
 </TableRow>
 }
