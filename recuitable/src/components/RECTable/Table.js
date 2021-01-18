@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {fade, makeStyles } from '@material-ui/core/styles';
+import {makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,8 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import EditIcon from '@material-ui/icons/Edit';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -17,11 +15,9 @@ import Fade from '@material-ui/core/Fade';
 import InputFields from '../InputFieldsUser/AddUser';
 import DeleteIcon from "@material-ui/icons/Delete";
 import DataService from "../../Service/service";
-import CreateUser from "./AddUserTable";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import SearchIcon from '@material-ui/icons/Search';
-import TextField from '@material-ui/core/TextField';
+import SearchAndAdd from "./SearchAndAdd";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -51,26 +47,19 @@ const useStyles = makeStyles((theme) => ({
 export default function BasicTable() {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
-const [open1,setOpen1]=React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
-const [searchTerm, setSearchTerm] = React.useState("");
-const [searchResults, setSearchResults] = React.useState([]);
-const handleOpen = () => {
-setOpen(true);
-};
+const [state, setState] = React.useState({
+  open: false,
+  vertical: 'top',
+  horizontal: 'center',
+});
 
-const handleOpen1 = () => {
-  setOpen1(true);
-  };
+const { vertical, horizontal} = state;
 
 const handleClose = () => {
 setOpen(false);
 };
-
-const handleClose1 = () => {
-  setOpen1(false);
-  };
 
 const handleDelete=(id)=>{
   deleteUser(id);
@@ -104,11 +93,6 @@ const deleteUser =(id)=>{
  handleClickSnackbar();
 }
 
-const handleChange = event => {
-  setSearchTerm(event.target.value);
-  console.log(event.target.value);
-}
-
 useEffect(() => {
  retrieveUsers();
   },[]);
@@ -127,29 +111,15 @@ useEffect(() => {
 return (
 <>
 <div className={classes.root}>
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success">
          User status become inActive now!
         </Alert>
       </Snackbar>
     </div>
 <TableContainer component={Paper}>
-
-<div style={{float:'left',margin:'20px'}}>
-REGISTERED USER
-</div>
-<div style={{float:'right',margin:'20px'}}>
-
-<TextField label="Search..." variant="outlined" value={searchTerm}
-        onChange={handleChange} />
-  
-<Button color="primary"><GetAppIcon/></Button>
-<Button color="primary" onClick={handleOpen1}>
-<AddIcon/>
-ADD USER</Button>
-</div>
-
-
+<SearchAndAdd/>
 <Table stickyHeader aria-label="sticky table">
 <TableHead>
 <TableRow>
@@ -209,27 +179,6 @@ timeout: 500,
 <Fade in={open}>
 <div className={classes.paper}>
 <InputFields data={getData}/>
-</div>
-</Fade>
-
-</Modal>
-</div>
-<div>
-<Modal
-aria-labelledby="transition-modal-title"
-aria-describedby="transition-modal-description"
-className={classes.modal}
-open={open1}
-onClose={handleClose1}
-closeAfterTransition
-BackdropComponent={Backdrop}
-BackdropProps={{
-timeout: 500,
-}}
->
-<Fade in={open1}>
-<div className={classes.paper}>
-<CreateUser/>
 </div>
 </Fade>
 

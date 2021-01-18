@@ -53,8 +53,13 @@ const updateUser=(id,data)=>{
   DataService.update(id,JSON.stringify(data));
 }
 
+const Close = () => {
+  window.location="/"
+}
+
   return (
     <>
+    
     <form className={classes.root} noValidate autoComplete="off">
       <div>
       <TextField
@@ -103,7 +108,7 @@ const updateUser=(id,data)=>{
         />
       </div>
 <Button color="primary" onClick={submitValue}>SAVE</Button>
-<Button color="secondary">CANCEL</Button>
+<Button color="secondary" onClick={Close}>CANCEL</Button>
     </form>
     </>
   );

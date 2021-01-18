@@ -35,9 +35,16 @@ export default function CreateUser() {
   const [dob, setdob] = useState('');
   const [email, setEmail] = useState('');
   const [adhar,setAdhar] =useState('');
-  const [status,setState]=useState('Active');
+  const [status,setStatus]=useState('Active');
 const [createdAt,setcreatedAt]=useState(new Date());
 const [updatedAt,setupdatedAt]=useState(new Date());
+const [state, setState] = React.useState({
+  open: false,
+  vertical: 'top',
+  horizontal: 'center',
+});
+
+const { vertical, horizontal} = state;
   const submitValue = () => {
     const frmdetails = {
         'firstName' : fName,
@@ -59,8 +66,8 @@ DataService.create(data);
 handleClick();
 }
 
-const closeWindow=()=>{
-console.log("close")
+const Close = () => {
+  window.location="/"
 }
 
 const [open, setOpen] = React.useState(false);
@@ -132,7 +139,7 @@ const handleClose = (event, reason) => {
         />
       </div>
 <Button color="primary" onClick={submitValue}>SAVE</Button>
-<Button color="secondary" onClick={closeWindow}>CANCEL</Button>
+<Button color="secondary" onClick={Close}>CANCEL</Button>
     </form>
     
     </>

@@ -17,7 +17,7 @@ import Fade from '@material-ui/core/Fade';
 import InputFields from '../InputFieldsUser/AddUser';
 import DeleteIcon from "@material-ui/icons/Delete";
 import DataService from "../../Service/service";
-import adduser from "./AddUserTable";
+import SearchAndAdd from "./SearchAndAdd";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
@@ -42,20 +42,12 @@ const useStyles = makeStyles((theme) => ({
 export default function BasicTable() {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
-const [open1,setOpen1]=React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
 const handleOpen = () => {
 setOpen(true);
 };
 
-const handleOpen1 = () => {
-  setOpen1(true);
-  };
-
-const handleClose1 = () => {
-  setOpen1(false);
-  };
 
 const handleClose = () => {
 setOpen(false);
@@ -97,18 +89,7 @@ useEffect(() => {
 return (
 <>
 <TableContainer component={Paper}>
-
-<div style={{float:'left',margin:'20px'}}>
-REGISTERED USER
-</div>
-<div style={{float:'right',margin:'20px'}}>
-<Button color="primary"><GetAppIcon/></Button>
-<Button color="primary" onClick={handleOpen1}>
-<AddIcon/>
-ADD USER</Button>
-</div>
-
-
+  <SearchAndAdd/>
 <Table stickyHeader aria-label="sticky table">
 <TableHead>
 <TableRow>
@@ -168,27 +149,7 @@ timeout: 500,
 </Fade>
 </Modal>
 </div>
-<div>
-<Modal
-aria-labelledby="transition-modal-title"
-aria-describedby="transition-modal-description"
-className={classes.modal}
-open={open1}
-onClose={handleClose1}
-closeAfterTransition
-BackdropComponent={Backdrop}
-BackdropProps={{
-timeout: 500,
-}}
->
-<Fade in={open1}>
-<div className={classes.paper}>
-<adduser/>
-</div>
-</Fade>
 
-</Modal>
-</div>
 </>
 );
 }
