@@ -87,7 +87,7 @@ const handleClose = (event, reason) => {
   return (
     <>
      <div className={classes.root}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} anchorOrigin={{ vertical, horizontal }} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           new user created successfully!
         </Alert>

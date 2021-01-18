@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DataService from "../../Service/service";
-
+import Table from "./Table";
 const useStyles = makeStyles((theme) => ({
       modal: {
         display: 'flex',
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 const SearchAndAdd=()=>{
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [searchTerm, setSearchTerm] = React.useState("");
-
+    const [searchTerm, setSearchTerm] =useState();
+    const [getSearch,setSearch]=useState([]);
       const handleOpen = () => {
         setOpen(true);
         };
@@ -37,17 +37,13 @@ const SearchAndAdd=()=>{
             setOpen(false);
             };
 
-            const handleChange = event => {
-                setSearchTerm(event.target.value);
-                console.log(event.target.value);
-                // search(event.target.value);
-              }
-
-// const search=(keyword)=>{
-// DataService.search(keyword).then(responce=>{
-//     console.log("SERACH"+responce);
-// });
-// }
+  
+const search=(searchTerm)=>{
+DataService.search(searchTerm).then(responce=>{
+    setSearch(responce.data);
+    console.log("SERACH"+JSON.stringify(getSearch));
+});
+}
 
     return(
         <>
@@ -56,9 +52,8 @@ REGISTERED USER
 </div>
 <div style={{float:'right',margin:'20px'}}>
 
-<TextField label="Search..." variant="outlined" value={searchTerm}
-        onChange={handleChange} />
-  
+<TextField label="Search..." variant="outlined"
+        onKeyUp={e=> search(e.target.value)} />
 <Button color="primary"><GetAppIcon/></Button>
 <Button color="primary" onClick={handleOpen}>
 <AddIcon/>
@@ -86,6 +81,7 @@ timeout: 500,
 
 </Modal>
 </div>
+{false&&<Table sea={getSearch}/>}
         </>
     )
 }

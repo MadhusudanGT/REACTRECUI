@@ -3,6 +3,12 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DataService from "../../Service/service";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -28,10 +34,16 @@ export default function ValidationTextFields({data}) {
   const [dob, setdob] = useState(data.dob);
   const [email, setEmail] = useState(data.email);
   const [adhar,setAdhar] =useState(data.adhar);
-  const [state,setState]=useState(data.state);
+  const [status,setstatus]=useState(data.status);
 const [id,setId]=useState(data.id);
 const [createdAt,setcreatedAt]=useState(data.createdAt);
 const [updatedAt,setupdatedAt]=useState(data.updatedAt);
+const [state, setState] = React.useState({
+  open: false,
+  vertical: 'top',
+  horizontal: 'center',
+});
+const { vertical, horizontal} = state;
   const submitValue = () => {
     const frmdetails = {
        'id':id,
@@ -40,7 +52,7 @@ const [updatedAt,setupdatedAt]=useState(data.updatedAt);
         'dob' : dob,
         'email' : email,
         'adhar':adhar,
-        'status':state,
+        'status':status,
         'createdAt':createdAt,
         'updatedAt':updatedAt
     }
@@ -51,15 +63,35 @@ const [updatedAt,setupdatedAt]=useState(data.updatedAt);
 const updateUser=(id,data)=>{
   console.log(id+"/////"+JSON.stringify(data))
   DataService.update(id,JSON.stringify(data));
+  handleClick()
 }
 
 const Close = () => {
   window.location="/"
 }
 
+const [open, setOpen] = React.useState(false);
+
+const handleClick = () => {
+  setOpen(true);
+};
+
+const handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpen(false);
+};
   return (
     <>
-    
+     <div className={classes.root}>
+      <Snackbar open={open} anchorOrigin={{ vertical, horizontal }} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          user information updated successfully!
+        </Alert>
+      </Snackbar>
+    </div>
     <form className={classes.root} noValidate autoComplete="off">
       <div>
       <TextField

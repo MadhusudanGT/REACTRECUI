@@ -44,11 +44,13 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-export default function BasicTable() {
+export default function BasicTable({sea}) {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
+const [searchdata,setsearchdata]=useState("");
+const [setSearch,getSearch]=useState("");
 const [state, setState] = React.useState({
   open: false,
   vertical: 'top',
@@ -95,6 +97,8 @@ const deleteUser =(id)=>{
 
 useEffect(() => {
  retrieveUsers();
+ setsearchdata(sea);
+ console.log(JSON.stringify(sea))
   },[]);
 
   const retrieveUsers = async () => {
@@ -107,6 +111,13 @@ useEffect(() => {
         console.log(e);
       });
   };
+
+  const search1=(search)=>{
+    DataService.search(search).then(responce=>{
+        setSearch(responce.data);
+        console.log("SERACH"+JSON.stringify(getSearch));
+    });
+    }
 
 return (
 <>
