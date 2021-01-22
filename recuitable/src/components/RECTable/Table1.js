@@ -15,7 +15,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import InputFields from '../InputFieldsUser/AddUser';
-import DeleteIcon from "@material-ui/icons/Delete";
+import TimelapseIcon from '@material-ui/icons/Timelapse';
 import DataService from "../../Service/service";
 import SearchAndAdd from "./SearchAndAdd";
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +89,6 @@ useEffect(() => {
 return (
 <>
 <TableContainer component={Paper}>
-  <SearchAndAdd/>
 <Table stickyHeader aria-label="sticky table">
 <TableHead>
 <TableRow>
@@ -117,8 +116,7 @@ return (
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.createdAt}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">
-<Button onClick={() => handleEdit(row)}><EditIcon style={{color:'blue'}} /></Button>
-<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'Orange'}} /></Button>
+<Button onClick={() => handleEdit(row)}><TimelapseIcon style={{color:'blue'}} /></Button>
 </TableCell>
 </TableRow>
 }

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '100%',
+      width: '25ch',
     },
     container: {
       display: 'flex',
@@ -58,6 +58,7 @@ const { vertical, horizontal} = state;
     }
     console.log(frmdetails);
     createUser(frmdetails);
+    setOpen(false);
 }
 
 const createUser=(data)=>{
@@ -109,6 +110,14 @@ const handleClose = (event, reason) => {
           size="small"
           onChange={e => setlName(e.target.value)}
         />
+           <TextField
+          label="Address"
+          id="outlined-size-small"
+          variant="outlined"
+          size="small"
+          // onChange={e => setlName(e.target.value)}
+        />
+        
       </div>
       <div>
       <TextField
@@ -128,18 +137,34 @@ const handleClose = (event, reason) => {
           size="small"
           onChange={e => setEmail(e.target.value)}
         />
+           <TextField
+          label="City"
+          id="outlined-size-small"
+          variant="outlined"
+          size="small"
+          // onChange={e => setlName(e.target.value)}
+        />
       </div>
       <div>
       <TextField
-          label="adhar"
+          label="Adhar number"
           id="outlined-size-small"
           variant="outlined"
           size="small"
           onChange={e => setAdhar(e.target.value)}
         />
+           <TextField
+          label="Phone No"
+          id="outlined-size-small"
+          variant="outlined"
+          size="small"
+          // onChange={e => setlName(e.target.value)}
+        />
       </div>
+      <div style={{float:'right'}}>
 <Button color="primary" onClick={submitValue}>SAVE</Button>
 <Button color="secondary" onClick={Close}>CANCEL</Button>
+</div>
     </form>
     
     </>

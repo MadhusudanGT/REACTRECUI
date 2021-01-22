@@ -18,6 +18,7 @@ import DataService from "../../Service/service";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import SearchAndAdd from "./SearchAndAdd";
+import TextField from '@material-ui/core/TextField';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -44,13 +45,12 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-export default function BasicTable({sea}) {
+export default function BasicTable() {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
 const [searchdata,setsearchdata]=useState("");
-const [setSearch,getSearch]=useState("");
 const [state, setState] = React.useState({
   open: false,
   vertical: 'top',
@@ -65,8 +65,8 @@ setOpen(false);
 
 const handleDelete=(id)=>{
   deleteUser(id);
+  retrieveUsers();
     console.log("user deleted with id:=",id);
-    
 }
 
 const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -91,14 +91,13 @@ setOpen(true);
 
 const deleteUser =(id)=>{
  DataService.remove(id);
+ retrieveUsers();
  console.log(getUser)
  handleClickSnackbar();
 }
 
 useEffect(() => {
  retrieveUsers();
- setsearchdata(sea);
- console.log(JSON.stringify(sea))
   },[]);
 
   const retrieveUsers = async () => {
@@ -111,16 +110,25 @@ useEffect(() => {
         console.log(e);
       });
   };
-
-  const search1=(search)=>{
-    DataService.search(search).then(responce=>{
+  const [getSearch,setSearch]=useState([]);
+  const search=(searchTerm)=>{
+    if(searchTerm==''){
+retrieveUsers();
+    }
+    else{
+      DataService.search(searchTerm).then(responce=>{
         setSearch(responce.data);
-        console.log("SERACH"+JSON.stringify(getSearch));
+        setUserData(responce.data);
+        console.log(getSearch)
+       
     });
     }
-
+    }
 return (
 <>
+<TextField label="Search..." variant="outlined"
+        onChange={e=> search(e.target.value)} />
+        {/* <Button color="primary" onClick={handlesearch}>SERACH</Button> */}
 <div className={classes.root}>
       <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
        open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>

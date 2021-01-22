@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
 const SearchAndAdd=()=>{
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [searchTerm, setSearchTerm] =useState();
-    const [getSearch,setSearch]=useState([]);
       const handleOpen = () => {
         setOpen(true);
         };
@@ -37,13 +35,6 @@ const SearchAndAdd=()=>{
             setOpen(false);
             };
 
-  
-const search=(searchTerm)=>{
-DataService.search(searchTerm).then(responce=>{
-    setSearch(responce.data);
-    console.log("SERACH"+JSON.stringify(getSearch));
-});
-}
 
     return(
         <>
@@ -51,9 +42,6 @@ DataService.search(searchTerm).then(responce=>{
 REGISTERED USER
 </div>
 <div style={{float:'right',margin:'20px'}}>
-
-<TextField label="Search..." variant="outlined"
-        onKeyUp={e=> search(e.target.value)} />
 <Button color="primary"><GetAppIcon/></Button>
 <Button color="primary" onClick={handleOpen}>
 <AddIcon/>
@@ -81,7 +69,6 @@ timeout: 500,
 
 </Modal>
 </div>
-{false&&<Table sea={getSearch}/>}
         </>
     )
 }
