@@ -30,9 +30,10 @@ export default function Menu() {
             <AccountCircleIcon/>
           </IconButton>
           <Typography variant="h6">
-            CUSTOMER MANAGEMENT
+           ODIGO TECH
           </Typography>
           <Typography variant="h6" className={classes.title}>
+            WELCOME TO USER 
           </Typography>
           <Button color="inherit"><LockIcon style={{color:'red'}}/>  LogOut</Button>
         </Toolbar>
