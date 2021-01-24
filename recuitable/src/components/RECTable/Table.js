@@ -19,6 +19,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import SearchAndAdd from "./SearchAndAdd";
 import TextField from '@material-ui/core/TextField';
+import UpdateProfileForm from "../FormikValidationForm/UpdateProfileForm";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -197,7 +199,7 @@ timeout: 500,
 >
 <Fade in={open}>
 <div className={classes.paper}>
-<InputFields data={getData}/>
+<UpdateProfileForm data={getData}/>
 </div>
 </Fade>
 

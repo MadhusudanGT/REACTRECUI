@@ -42,7 +42,6 @@ let SignupSchema = yup.object().shape({
           return moment().diff(moment(value),'years') >= 18;
         }
       )
-      
 
 });
 
@@ -71,15 +70,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
- const RegistrationForm= () => {
+ const UpdateProfileForm= ({data}) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     open: false,
     vertical: 'top',
     horizontal: 'center',
   });
-  
   const { vertical, horizontal} = state;
+
+  const Close = () => {
+    window.location="/"
+  }
+
   const [open, setOpen] = React.useState(false);
 
 const handleClick = () => {
@@ -94,46 +97,42 @@ const handleClose = (event, reason) => {
   setOpen(false);
 };
 
-const Close = () => {
-  window.location="/"
-}
-
-const createUser=(data)=>{
-  console.log(data);
-DataService.create(data);
-handleClick();
-}
-
+  const updateUser=(id,data)=>{
+    console.log(id+"/////"+JSON.stringify(data))
+    DataService.update(id,JSON.stringify(data));
+    handleClick()
+  }
   return (
     <>
-     <div className={classes.root}>
-      <Snackbar open={open} anchorOrigin={{ vertical, horizontal }} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          new user created successfully!
-        </Alert>
-      </Snackbar>
-    </div>
+    <div className={classes.root}>
+     <Snackbar open={open} anchorOrigin={{ vertical, horizontal }} autoHideDuration={6000} onClose={handleClose}>
+       <Alert onClose={handleClose} severity="success">
+         user information updated successfully!
+       </Alert>
+     </Snackbar>
+   </div>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          CREATE USER
+          UPDATE USER
         </Typography>
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            email: "",
-            adhar: "",
-            dob:'',
-            status:'Active',
-            createdAt:Date.now(),
-            updatedAt:Date.now()
+            id:data.id,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email:data.email,
+            adhar: data.adhar,
+            dob:data.dob,
+            status:data.status,
+        createdAt:data.createdAt,
+        updatedAt:data.updatedAt
           }}
           validationSchema={SignupSchema}
           onSubmit={values => {
             console.log(values);
-createUser(values)
+            updateUser(values.id,values)
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -143,6 +142,7 @@ createUser(values)
                   <TextField
                     error={errors.firstName && touched.firstName}
                     autoComplete="fname"
+                    defaultValue={data.firstName}
                     name="firstName"
                     variant="outlined"
                     fullWidth
@@ -160,6 +160,7 @@ createUser(values)
                 <Grid item xs={12} sm={6}>
                   <TextField
                     error={errors.lastName && touched.lastName}
+                    defaultValue={data.lastName}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -177,6 +178,7 @@ createUser(values)
                 <Grid item xs={12}>
                   <TextField
                     error={errors.email && touched.email}
+                    defaultValue={data.email}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -192,6 +194,7 @@ createUser(values)
                 <Grid item xs={12}>
                   <TextField
                     error={errors.dob && touched.dob}
+                    defaultValue={data.dob}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -212,6 +215,7 @@ createUser(values)
                 <Grid item xs={12}>
                   <TextField
                     error={errors.adhar && touched.adhar}
+                    defaultValue={data.adhar}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -235,14 +239,12 @@ createUser(values)
                 color="primary"
                 className={classes.submit}
               >
-                Save
+                Update
               </Button>
-              <Button color="secondary"
-              fullWidth
-              variant="contained"
-              color="primary"
-               onClick={Close}>CANCEL</Button>
-
+              <Button color="secondary"  fullWidth
+                variant="contained"
+                color="primary"
+                onClick={Close}>CANCEL</Button>
             </Form>
           )}
         </Formik>
@@ -253,4 +255,4 @@ createUser(values)
 };
 
 
-export default RegistrationForm;
+export default UpdateProfileForm;

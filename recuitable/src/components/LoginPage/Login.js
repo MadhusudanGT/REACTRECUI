@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import {Formik,Form,Field,ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 const Login=()=>{
-const paperStyle={padding:20,height:'53vh',width:280,margin:"55px auto"}
+const paperStyle={padding:20,width:280,margin:"55px auto"}
 const avatarStyle={backgroundColor:"#AF0069"}
 const btnStyle={margin:"15px 0px"}
 const initialValues={

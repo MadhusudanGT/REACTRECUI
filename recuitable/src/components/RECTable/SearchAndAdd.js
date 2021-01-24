@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DataService from "../../Service/service";
 import Table from "./Table";
+import RegistrationForm from "../FormikValidationForm/RegistrationForm";
 const useStyles = makeStyles((theme) => ({
       modal: {
         display: 'flex',
@@ -63,7 +64,7 @@ timeout: 500,
 >
 <Fade in={open}>
 <div className={classes.paper}>
-<CreateUser/>
+<RegistrationForm/>
 </div>
 </Fade>
 
