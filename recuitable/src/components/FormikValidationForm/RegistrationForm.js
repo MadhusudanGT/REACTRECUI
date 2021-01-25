@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -81,7 +81,8 @@ const useStyles = makeStyles(theme => ({
   
   const { vertical, horizontal} = state;
   const [open, setOpen] = React.useState(false);
-
+const[response,setresponse]=useState('');
+const[snackcolor,setscackcolor]=useState('');
 const handleClick = () => {
   setOpen(true);
 };
@@ -98,21 +99,43 @@ const Close = () => {
   window.location="/"
 }
 
-const createUser=(data)=>{
+const  createUser= async (data)=>{
   console.log(data);
-DataService.create(data);
+let response=await DataService.create(data);
+
+console.log("response of create"+JSON.stringify(response.data))
+setresponse(response.data)
+setOpen(false);
+handleClick(true)
+
+if(response){
+  setState({ opens: true,  vertical: 'top', horizontal: 'right' });
+  handleClick({ vertical: 'top', horizontal: 'right' })
+if(response.data==="The Email is already Present, Failed to Create new User"){
+  response="";
+setscackcolor("error")
+}
+else{
+  setscackcolor("success")
+  response="";
+}
+
+}
 handleClick();
 }
 
   return (
     <>
-     <div className={classes.root}>
-      <Snackbar open={open} anchorOrigin={{ vertical, horizontal }} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          new user created successfully!
+       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}
+   
+   key={vertical + horizontal}
+   anchorOrigin={{ vertical, horizontal }}>
+        <Alert onClose={handleClose} severity={snackcolor}
+       
+        >
+         {response}
         </Alert>
       </Snackbar>
-    </div>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

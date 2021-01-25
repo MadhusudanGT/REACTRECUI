@@ -100,7 +100,8 @@ const handleClose = (event, reason) => {
   const updateUser=(id,data)=>{
     console.log(id+"/////"+JSON.stringify(data))
     DataService.update(id,JSON.stringify(data));
-    handleClick()
+    handleClick();
+    Close();
   }
   return (
     <>
