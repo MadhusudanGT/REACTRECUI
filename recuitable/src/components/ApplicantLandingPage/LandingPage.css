@@ -1,0 +1,29 @@
+.LandingPageImg {
+    height: 70vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.LandingPageImg-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px;
+}
+
+@media (min-width: 650px ) {
+    .LandingPageImg {
+        background-position: center center;
+    }
+
+    .LandingPageImg-content {
+        align-items: flex-start;
+        justify-content: center;
+    }
+}
+.rows .row {
+    display: inline-block;
+ }

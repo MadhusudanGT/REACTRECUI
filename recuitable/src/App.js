@@ -7,6 +7,7 @@ import UserDeatailsForm from "./components/UserLandingPage/UserDetailsForm";
 import UserInterviewForm from "./components/UserLandingPage/UserInterviewForm";
 import InterviewProcess from "./components/InterViewProceses/LandingPageInterview";
 import Login from "./components/LoginPage/Login";
+import LandingPage from "./components/ApplicantLandingPage/LandingPage"
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,7 @@ function App() {
               <Route path="/InterviewProcess" component={UserInterviewForm}/>
               <Route path="/interview" component={InterviewProcess}/>
               <Route path="/login" exact component={Login}/>
+              <Route path="/LandingPage" exact component={LandingPage}/>
               </React.Fragment>
           </Switch>
         </div>

@@ -23,8 +23,8 @@ let SignupSchema = yup.object().shape({
      .max(70, 'Too Long!')
      .required("This field is required."),
   lastName: yup.string()
-  .min(2, 'Too Short!')
-     .max(70, 'Too Long!')
+  .min(1, 'Too Short!')
+     .max(20, 'Too Long!')
      .required("This field is required."),
   email: yup
     .string()

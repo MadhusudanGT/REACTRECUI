@@ -142,7 +142,7 @@ timeout: 500,
 >
 <Fade in={open}>
 <div className={classes.paper}>
-<InputFields data={getData}/>
+Time Tracker for inActive user
 </div>
 </Fade>
 </Modal>

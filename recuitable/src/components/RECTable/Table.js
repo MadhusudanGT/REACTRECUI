@@ -20,6 +20,11 @@ import MuiAlert from '@material-ui/lab/Alert';
 import SearchAndAdd from "./SearchAndAdd";
 import TextField from '@material-ui/core/TextField';
 import UpdateProfileForm from "../FormikValidationForm/UpdateProfileForm";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -52,7 +57,8 @@ const classes = useStyles();
 const [open, setOpen] = React.useState(false);
 const [getUser,setUserData]=useState([]);
 const [getData,setData]=useState('');
-const [searchdata,setsearchdata]=useState("");
+const[getfName,setfName]=useState('');
+const [openDilogBox, setOpenDilogBox] = React.useState(false);
 const [state, setState] = React.useState({
   open: false,
   vertical: 'top',
@@ -60,7 +66,22 @@ const [state, setState] = React.useState({
 });
 
 const { vertical, horizontal} = state;
+const [getUserName,setUserName]=useState('');
+const [getUserId,setUserId]=useState('');
+const handleDeleteBoxOpen = (e) => {
+  setOpenDilogBox(true);
+  setUserName(e.firstName);
+  setUserId(e.id);
+};
 
+const handleDeleteBoxClose = () => {
+  setOpenDilogBox(false);
+ if(getUserName===getfName){
+  handleDelete(getUserId);
+ }else{
+   alert("please check the user name")
+ }
+};
 const handleClose = () => {
 setOpen(false);
 };
@@ -169,7 +190,7 @@ return (
 <TableCell  style={{ minWidth: row.minWidth}} align="center">{row.email}</TableCell>
 <TableCell  style={{ minWidth: row.minWidth}} align="center">
 <Button onClick={() => handleEdit(row)}><EditIcon style={{color:'blue'}} /></Button>
-<Button onClick={() => handleDelete(row.id)}><DeleteIcon style={{color:'Orange'}} /></Button>
+<Button onClick={() => handleDeleteBoxOpen(row)}><DeleteIcon style={{color:'Orange'}} /></Button>
 </TableCell>
 </TableRow>
 }
@@ -205,6 +226,30 @@ timeout: 500,
 
 </Modal>
 </div>
+
+<Dialog open={openDilogBox} onClose={handleDeleteBoxClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">YOU LIKE TO DELETE THIS USER</DialogTitle>
+        {getUserName}
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="USER NAME"
+            type="email"
+            fullWidth
+            onChange={e => setfName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteBoxClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteBoxClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
 </>
 );
 }
