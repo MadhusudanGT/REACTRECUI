@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import LandingPageCard from "./LandingPageCard"
 import Footer from "../../components/Footer/Footer";
 import LandingPageMenu from "../../components/MenuBar/MenuBarLandingPage";
+import { useHistory } from "react-router-dom";
 const category = [
     {
       value: 'IT',
@@ -71,11 +72,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 const LandingPage=()=>{
     const classes = useStyles();
+    let history = useHistory();
     const imageUrl = window.innerWidth >= 650 ? DesktopViewImg : MobileViewImg;
     const [Category, setCategory] = React.useState('');
       const handleChange = (event) => {
         setCategory(event.target.value);
       };
+
+      const handleRedirect=()=>{
+        history.push("/registration");
+      }
+
+
     return (
         <>
         <LandingPageMenu/>
@@ -98,8 +106,8 @@ const LandingPage=()=>{
      <div className='row' style={{marginLeft:"20px"}}>
     <h2>Tell us more about yourself and we'll keep you up-to-date regarding upcoming</h2>
     <h4>events and career opportunities that match your interests.</h4>
-    <Button variant="contained" color="primary" style={{width:'180px'}}>JOIN NOW</Button>
-     </div>
+    <Button variant="contained" color="primary" style={{width:'180px'}} onClick={handleRedirect}>JOIN NOW</Button>
+     </div> 
      <div className='row' style={{margin:"20px"}}>
      <img src={adduser} alt="Girl in a jacket" style={{height:'100px'}}/>
      </div>
