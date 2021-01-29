@@ -7,9 +7,11 @@ import UserDeatailsForm from "./components/UserLandingPage/UserDetailsForm";
 import UserInterviewForm from "./components/UserLandingPage/UserInterviewForm";
 import InterviewProcess from "./components/InterViewProceses/LandingPageInterview";
 import Login from "./components/LoginPage/Login";
+import ForgetPassword from "./components/LoginPage/ForgetPassword";
 import LandingPage from "./components/ApplicantLandingPage/LandingPage";
 import Registration from "./components/LoginPage/Registration";
 import JobDetailsPage from "./components/JobModel/JobDetailsPage";
+import LandingPageAuth from "./components/ApplicantLandingPage/LandingPageForUnauth";
 function App() {
   return (
     <div className="App">
@@ -22,8 +24,10 @@ function App() {
               <Route path="/InterviewProcess" component={UserInterviewForm}/>
               <Route path="/interview" component={InterviewProcess}/>
               <Route path="/login" exact component={Login}/>
+              <Route path="/ForgetPassword" exact component={ForgetPassword}/>
               <Route path="/LandingPage" exact component={LandingPage}/>
               <Route path="/registration" exact component={Registration}/>
+              <Route path="/LandingPageAuth" exact component={LandingPageAuth}/>
               <Route path="/JobDetailsPage" exact component={JobDetailsPage}/>
               </React.Fragment>
           </Switch>

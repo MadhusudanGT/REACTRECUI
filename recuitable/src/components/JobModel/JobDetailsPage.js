@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuBarLandingPage from "../MenuBar/MenuBarLandingPage";
+import MenuBar from "../MenuBar/Menu"
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
@@ -139,7 +139,8 @@ const jobjson={
     startingDate:e.StartingDate,
     vacancy:e.NoOfVacanci,
     email:e.ContactEmail,
-    phoneno:e.phoneNumber
+    phoneno:e.phoneNumber,
+    location:e.location
 }
 // console.log(jobjson)
 JobService.addUser(jobjson)
@@ -148,7 +149,7 @@ console.log("success");
 
   return (
     <>
-        <MenuBarLandingPage/>
+        <MenuBar/>
         <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Job Details</Typography>
         <Formik
           initialValues={{

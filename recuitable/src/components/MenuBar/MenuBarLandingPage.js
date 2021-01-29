@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -41,6 +41,15 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  let history = useHistory();
+
+    const handleSignIn = () => {
+    history.push("/registration");
+  };
+
+  const handleLogIn=()=>{
+    history.push("/login");
+  }
 
   return (
     <div className={classes.root}>
@@ -77,8 +86,8 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleSignIn}>SIGN IN</MenuItem>
+                <MenuItem onClick={handleLogIn}>LOG IN</MenuItem>
               </Menu>
             </div>
         </Toolbar>

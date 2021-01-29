@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -21,7 +22,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Menu() {
   const classes = useStyles();
-
+  let history = useHistory();
+  
+const handleLogOut=()=>{
+  history.push('/LandingPageAuth');
+}
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -35,7 +40,7 @@ export default function Menu() {
           <Typography variant="h6" className={classes.title}>
             WELCOME TO USER 
           </Typography>
-          <Button color="inherit"><LockIcon style={{color:'red'}}/>  LogOut</Button>
+          <Button color="inherit" onClick={handleLogOut}><LockIcon style={{color:'red'}}/>  LogOut</Button>
         </Toolbar>
       </AppBar>
     </div>
