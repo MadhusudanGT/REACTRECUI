@@ -11,7 +11,7 @@ import {Formik,Form,Field,ErrorMessage} from 'formik';
 import {FormHelperText} from '@material-ui/core';
 import * as Yup from 'yup';
 const Registration=()=>{
-    const paperStyle={padding:20,width:280,margin:"55px auto"}
+const paperStyle={padding:"40px 30px",width:450,margin:"20px auto"}
 const btnStyle={margin:"20px 5px"}
 // const [value, setValue] = React.useState('female');
 
@@ -59,8 +59,7 @@ return(
 <Form>
 <Field as={TextField} label='FirstName' name='firstName' placeholder='Enter your Firstname' helperText={<ErrorMessage name="firstName"/>} fullWidth required/>
 <Field as={TextField} label='LastName' name='lastName' placeholder='Enter your Lastname' helperText={<ErrorMessage name="lastName"/>} fullWidth required/>
-{/* {/ <FormControl component="fieldset" style={{marginTop:"5px"}}> /}
-{/ <FormLabel component="legend">Gender</FormLabel> /} */}
+
 {/* <RadioGroup aria-label="gender" name="gender1" style={{display:"initial"}}>
 <FormControlLabel value="female" control={<Radio />} label="Female" />
 <FormControlLabel value="male" control={<Radio />} label="Male" />

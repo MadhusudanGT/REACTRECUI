@@ -1,6 +1,7 @@
 import React from "react";
 import './LandingPage.css';
 import DesktopViewImg from "../Images/Careers-Banner.png";
+import DesktopViewImg1 from "../Images/career-banner1.jpg";
 import MobileViewImg from "../Images/carrer2.jpg";
 import adduser from "../Images/adduser.png";
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const LandingPage=()=>{
     const classes = useStyles();
     let history = useHistory();
-    const imageUrl = window.innerWidth >= 650 ? DesktopViewImg : MobileViewImg;
+    const imageUrl = window.innerWidth >= 650 ? DesktopViewImg1 : MobileViewImg;
     const [Category, setCategory] = React.useState('');
       const handleChange = (event) => {
         setCategory(event.target.value);
@@ -92,7 +93,7 @@ const LandingPage=()=>{
             <div className="LandingPageImg-content">
                 {/* <a style={{fontSize:'40px',color:'#867979'}}>ENTRY LEVEL</a>
                 <a style={{fontSize:'40px',color:'#867979'}}>JOB OPPORTUNITIES</a> */}
-                <form className={classes.root} noValidate autoComplete="off">
+                <form className={classes.root} noValidate autoComplete="off" style={{marginBottom: '168px'}}>
                 <TextField id="outlined-basic" label="Search" variant="outlined"/>
                 <Button variant="contained" color="primary" style={{width:'140px',height:'55px'}}>
   Sarech
@@ -100,7 +101,7 @@ const LandingPage=()=>{
 </form>
 </div>        
         </div>
-        <div className='rows' style={{marginTop:"20px",backgroundColor:'black',color:'white'}}>
+        <div className='rows' style={{marginTop:"20px",backgroundColor:'gray',color:'white'}}>
      <div className='row' >
          <h1>Join our  </h1><h1>Organization!!</h1></div>
      <div className='row' style={{marginLeft:"20px"}}>
