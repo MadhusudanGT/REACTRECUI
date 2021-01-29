@@ -9,6 +9,7 @@ import InterviewProcess from "./components/InterViewProceses/LandingPageIntervie
 import Login from "./components/LoginPage/Login";
 import LandingPage from "./components/ApplicantLandingPage/LandingPage";
 import Registration from "./components/LoginPage/Registration";
+import JobDetailsPage from "./components/JobModel/JobDetailsPage";
 function App() {
   return (
     <div className="App">
@@ -23,6 +24,7 @@ function App() {
               <Route path="/login" exact component={Login}/>
               <Route path="/LandingPage" exact component={LandingPage}/>
               <Route path="/registration" exact component={Registration}/>
+              <Route path="/JobDetailsPage" exact component={JobDetailsPage}/>
               </React.Fragment>
           </Switch>
         </div>
