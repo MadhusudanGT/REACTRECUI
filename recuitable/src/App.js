@@ -12,6 +12,8 @@ import LandingPage from "./components/ApplicantLandingPage/LandingPage";
 import Registration from "./components/LoginPage/Registration";
 import JobDetailsPage from "./components/JobModel/JobDetailsPage";
 import LandingPageAuth from "./components/ApplicantLandingPage/LandingPageForUnauth";
+import ApplicantProfile from "./components/ApplicantProfile/ApplicantProfile";
+
 function App() {
   return (
     <div className="App">
@@ -29,6 +31,7 @@ function App() {
               <Route path="/registration" exact component={Registration}/>
               <Route path="/LandingPageAuth" exact component={LandingPageAuth}/>
               <Route path="/JobDetailsPage" exact component={JobDetailsPage}/>
+              <Route path="/ApplicantProfile" exact component={ApplicantProfile}/>
               </React.Fragment>
           </Switch>
         </div>

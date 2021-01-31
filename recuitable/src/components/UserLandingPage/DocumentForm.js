@@ -9,6 +9,9 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import Typography from "@material-ui/core/Typography";
+
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -20,36 +23,51 @@ const useStyles = makeStyles((theme) => ({
 
 const  UserDeatilsForm=()=>{
     const classes = useStyles();
-const [open,setOpen]=useState(false);
-const [getfiles ,setfiles]=useState([]);
+    const [file, setFile] = useState(null);
 
-const handleClose=()=>{
-    setOpen(false)
-}
+  const UPLOAD_ENDPOINT =
+    "http://localhost:8080/file/uploadFile";
 
-const handleSave=(files)=>{
-        setfiles(files)
-        setOpen(false)
-        console.log(getfiles)
-    };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    //if await is removed, console log will be called before the uploadFile() is executed completely.
+    //since the await is added, this will pause here then console log will be called
+    let res = await uploadFile(file);
+ 
+  };
 
-  const handleOpen=()=>{
-       setOpen(true);
-    }
+  const uploadFile = async file => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return await axios.post(UPLOAD_ENDPOINT, formData).then(res=>{
+      console.log(res);
+    });
+  };
+
+  const handleOnChange = e => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+  };
+
     return(
 <>
 <div style={{marginTop:"20px"}}>
-                <Button variant="contained" color="primary" onClick={handleOpen}>
-                 UPLOAD FILES
-                </Button>
-                <DropzoneDialog
-                    open={open}
-                    onSave={handleSave}
-                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                    showPreviews={true}
-                    maxFileSize={5000000}
-                    onClose={handleClose}
-                />
+<form onSubmit={handleSubmit}>
+      <Typography>UPLOAD RESUME</Typography>
+      <Button
+  variant="contained"
+  component="label"
+>
+  Upload File
+  <input type="file" onChange={handleOnChange} />
+</Button>
+     
+      <Button color="secondary"
+              variant="contained"
+              color="primary" type="submit">Upload File</Button>
+    </form>
+              
             </div>
 <Card className={classes.root} variant="outlined" style={{margin:"20px"}}>
 <form className={classes.root} noValidate autoComplete="off">

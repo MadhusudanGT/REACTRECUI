@@ -149,7 +149,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
           const stepProps = {};
           const buttonProps = {};
           if (isStepOptional(index)) {
-            buttonProps.optional = <Typography variant="caption">Optional</Typography>;
+            buttonProps.optional = <Typography variant="caption">*</Typography>;
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;

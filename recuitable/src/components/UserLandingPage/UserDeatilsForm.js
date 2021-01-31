@@ -7,7 +7,73 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
+import { Formik, Form } from "formik";
+import * as yup from "yup";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import CardContent from '@material-ui/core/CardContent';
+import Typography from "@material-ui/core/Typography";
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const addressRegex = /^[a-zA-Z0-9][a-zA-Z0-9 .,-]*$/;
+
+let Schema = yup.object().shape({
+  firstName: yup.string()
+  .min(2, 'Too Short!')
+     .max(70, 'Too Long!')
+     .required("This field is required."),
+  lastName: yup.string()
+  .min(1, 'Too Short!')
+     .max(20, 'Too Long!')
+     .required("This field is required."),
+  email: yup
+    .string()
+    .email()
+    .required("This field is required."),
+    // dob:yup.string().test(
+    //     "dob",
+    //     "Age must be above 18",
+    //     value => {
+    //       return moment().diff(moment(value),'years') >= 18;
+    //     }
+    //   ),
+      phoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+      summary: yup.string()
+      .min(10, 'Too Short!')
+         .max(250, 'Too Long!')
+         .required("Please tell about yourself"),
+
+         street1: yup.string()
+         .min(2, "Must be at least ${min} characters.")
+         .max(60, "Must be no more than ${max} characters.")
+         .matches(
+           addressRegex,
+           "May only contain hyphens, periods, commas or alphanumeric characters."
+         )
+         .required("Required."),
+       street2: yup.string()
+         .nullable()
+         .max(60, "Must be no more than ${max} characters.")
+         .matches(addressRegex, {
+           excludeEmptyString: true,
+           message:
+             "May only contain hyphens, periods, commas or alphanumeric characters."
+         }),
+       city: yup.string()
+         .max(20, "Must be no more than ${max} characters.")
+         .matches(
+           addressRegex,
+           "May only contain hyphens, periods, commas or alphanumeric characters."
+         )
+         .required("Required."),
+       state: yup.string().required("Required."),
+       zipCode: yup.number()
+         .min(501, "Invalid zip code.")
+         .max(999501, "Invalid zip code.")
+         .required("Required.")    
+
+});
+
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -20,85 +86,259 @@ const useStyles = makeStyles((theme) => ({
 const  UserDeatilsForm=()=>{
     const classes = useStyles();
 
-
+    const Close = () => {
+      window.location="/"
+    }
 
     return(
 <>
-<Card className={classes.root} variant="outlined" style={{margin:"20px"}}>
-<form className={classes.root} noValidate autoComplete="off">
-      <FormControl>
-        <InputLabel htmlFor="component-simple">First Name</InputLabel>
-        <Input id="component-simple" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">Last Name</InputLabel>
-        <Input
-          id="component-helper"
-         
-          aria-describedby="component-helper-text"
-        />
-        {/* <FormHelperText id="component-helper-text">Some important helper text</FormHelperText> */}
-      </FormControl>
-      <FormControl>
-      <TextField
-        id="date"
-        label="DOB"
-        type="date"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">Email id</InputLabel>
-        <Input id="component-helper" aria-describedby="component-helper-text"/>
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-simple">Phone No1</InputLabel>
-        <Input id="component-simple" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">Phone no2</InputLabel>
-        <Input id="component-helper" aria-describedby="component-helper-text"/>
-      </FormControl>
-      </form>
-      </Card>
+<Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Details</Typography>
+        <Formik
+          initialValues={{
+          firstName:'',
+          lastName:'',
+          email:'',
+          phoneNumber:'',
+          summary:'',
+          dataofappl:Date.now(),
+          street1:'',
+          street2:'',
+          city:'',
+          state:'',
+          zipCode:''
+          }}
+          validationSchema={Schema}
+          onSubmit={values => {
+            console.log(values)
+            
+          }}
+        >
+          {({ errors, handleChange, touched }) => (
+            <Form className={classes.form}>
+                <Card className={classes.root} style={{margin:'20px'}}>
+                <CardContent>
+              <Grid container spacing={2}>   
+                <Grid item xs={12} sm={6}>
+                <TextField
+                    error={errors.firstName && touched.firstName}
+                    autoComplete="firstName"
+                    name="firstName"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="firstName"
+                    label="firstName"
+                    autoFocus
+                    helperText={
+                      errors.firstName && touched.firstName
+                        ? errors.firstName
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        <TextField
+                    error={errors.lastName && touched.lastName}
+                    autoComplete="lastName"
+                    name="lastName"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="lastName"
+                    label="lastName"
+                    autoFocus
+                    helperText={
+                      errors.lastName && touched.lastName
+                        ? errors.lastName
+                        : null
+                    }
+                  />
+        </Grid>
+             <Grid container spacing={3} style={{marginTop:'20px'}}>
+        <Grid item xs={12} sm={4}>
+          <TextField
+                    error={errors.email && touched.email}
+                    autoComplete="email"
+                    name="email"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="email"
+                    label="email"
+                    autoFocus
+                    helperText={
+                      errors.email && touched.email
+                        ? errors.email
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <TextField
+                    error={errors.phoneNumber && touched.phoneNumber}
+                    autoComplete="phoneNumber"
+                    name="phoneNumber"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="phoneNumber"
+                    label="phoneNumber"
+                    autoFocus
+                    helperText={
+                      errors.phoneNumber && touched.phoneNumber
+                        ? errors.phoneNumber
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <TextField
+                    error={errors.summary && touched.summary}
+                    autoComplete="summary"
+                    name="summary"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="summary"
+                    label="summary"
+                    autoFocus
+                    helperText={
+                      errors.summary && touched.summary
+                        ? errors.summary
+                        : null
+                    }
+                  />
+        </Grid>
+      </Grid>
+              
+                </Grid>
+                </CardContent>
+                </Card>
+                <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>
+                  Address Details</Typography>
+                  <Card className={classes.root} style={{margin:'20px'}}>
+                <CardContent>
+              <Grid container spacing={2}>   
+                <Grid item xs={12} sm={6}>
+                <TextField
+                    error={errors.street1 && touched.street1}
+                    autoComplete="street1"
+                    name="street1"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="street1"
+                    label="street1"
+                    autoFocus
+                    helperText={
+                      errors.street1 && touched.street1
+                        ? errors.street1
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        <TextField
+                    error={errors.street2 && touched.street2}
+                    autoComplete="street2"
+                    name="street2"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="street2"
+                    label="street2"
+                    autoFocus
+                    helperText={
+                      errors.street2 && touched.street2
+                        ? errors.street2
+                        : null
+                    }
+                  />
+        </Grid>
+             <Grid container spacing={3} style={{marginTop:'20px'}}>
+        <Grid item xs={12} sm={4}>
+      
+          <TextField
+                    error={errors.city && touched.city}
+                    autoComplete="city"
+                    name="city"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="city"
+                    label="city"
+                    autoFocus
+                    helperText={
+                      errors.city && touched.city
+                        ? errors.city
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <TextField
+                    error={errors.state && touched.state}
+                    autoComplete="state"
+                    name="state"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="state"
+                    label="state"
+                    autoFocus
+                    helperText={
+                      errors.state && touched.state
+                        ? errors.state
+                        : null
+                    }
+                  />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <TextField
+                    error={errors.zipCode && touched.zipCode}
+                    autoComplete="zipCode"
+                    name="zipCode"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="zipCode"
+                    label="Pin Code"
+                    autoFocus
+                    helperText={
+                      errors.zipCode && touched.zipCode
+                        ? errors.zipCode
+                        : null
+                    }
+                  />
+        </Grid>
+      </Grid>
+              
+                </Grid>
+                </CardContent>
+                </Card>
+                {/* ------- */}
+        
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Save
+              </Button>
+              <Button color="secondary"
+              fullWidth
+              variant="contained"
+              color="primary"
+               onClick={Close}>CANCEL</Button>
+
+            </Form>
+            
+          )}
+        </Formik>
 
 
-      <Card className={classes.root} variant="outlined" style={{margin:"20px"}}>
-<form className={classes.root} noValidate autoComplete="off">
-      <FormControl>
-        <InputLabel htmlFor="component-simple">Address Line1</InputLabel>
-        <Input id="component-simple" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">Address Line1</InputLabel>
-        <Input
-          id="component-helper"
-         
-          aria-describedby="component-helper-text"
-        />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-simple">Address Line2</InputLabel>
-        <Input id="component-simple" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">City</InputLabel>
-        <Input id="component-helper" aria-describedby="component-helper-text"/>
-      </FormControl>
-
-      <FormControl>
-        <InputLabel htmlFor="component-simple">Country</InputLabel>
-        <Input id="component-simple" />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="component-helper">Pin Code</InputLabel>
-        <Input id="component-helper" aria-describedby="component-helper-text"/>
-      </FormControl>
-      </form>
-      </Card>
 </>
     )
 }
