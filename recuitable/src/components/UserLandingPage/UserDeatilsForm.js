@@ -95,14 +95,19 @@ const  UserDeatilsForm=()=>{
       setChecked(event.target.checked);
     };
 
-const [UserDeatils,setUserDeatils]=useState([]);
-   
+
+
+    const[userdeatils,setuserdeatils]=useState(()=>{
+     
+      let storge=JSON.parse(localStorage.getItem('userdetails'));
+      return storge?storge:[];
+     });
     return(
 <>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Details</Typography>
         <Formik
           initialValues={{
-          firstName:'',
+          firstName:userdeatils.firstName,
           lastName:'',
           email:'',
           phoneNumber:'',
@@ -118,7 +123,6 @@ const [UserDeatils,setUserDeatils]=useState([]);
           onSubmit={values => {
             console.log(values)
             localStorage.setItem('userdetails',JSON.stringify(values))
-
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -133,6 +137,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="firstName"
                     variant="outlined"
                     fullWidth
+                    // defaultValue={userdeatils.firstName}
                     onChange={handleChange}
                     id="firstName"
                     label="firstName"
@@ -151,6 +156,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="lastName"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.lastName}
                     onChange={handleChange}
                     id="lastName"
                     label="lastName"
@@ -170,6 +176,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="email"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.email}
                     onChange={handleChange}
                     id="email"
                     label="email"
@@ -188,6 +195,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="phoneNumber"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.phoneNumber}
                     onChange={handleChange}
                     id="phoneNumber"
                     label="phoneNumber"
@@ -206,6 +214,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="summary"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.summary}
                     onChange={handleChange}
                     id="summary"
                     label="summary"
@@ -234,6 +243,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="street1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.street1}
                     onChange={handleChange}
                     id="street1"
                     label="street1"
@@ -252,6 +262,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="street2"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.street2}
                     onChange={handleChange}
                     id="street2"
                     label="street2"
@@ -272,6 +283,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="city"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.city}
                     onChange={handleChange}
                     id="city"
                     label="city"
@@ -290,6 +302,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     name="state"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdeatils.state}
                     onChange={handleChange}
                     id="state"
                     label="state"
@@ -307,6 +320,7 @@ const [UserDeatils,setUserDeatils]=useState([]);
                     autoComplete="zipCode"
                     name="zipCode"
                     variant="outlined"
+                    defaultValue={userdeatils.zipCode}
                     onChange={handleChange}
                     id="zipCode"
                     label="Pin Code"

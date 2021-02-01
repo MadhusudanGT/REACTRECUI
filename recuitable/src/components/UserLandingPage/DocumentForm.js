@@ -31,6 +31,10 @@ let Schema = yup.object().shape({
         .min(20, 'Too Short!')
            .max(200, 'Too Long!')
            .required("Documetn inforamtion is required."),
+           experience: yup.number()
+           .min(0, 'Too Short!')
+              .max(5, 'Too Long!')
+              .required("experience is required.")
 })
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const  UserDeatilsForm=()=>{
     const classes = useStyles();
     const [file, setFile] = useState(null);
-const [Document ,setDocument]=useState([]);
+
 
 
   const UPLOAD_ENDPOINT =
@@ -98,16 +102,11 @@ const [Document ,setDocument]=useState([]);
     setFields(values);
   }
 
-  const [education,seteducation]=useReducer(EducationDetails,[],()=>{
-    const educationdata=localStorage.getItem('education');
-    console.log(educationdata);
-    return educationdata?JSON.parse(educationdata):[];
-   
-  })
-  useEffect(()=>{
-    const educationdata=JSON.parse(localStorage.getItem('education'));
-    console.log(educationdata)
-  },[])
+
+  const[userdocument,setDocument]=useState(()=>{
+    let storge=JSON.parse(localStorage.getItem('document'));
+    return storge?storge:[];
+  });
     return(
 <>
 <div style={{marginTop:"20px"}}>
@@ -143,13 +142,14 @@ const [Document ,setDocument]=useState([]);
          ProjectDescription:'',
          WebSiteLink:'',
          Document:'',
-         LastUpdate:Date.now()
+         LastUpdate:new Date(),
+         experience:''
           }}
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
        
-            localStorage.setItem('document',JSON.stringify(values))
+            localStorage.setItem('document',JSON.stringify(values));
             
           }}
         >
@@ -157,7 +157,27 @@ const [Document ,setDocument]=useState([]);
             <Form className={classes.form}>
                 <Card className={classes.root} style={{margin:'20px'}}>
                 <CardContent>
-              <Grid container spacing={2}>   
+              <Grid container spacing={2}>  
+              <Grid item xs={12} sm={4}>
+        <TextField
+                    error={errors.experience && touched.experience}
+                    autoComplete="experience"
+                    name="experience"
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={userdocument.experience}
+                    onChange={handleChange}
+                    id="experience"
+                    label="experience"
+                    autoFocus
+                    helperText={
+                      errors.experience && touched.experience
+                        ? errors.experience
+                        : null
+                    }
+                  />
+        </Grid>
+ 
         <Grid item xs={12} sm={6}>
         <TextField
                     error={errors.ProjectName && touched.ProjectName}
@@ -165,6 +185,7 @@ const [Document ,setDocument]=useState([]);
                     name="ProjectName"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdocument.ProjectName}
                     onChange={handleChange}
                     id="ProjectName"
                     label="ProjectName"
@@ -184,6 +205,7 @@ const [Document ,setDocument]=useState([]);
                     name="ProjectDescription"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdocument.ProjectDescription}
                     onChange={handleChange}
                     id="ProjectDescription"
                     label="ProjectDescription"
@@ -202,6 +224,7 @@ const [Document ,setDocument]=useState([]);
                     name="WebSiteLink"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdocument.WebSiteLink}
                     onChange={handleChange}
                     id="WebSiteLink"
                     label="URL"
@@ -220,6 +243,7 @@ const [Document ,setDocument]=useState([]);
                     name="Document"
                     variant="outlined"
                     fullWidth
+                    defaultValue={userdocument.Document}
                     onChange={handleChange}
                     id="Document"
                     label="Document INFORAMTION"

@@ -103,7 +103,10 @@ const [educationDeatails,seteducationDeatails]=useState([]);
       setChecked(event.target.checked);
     };
    
-    const[education,setEducation]=useState(localStorage.getItem('education'));
+    const[education,setEducation]=useState(()=>{
+      let storge=JSON.parse(localStorage.getItem('education'));
+      return storge?storge:[];
+    });
     return(
       <>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>SECONDARY EDUCATION DEATILS (10th)</Typography>
@@ -145,7 +148,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     name="schoolName"
                     variant="outlined"
                     fullWidth
-                    defaultValue={education}
+                    defaultValue={education.schoolName}
                     onChange={handleChange}
                     id="schoolName"
                     label="schoolName"

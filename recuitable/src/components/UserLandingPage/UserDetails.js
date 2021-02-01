@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../MenuBar/Menu";
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import UserDeatilsForm from "./UserDeatilsForm";
 import DocumentForm from "./DocumentForm";
 import EducationSkillsForm from "./EducationSkillsForm";
-
+import ApplicationService from "../../Service/ApplicationService";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -82,6 +83,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
 
   const completedSteps = () => {
     return completed.size;
+   
   };
 
   const allStepsCompleted = () => {
@@ -110,29 +112,65 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-
-  const[education,setEducation]=useState(localStorage.getItem('education'));
-  const[userdeatils,setuserdeatils]=useState(localStorage.getItem('userdetails'));
-  const[userdocument,setDocument]=useState(localStorage.getItem('document'));
+  let history = useHistory();
+  const[education,setEducation]=useState(()=>{
+let data1=JSON.parse(localStorage.getItem('education'));
+return data1?data1:'';
+  });
+  const[userdeatils,setuserdeatils]=useState(()=>{
+    let data=JSON.parse(localStorage.getItem('userdetails'));
+    return data?data:'';
+  });
+  const[userdocument,setDocument]=useState(()=>{
+    let data2=JSON.parse(localStorage.getItem('document'));
+    return data2?data2:'';
+  });
   const handleComplete = () => {
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
 console.log(education+"..........."+userdeatils+".........."+userdocument)
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
     if (completed.size !== totalSteps() - skippedSteps()) {
       handleNext();
     }
-  };
+    
+    if(completedSteps() === totalSteps() - 1){
+      console.log("finish")
+      const appljson={
+        applicant: {
+          email:userdeatils.email,
+          firstName:userdeatils.firstName,
+          lastName:userdocument.LastUpdate,
+          phoneNo:userdeatils.phoneNumber,
+          summary:userdeatils.summary
+        },
+        applicationDocument: [
+          {
+            document: {
+              document:userdocument.Document,
+              lastUpdate:userdocument.LastUpdate,
+              name:userdocument.ProjectName,
+              url:userdocument.WebSiteLink
+            },
+          }
+        ],
+        appliedDate:userdocument.LastUpdate,
+        education:education.schoolName,
+        experience:userdocument.experience,
+        id: 1,
+        otherInfo:education.schoolName
+      }
 
+      ApplicationService.addUser(appljson);
+      console.log("success")
+      localStorage.clear();
+    }
+ 
+   };
+
+   
   const handleReset = () => {
-    setActiveStep(0);
-    setCompleted(new Set());
-    setSkipped(new Set());
+    history.push("/LandingPage");
   };
 
   const isStepSkipped = (step) => {
@@ -174,9 +212,9 @@ console.log(education+"..........."+userdeatils+".........."+userdocument)
         {allStepsCompleted() ? (
           <div>
             <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
+              YOUR DETAILS ARE COLLECTED THANKS FOR YOUR INFORMATION
             </Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleReset}>GO TO YOUR PROFILE</Button>
           </div>
         ) : (
           <div style={{marginTop:"20px"}}>
