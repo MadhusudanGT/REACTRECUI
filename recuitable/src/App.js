@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch} from "react-router-dom";
 import UserSettings from "./DashBoard/SettingsUserPage/UserSettings";
-import UserDeatailsForm from "./components/UserLandingPage/UserDetailsForm";
+import UserDeatailsForm from "./components/UserLandingPage/UserDetails";
 import UserInterviewForm from "./components/UserLandingPage/UserInterviewForm";
 import InterviewProcess from "./components/InterViewProceses/LandingPageInterview";
 import Login from "./components/LoginPage/Login";

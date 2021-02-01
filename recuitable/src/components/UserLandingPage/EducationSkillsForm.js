@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
-
+import Checkbox from '@material-ui/core/Checkbox';
 let Schema = yup.object().shape({
   schoolName: yup.string()
   .min(4, 'Too Short!')
@@ -93,13 +93,17 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const  UserDeatilsForm=()=>{
+const  UserDeatilsForm=({educdata})=>{
     const classes = useStyles();
-    const Close = () => {
-      window.location="/"
-    }
+   
+const [educationDeatails,seteducationDeatails]=useState([]);
+    const [checked, setChecked] = React.useState(true);
 
-
+    const handleChangeCheck = (event) => {
+      setChecked(event.target.checked);
+    };
+   
+    const[education,setEducation]=useState(localStorage.getItem('education'));
     return(
       <>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>SECONDARY EDUCATION DEATILS (10th)</Typography>
@@ -126,7 +130,7 @@ const  UserDeatilsForm=()=>{
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
-            
+            localStorage.setItem('education',JSON.stringify(values))
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -141,6 +145,7 @@ const  UserDeatilsForm=()=>{
                     name="schoolName"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education}
                     onChange={handleChange}
                     id="schoolName"
                     label="schoolName"
@@ -159,6 +164,7 @@ const  UserDeatilsForm=()=>{
                     name="schoolBoard"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.schoolBoard}
                     onChange={handleChange}
                     id="schoolBoard"
                     label="schoolBoard"
@@ -178,6 +184,7 @@ const  UserDeatilsForm=()=>{
                     name="completedYear"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.completedYear}
                     onChange={handleChange}
                     id="completedYear"
                     label="completedYear"
@@ -196,6 +203,7 @@ const  UserDeatilsForm=()=>{
                     name="percentage"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.percentage}
                     onChange={handleChange}
                     id="percentage"
                     label="percentage(%)"
@@ -214,6 +222,7 @@ const  UserDeatilsForm=()=>{
                     name="place"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.place}
                     onChange={handleChange}
                     id="place"
                     label="place"
@@ -242,6 +251,7 @@ const  UserDeatilsForm=()=>{
                     name="collageName"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.collageName}
                     onChange={handleChange}
                     id="collageName"
                     label="collageName"
@@ -260,6 +270,7 @@ const  UserDeatilsForm=()=>{
                     name="collageBoard"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.collageBoard}
                     onChange={handleChange}
                     id="collageBoard"
                     label="collageBoard"
@@ -279,6 +290,7 @@ const  UserDeatilsForm=()=>{
                     name="completedYear1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.completedYear1}
                     onChange={handleChange}
                     id="completedYear1"
                     label="completedYear"
@@ -297,6 +309,7 @@ const  UserDeatilsForm=()=>{
                     name="percentage1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.percentage1}
                     onChange={handleChange}
                     id="percentage1"
                     label="percentage(%)"
@@ -315,6 +328,7 @@ const  UserDeatilsForm=()=>{
                     name="place1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.place1}
                     onChange={handleChange}
                     id="place1"
                     label="place"
@@ -343,6 +357,7 @@ const  UserDeatilsForm=()=>{
                     name="collageName1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.collageName1}
                     onChange={handleChange}
                     id="collageName1"
                     label="collageName"
@@ -361,6 +376,7 @@ const  UserDeatilsForm=()=>{
                     name="collageBoard1"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.collageBoard1}
                     onChange={handleChange}
                     id="collageBoard1"
                     label="collageBoard"
@@ -380,6 +396,7 @@ const  UserDeatilsForm=()=>{
                     name="completedYear2"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.completedYear2}
                     onChange={handleChange}
                     id="completedYear2"
                     label="completedYear"
@@ -398,6 +415,7 @@ const  UserDeatilsForm=()=>{
                     name="percentage2"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.percentage2}
                     onChange={handleChange}
                     id="percentage2"
                     label="percentage(%)"
@@ -416,6 +434,7 @@ const  UserDeatilsForm=()=>{
                     name="place2"
                     variant="outlined"
                     fullWidth
+                    defaultValue={education.place2}
                     onChange={handleChange}
                     id="place2"
                     label="place"
@@ -431,19 +450,13 @@ const  UserDeatilsForm=()=>{
       </Grid>
                               </CardContent>
                 </Card>
-              <Button
-                type="submit"
-                
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Save
-              </Button>
-              <Button color="secondary"
-              variant="contained"
-              color="primary"
-               onClick={Close}>CANCEL</Button>
+                Verfiy the form and click this <Checkbox
+       type="submit"
+       className={classes.submit}
+       checked={checked}
+        onChange={handleChangeCheck}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
 
             </Form>
             

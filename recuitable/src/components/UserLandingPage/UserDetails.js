@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Menu from "../MenuBar/Menu";
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -111,11 +111,14 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     setActiveStep(step);
   };
 
+  const[education,setEducation]=useState(localStorage.getItem('education'));
+  const[userdeatils,setuserdeatils]=useState(localStorage.getItem('userdetails'));
+  const[userdocument,setDocument]=useState(localStorage.getItem('document'));
   const handleComplete = () => {
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
-
+console.log(education+"..........."+userdeatils+".........."+userdocument)
     /**
      * Sigh... it would be much nicer to replace the following if conditional with
      * `if (!this.allStepsComplete())` however state is not set when we do this,

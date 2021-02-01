@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect,useReducer} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +14,8 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
+import Checkbox from '@material-ui/core/Checkbox';
+
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const addressRegex = /^[a-zA-Z0-9][a-zA-Z0-9 .,-]*$/;
 
@@ -86,10 +88,15 @@ const useStyles = makeStyles((theme) => ({
 const  UserDeatilsForm=()=>{
     const classes = useStyles();
 
-    const Close = () => {
-      window.location="/"
-    }
 
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChangeCheck = (event) => {
+      setChecked(event.target.checked);
+    };
+
+const [UserDeatils,setUserDeatils]=useState([]);
+   
     return(
 <>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Details</Typography>
@@ -110,7 +117,8 @@ const  UserDeatilsForm=()=>{
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
-            
+            localStorage.setItem('userdetails',JSON.stringify(values))
+
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -299,7 +307,6 @@ const  UserDeatilsForm=()=>{
                     autoComplete="zipCode"
                     name="zipCode"
                     variant="outlined"
-                    fullWidth
                     onChange={handleChange}
                     id="zipCode"
                     label="Pin Code"
@@ -318,20 +325,14 @@ const  UserDeatilsForm=()=>{
                 </Card>
                 {/* ------- */}
         
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Save
-              </Button>
-              <Button color="secondary"
-              fullWidth
-              variant="contained"
-              color="primary"
-               onClick={Close}>CANCEL</Button>
+               Verfiy the form and click this  <Checkbox
+       type="submit"
+       className={classes.submit}
+       checked={checked}
+        onChange={handleChangeCheck}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+             
 
             </Form>
             
