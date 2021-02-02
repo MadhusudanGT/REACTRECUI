@@ -114,16 +114,17 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   };
   let history = useHistory();
   const[education,setEducation]=useState(()=>{
-let data1=JSON.parse(localStorage.getItem('education'));
-return data1?data1:'';
+    let storge=JSON.parse(localStorage.getItem('education'));
+    return storge?storge:[];
   });
   const[userdeatils,setuserdeatils]=useState(()=>{
-    let data=JSON.parse(localStorage.getItem('userdetails'));
-    return data?data:'';
-  });
-  const[userdocument,setDocument]=useState(()=>{
-    let data2=JSON.parse(localStorage.getItem('document'));
-    return data2?data2:'';
+     
+    let storge=JSON.parse(localStorage.getItem('userdetails'));
+    return storge?storge:[];
+   });
+   const[userdocument,setDocument]=useState(()=>{
+    let storge=JSON.parse(localStorage.getItem('document'));
+    return storge?storge:[];
   });
   const handleComplete = () => {
     const newCompleted = new Set(completed);
@@ -162,7 +163,7 @@ console.log(education+"..........."+userdeatils+".........."+userdocument)
       }
 
       ApplicationService.addUser(appljson);
-      console.log("success")
+      console.log(appljson)
       localStorage.clear();
     }
  
