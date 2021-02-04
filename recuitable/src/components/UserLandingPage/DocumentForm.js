@@ -149,7 +149,7 @@ const  UserDeatilsForm=()=>{
           onSubmit={values => {
             console.log(values)
        
-            localStorage.setItem('document',JSON.stringify(values));
+            localStorage.setItem('document',JSON.stringify({...values}));
             
           }}
         >

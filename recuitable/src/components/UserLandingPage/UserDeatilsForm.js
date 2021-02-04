@@ -98,10 +98,10 @@ const  UserDeatilsForm=()=>{
 
 
     const[userdeatils,setuserdeatils]=useState(()=>{
-     
       let storge=JSON.parse(localStorage.getItem('userdetails'));
       return storge?storge:[];
-     });
+    });
+
     return(
 <>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Details</Typography>
@@ -112,7 +112,7 @@ const  UserDeatilsForm=()=>{
           email:'',
           phoneNumber:'',
           summary:'',
-          dataofappl:Date.now(),
+          dataofappl:new Date(),
           street1:'',
           street2:'',
           city:'',
@@ -122,7 +122,8 @@ const  UserDeatilsForm=()=>{
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
-            localStorage.setItem('userdetails',JSON.stringify(values))
+            setuserdeatils({...values});
+            localStorage.setItem('userdetails',JSON.stringify({...values}))
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -137,7 +138,7 @@ const  UserDeatilsForm=()=>{
                     name="firstName"
                     variant="outlined"
                     fullWidth
-                    // defaultValue={userdeatils.firstName}
+                    defaultValue={userdeatils.firstName}
                     onChange={handleChange}
                     id="firstName"
                     label="firstName"

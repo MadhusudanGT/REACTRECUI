@@ -113,59 +113,71 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     setActiveStep(step);
   };
   let history = useHistory();
-  const[education,setEducation]=useState(()=>{
-    let storge=JSON.parse(localStorage.getItem('education'));
-    return storge?storge:[];
-  });
-  const[userdeatils,setuserdeatils]=useState(()=>{
-     
-    let storge=JSON.parse(localStorage.getItem('userdetails'));
-    return storge?storge:[];
-   });
-   const[userdocument,setDocument]=useState(()=>{
-    let storge=JSON.parse(localStorage.getItem('document'));
-    return storge?storge:[];
-  });
-  const handleComplete = () => {
+  const[education,setEducation]=useState([]);
+  const[userdeatils,setuserdeatils]=useState([]);
+  const[userdocument,setDocument]=useState([]);
+
+ 
+const calllocalstorge=()=>{
+  setEducation(JSON.parse(localStorage.getItem('education')));
+    setuserdeatils(JSON.parse(localStorage.getItem('userdetails')));
+    setDocument(JSON.parse(localStorage.getItem('document')));
+}
+   
+
+  const handleComplete = (async) => {
+    // setEducation(JSON.parse(localStorage.getItem('education')));
+    // setuserdeatils(JSON.parse(localStorage.getItem('userdetails')));
+    // setDocument(JSON.parse(localStorage.getItem('document')));
+calllocalstorge();
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
-console.log(education+"..........."+userdeatils+".........."+userdocument)
     if (completed.size !== totalSteps() - skippedSteps()) {
       handleNext();
+      calllocalstorge();
     }
-    
     if(completedSteps() === totalSteps() - 1){
-      console.log("finish")
-      const appljson={
-        applicant: {
-          email:userdeatils.email,
-          firstName:userdeatils.firstName,
-          lastName:userdocument.LastUpdate,
-          phoneNo:userdeatils.phoneNumber,
-          summary:userdeatils.summary
-        },
-        applicationDocument: [
-          {
-            document: {
-              document:userdocument.Document,
-              lastUpdate:userdocument.LastUpdate,
-              name:userdocument.ProjectName,
-              url:userdocument.WebSiteLink
-            },
-          }
-        ],
-        appliedDate:userdocument.LastUpdate,
-        education:education.schoolName,
-        experience:userdocument.experience,
-        id: 1,
-        otherInfo:education.schoolName
+      calllocalstorge();
+      console.log(education+"..........."+userdeatils+".........."+userdocument)
+      if(education==null||userdeatils==null||userdocument==null){
+        calllocalstorge();
+        setEducation(JSON.parse(localStorage.getItem('education')));
+    setuserdeatils(JSON.parse(localStorage.getItem('userdetails')));
+    setDocument(JSON.parse(localStorage.getItem('document')));
       }
-
-      ApplicationService.addUser(appljson);
-      console.log(appljson)
-      localStorage.clear();
-    }
+      else{
+        const  appljson={
+          applicant: {
+            email:userdeatils.email,
+            firstName:userdeatils.firstName,
+            lastName:userdeatils.lastName,
+            phoneNo:userdeatils.phoneNumber,
+            summary:userdeatils.summary
+          },
+          applicationDocument: [
+            {
+              document: {
+                document:userdocument.Document,
+                lastUpdate:userdocument.LastUpdate,
+                name:userdocument.ProjectName,
+                url:userdocument.WebSiteLink
+              },
+            }
+          ],
+          appliedDate:userdocument.LastUpdate,
+          education:education.schoolName,
+          experience:userdocument.experience,
+          id: 1,
+          otherInfo:education.schoolName
+        }
+  
+    ApplicationService.addUser(appljson);
+    console.log("success"+appljson) 
+        localStorage.clear();
+   
+      }
+         }
  
    };
 

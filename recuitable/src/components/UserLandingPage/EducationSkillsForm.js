@@ -133,7 +133,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
-            localStorage.setItem('education',JSON.stringify(values))
+            localStorage.setItem('education',JSON.stringify({...values}))
           }}
         >
           {({ errors, handleChange, touched }) => (
