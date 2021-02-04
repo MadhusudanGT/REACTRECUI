@@ -13,7 +13,8 @@ import Registration from "./components/LoginPage/Registration";
 import JobDetailsPage from "./components/JobModel/JobDetailsPage";
 import LandingPageAuth from "./components/ApplicantLandingPage/LandingPageForUnauth";
 import ApplicantProfile from "./components/ApplicantProfile/ApplicantProfile";
-
+import TechnicalLandingPage from "./components/TECHNICALTEAM/TechnicalLandingPage";
+import HrLandingPage from "./components/HRLANDINGPAGE/HrLandingPge";
 function App() {
   return (
     <div className="App">
@@ -32,6 +33,8 @@ function App() {
               <Route path="/LandingPageAuth" exact component={LandingPageAuth}/>
               <Route path="/JobDetailsPage" exact component={JobDetailsPage}/>
               <Route path="/ApplicantProfile" exact component={ApplicantProfile}/>
+              <Route path="/TechnicalTeam" exact component={TechnicalLandingPage}/>
+              <Route path="/HrPage" exact component={HrLandingPage}/>
               </React.Fragment>
           </Switch>
         </div>
