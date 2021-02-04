@@ -180,14 +180,14 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['DashBoard', 'Applications'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <HomeIcon onClick={()=>setActiveStep(1)}/> : <FileCopyIcon onClick={()=>setActiveStep(0)}/>}</ListItemIcon>
+            <ListItem button key={text} >
+              <ListItemIcon>{index % 2 === 0 ? <HomeIcon color='primary' onClick={()=>setActiveStep(1)}/> : <FileCopyIcon color='primary' onClick={()=>setActiveStep(0)}/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
                  {[ 'Selected Resume', 'Rejected Resume'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <CheckIcon onClick={()=>setActiveStep(4)}/> : <CancelIcon onClick={()=>setActiveStep(3)}/>}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <CheckIcon color='primary' onClick={()=>setActiveStep(4)}/> : <CancelIcon color='primary' onClick={()=>setActiveStep(3)}/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -195,14 +195,14 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['Schedulied Mettings', 'Todays Schedules'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <ScheduleIcon onClick={()=>setActiveStep(5)}/> : <TodayIcon onClick={()=>setActiveStep(6)}/>}</ListItemIcon>
+            <ListItem button key={text} >
+              <ListItemIcon>{index % 2 === 0 ? <ScheduleIcon color='primary' onClick={()=>setActiveStep(5)}/> : <TodayIcon color='primary' onClick={()=>setActiveStep(6)}/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
             {['Notifications'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <NotificationsActiveIcon onClick={()=>setActiveStep(2)}/> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <NotificationsActiveIcon color='primary' onClick={()=>setActiveStep(2)}/> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
