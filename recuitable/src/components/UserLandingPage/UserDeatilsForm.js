@@ -7,7 +7,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
-import { Formik, Form } from "formik";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -15,7 +14,8 @@ import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { Formik, Form, Field, ErrorMessage  } from "formik";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const addressRegex = /^[a-zA-Z0-9][a-zA-Z0-9 .,-]*$/;
 
@@ -72,7 +72,11 @@ let Schema = yup.object().shape({
        zipCode: yup.number()
          .min(501, "Invalid zip code.")
          .max(999501, "Invalid zip code.")
-         .required("Required.")    
+         .required("Required."),
+         termsAndCondition: yup.string().oneOf(
+          ["true"],
+          "BEFORE GOING TO NEXT STEP SAVE THE DATA"
+        ),   
 
 });
 
@@ -117,7 +121,8 @@ const  UserDeatilsForm=()=>{
           street2:'',
           city:'',
           state:'',
-          zipCode:''
+          zipCode:'',
+          termsAndCondition: false,
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -340,13 +345,19 @@ const  UserDeatilsForm=()=>{
                 </Card>
                 {/* ------- */}
         
-               Verfiy the form and click this  <Checkbox
-       type="submit"
-       className={classes.submit}
-       checked={checked}
-        onChange={handleChangeCheck}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
+        
+       <FormControlLabel
+                control={<Field as={Checkbox} name="termsAndCondition" 
+                type="submit"
+                className={classes.submit}
+                />}
+                label=" Verfiy the form and click this "
+                helperText={<ErrorMessage name="termsAndCondition" />}
+                
+              />
+              <FormHelperText>
+                <ErrorMessage name="termsAndCondition" />
+              </FormHelperText>
              
 
             </Form>

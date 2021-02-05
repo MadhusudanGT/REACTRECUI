@@ -7,7 +7,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
-import { Formik, Form } from "formik";
+import { Formik, Form, Field, ErrorMessage  } from "formik";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -79,7 +80,10 @@ let Schema = yup.object().shape({
         min(2, 'Too Short!')
         .max(20, 'Too Long!')
         .required("This field is required."),
-
+        termsAndCondition: yup.string().oneOf(
+          ["true"],
+          "BEFORE GOING TO NEXT STEP SAVE THE DATA"
+        ),
         
 
 });
@@ -129,6 +133,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
           completedYear2:'',
           percentage2:'',
           place2:'',
+          termsAndCondition: false,
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -453,13 +458,21 @@ const [educationDeatails,seteducationDeatails]=useState([]);
       </Grid>
                               </CardContent>
                 </Card>
-                Verfiy the form and click this <Checkbox
-       type="submit"
-       className={classes.submit}
-       checked={checked}
-        onChange={handleChangeCheck}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
+                
+    
+       <FormControlLabel
+                control={<Field as={Checkbox} name="termsAndCondition" 
+                type="submit"
+                className={classes.submit}
+             
+             />}
+                label=" Verfiy the form and click this "
+                helperText={<ErrorMessage name="termsAndCondition" />}
+                
+              />
+              <FormHelperText>
+                <ErrorMessage name="termsAndCondition" />
+              </FormHelperText>
 
             </Form>
             

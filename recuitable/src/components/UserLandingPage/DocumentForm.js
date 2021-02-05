@@ -7,16 +7,17 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from "axios";
 import Card from '@material-ui/core/Card';
-import { Formik, Form } from "formik";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import EducationDetails from "./EducationSkillsForm";
 import UserDeatils from "./UserDeatilsForm";
+import { Formik, Form, Field, ErrorMessage  } from "formik";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 let Schema = yup.object().shape({
   ProjectName: yup.string()
   .min(2, 'Too Short!')
@@ -34,7 +35,11 @@ let Schema = yup.object().shape({
            experience: yup.number()
            .min(0, 'Too Short!')
               .max(5, 'Too Long!')
-              .required("experience is required.")
+              .required("experience is required."),
+              termsAndCondition: yup.string().oneOf(
+                ["true"],
+                "BEFORE GOING TO NEXT STEP SAVE THE DATA"
+              ),
 })
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -143,7 +148,8 @@ const  UserDeatilsForm=()=>{
          WebSiteLink:'',
          Document:'',
          LastUpdate:new Date(),
-         experience:''
+         experience:'',
+         termsAndCondition: false,
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -271,13 +277,20 @@ const  UserDeatilsForm=()=>{
               >
                 Save
               </Button> */}
-             Verfiy the form and click this <Checkbox
-       type="submit"
-       className={classes.submit}
-       checked={checked}
-        onChange={handleChangeCheck}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
+            
+       <FormControlLabel
+                control={<Field as={Checkbox} name="termsAndCondition" 
+                type="submit"
+                className={classes.submit}
+                checked={checked}
+                />}
+                label=" Verfiy the form and click this "
+                helperText={<ErrorMessage name="termsAndCondition" />}
+                
+              />
+              <FormHelperText>
+                <ErrorMessage name="termsAndCondition" />
+              </FormHelperText>
             </Form>
             
           )}
