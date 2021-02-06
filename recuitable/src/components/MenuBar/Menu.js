@@ -25,7 +25,7 @@ export default function Menu() {
   let history = useHistory();
   
 const handleLogOut=()=>{
-  history.push('/LandingPageAuth');
+  history.push('/');
 }
   return (
     <div className={classes.root}>

@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const LandingPage=()=>{
     const classes = useStyles();
     let history = useHistory();
-    const imageUrl = window.innerWidth >= 650 ? DesktopViewImg1 : MobileViewImg;
+    const imageUrl = window.innerWidth >= 650 ? DesktopViewImg : MobileViewImg;
     const [Category, setCategory] = React.useState('');
       const handleChange = (event) => {
         setCategory(event.target.value);
@@ -93,7 +93,7 @@ const LandingPage=()=>{
             <div className="LandingPageImg-content">
                 {/* <a style={{fontSize:'40px',color:'#867979'}}>ENTRY LEVEL</a>
                 <a style={{fontSize:'40px',color:'#867979'}}>JOB OPPORTUNITIES</a> */}
-                <form className={classes.root} noValidate autoComplete="off" style={{marginBottom: '168px'}}>
+                <form className={classes.root} noValidate autoComplete="off" style={{marginTop: '30px'}}>
                 <TextField id="outlined-basic" label="Search" variant="outlined"/>
                 <Button variant="contained" color="primary" style={{width:'140px',height:'55px'}}>
   Sarech

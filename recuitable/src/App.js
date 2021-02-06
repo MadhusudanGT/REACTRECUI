@@ -22,11 +22,11 @@ function App() {
         <div className="App">
           <Switch>
             <React.Fragment>
-              <Route path="/" exact component={UserSettings} />
+              <Route path="/UserManagement" exact component={UserSettings} />
               <Route path="/DetailsForm" component={UserDeatailsForm}/>
               <Route path="/InterviewProcess" component={UserInterviewForm}/>
               <Route path="/interview" component={InterviewProcess}/>
-              <Route path="/login" exact component={Login}/>
+              <Route path="/" exact component={Login}/>
               <Route path="/ForgetPassword" exact component={ForgetPassword}/>
               <Route path="/LandingPage" exact component={LandingPage}/>
               <Route path="/registration" exact component={Registration}/>

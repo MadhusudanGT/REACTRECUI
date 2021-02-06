@@ -12,6 +12,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { useHistory } from "react-router-dom";
+import ApplicantProfile from "../ApplicantProfile/ApplicantProfile"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -43,12 +44,12 @@ export default function MenuAppBar() {
   };
   let history = useHistory();
 
-    const handleSignIn = () => {
-    history.push("/registration");
+    const handleProfile = () => {
+    history.push("/ApplicantProfile");
   };
 
-  const handleLogIn=()=>{
-    history.push("/login");
+  const handleLogOut=()=>{
+    history.push('/');
   }
 
   return (
@@ -86,8 +87,8 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleSignIn}>SIGN IN</MenuItem>
-                <MenuItem onClick={handleLogIn}>LOG IN</MenuItem>
+                <MenuItem onClick={handleProfile}>PROFILE</MenuItem>
+                <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
               </Menu>
             </div>
         </Toolbar>
