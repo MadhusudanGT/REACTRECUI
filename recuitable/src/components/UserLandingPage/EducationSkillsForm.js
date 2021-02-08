@@ -80,10 +80,7 @@ let Schema = yup.object().shape({
         min(2, 'Too Short!')
         .max(20, 'Too Long!')
         .required("This field is required."),
-        termsAndCondition: yup.string().oneOf(
-          ["true"],
-          "BEFORE GOING TO NEXT STEP SAVE THE DATA"
-        ),
+       
         
 
 });
@@ -132,8 +129,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
           collageBoard1:'',
           completedYear2:'',
           percentage2:'',
-          place2:'',
-          termsAndCondition: false,
+          place2:''
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -460,19 +456,15 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                 </Card>
                 
     
-       <FormControlLabel
-                control={<Field as={Checkbox} name="termsAndCondition" 
+                <Button
                 type="submit"
+            
+                variant="contained"
+                color="primary"
                 className={classes.submit}
-             
-             />}
-                label=" Verfiy the form and click this "
-                helperText={<ErrorMessage name="termsAndCondition" />}
-                
-              />
-              <FormHelperText>
-                <ErrorMessage name="termsAndCondition" />
-              </FormHelperText>
+              >
+                Save
+              </Button>
 
             </Form>
             

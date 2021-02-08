@@ -36,10 +36,6 @@ let Schema = yup.object().shape({
            .min(0, 'Too Short!')
               .max(5, 'Too Long!')
               .required("experience is required."),
-              termsAndCondition: yup.string().oneOf(
-                ["true"],
-                "BEFORE GOING TO NEXT STEP SAVE THE DATA"
-              ),
 })
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -148,8 +144,7 @@ const  UserDeatilsForm=()=>{
          WebSiteLink:'',
          Document:'',
          LastUpdate:new Date(),
-         experience:'',
-         termsAndCondition: false,
+         experience:''
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -268,7 +263,7 @@ const  UserDeatilsForm=()=>{
                 </Card>
                 {/* ------- */}
         
-              {/* <Button
+              <Button
                 type="submit"
             
                 variant="contained"
@@ -276,21 +271,8 @@ const  UserDeatilsForm=()=>{
                 className={classes.submit}
               >
                 Save
-              </Button> */}
-            
-       <FormControlLabel
-                control={<Field as={Checkbox} name="termsAndCondition" 
-                type="submit"
-                className={classes.submit}
-                checked={checked}
-                />}
-                label=" Verfiy the form and click this "
-                helperText={<ErrorMessage name="termsAndCondition" />}
-                
-              />
-              <FormHelperText>
-                <ErrorMessage name="termsAndCondition" />
-              </FormHelperText>
+              </Button>
+
             </Form>
             
           )}

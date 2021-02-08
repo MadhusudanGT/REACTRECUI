@@ -72,11 +72,7 @@ let Schema = yup.object().shape({
        zipCode: yup.number()
          .min(501, "Invalid zip code.")
          .max(999501, "Invalid zip code.")
-         .required("Required."),
-         termsAndCondition: yup.string().oneOf(
-          ["true"],
-          "BEFORE GOING TO NEXT STEP SAVE THE DATA"
-        ),   
+         .required("Required.")  
 
 });
 
@@ -121,8 +117,7 @@ const  UserDeatilsForm=()=>{
           street2:'',
           city:'',
           state:'',
-          zipCode:'',
-          termsAndCondition: false,
+          zipCode:''
           }}
           validationSchema={Schema}
           onSubmit={values => {
@@ -346,18 +341,15 @@ const  UserDeatilsForm=()=>{
                 {/* ------- */}
         
         
-       <FormControlLabel
-                control={<Field as={Checkbox} name="termsAndCondition" 
+                <Button
                 type="submit"
+            
+                variant="contained"
+                color="primary"
                 className={classes.submit}
-                />}
-                label=" Verfiy the form and click this "
-                helperText={<ErrorMessage name="termsAndCondition" />}
-                
-              />
-              <FormHelperText>
-                <ErrorMessage name="termsAndCondition" />
-              </FormHelperText>
+              >
+                Save
+              </Button>
              
 
             </Form>

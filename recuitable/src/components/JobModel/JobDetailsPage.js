@@ -118,30 +118,32 @@ const Close = () => {
 }
 
 const Jobcreate=(e)=>{
-const jobjson={
+const jobjson=
+{
+  email:e.ContactEmail,
   datePublished:e.StartingDate,
-    description:e.JobDescription,
-    endingDate:e.StartingDate,
-    jobPlatform: {
-      platformName:e.platname,
-      platformDescription:e.platdescription,
-    },
-    jobPosition: {
-      description: e.JobDescription,
-      jobCategory: e.JobTitle,
-      name: e.JobTitle
-    },
-    name:e.JobTitle,
-    organization: {
-      orgDescription:e.orgDescription,
+  description:e.JobDescription,
+  endingDate:e.StartingDate,
+  jobPlatform: {
+    platformName:e.platname,
+    platformDescription:e.platdescription,
+  },
+  jobPosition: {
+    description: e.JobDescription,
+    jobCategory: e.JobTitle,
+    name: e.JobTitle
+  },
+  location:e.location,
+  name:e.JobTitle,
+  organization: {
+    orgDescription:e.orgDescription,
       orgName:e.orgName
-    },
-    startingDate:e.StartingDate,
-    vacancy:e.NoOfVacanci,
-    email:e.ContactEmail,
-    phoneno:e.phoneNumber,
-    location:e.location
+  },
+  phoneno:e.phoneNumber,
+  startingDate:e.StartingDate,
+  vacancy:e.NoOfVacanci,
 }
+
 // console.log(jobjson)
 JobService.addUser(jobjson)
 console.log("success");

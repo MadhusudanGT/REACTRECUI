@@ -148,30 +148,35 @@ calllocalstorge();
       }
       else{
         const  appljson={
-          applicant: {
+          applicantId:1 ,
+          applicantmodel: {
             email:userdeatils.email,
             firstName:userdeatils.firstName,
             lastName:userdeatils.lastName,
             phoneNo:userdeatils.phoneNumber,
             summary:userdeatils.summary
           },
-          applicationDocument: [
+          applicationdocumodel: [
             {
-              document: {
+              applicationId: 1,
+              documentmodel: {
                 document:userdocument.Document,
                 lastUpdate:userdocument.LastUpdate,
                 name:userdocument.ProjectName,
-                url:userdocument.WebSiteLink
+                url:userdocument.WebSiteLink 
               },
+              documnetId: 0,
+            
             }
           ],
           appliedDate:userdocument.LastUpdate,
           education:education.schoolName,
           experience:userdocument.experience,
           id: 1,
-          otherInfo:education.schoolName
+          otherInfo:education.schoolName,
+          jobId: 1,
         }
-  
+ 
     ApplicationService.addUser(appljson);
     console.log("success"+appljson) 
         localStorage.clear();
