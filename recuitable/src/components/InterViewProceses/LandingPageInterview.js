@@ -6,10 +6,13 @@ import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import FirstRound from  './FirstInterviewProcess';
 import SecondRound from "./SecondInterviewProcess";
 import FinalRound from "./FinalRound";
+import Questions from "./Questions";
+import TimeCounter from "./TimeCount";
+import { useHistory } from "react-router-dom";
 
+import UserTestService from "../../Service/UserTestService";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -30,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Document verfication', 'Technical and Hr interview', 'Final step'];
+  return ['step1', 'step2', 'step3'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <FirstRound/>;
+      return <Questions/>;
     case 1:
       return <SecondRound/>;
     case 2:
@@ -47,6 +50,7 @@ function getStepContent(step) {
 }
 
 export default function HorizontalNonLinearAlternativeLabelStepper() {
+  
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(new Set());
@@ -110,7 +114,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-
+  let history = useHistory();
   const handleComplete = () => {
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
@@ -124,7 +128,37 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     if (completed.size !== totalSteps() - skippedSteps()) {
       handleNext();
     }
+
   };
+
+  const HandleSave=()=>{
+
+    const ansjson={
+      answerDetials: localStorage.getItem('step2'),
+      applicationTest: 1,
+      atm: {
+        applicationId: 1,
+        appltest: {
+          code: localStorage.getItem('step3'),
+          duration:localStorage.getItem('minutes')+':'+localStorage.getItem('seconds'),
+          maxscore: localStorage.getItem('score')
+        },
+        endTime:localStorage.getItem('minutes'),
+        startTime:30,
+        testid: 1
+      },
+      pass: true,
+      recruiterid: 1,
+      totalGrades: 5
+    }
+    console.log(ansjson)
+    UserTestService.addUser(ansjson).then((res)=>{
+      console.log(res.data);
+    })
+    console.log("success")
+    localStorage.clear();
+    history.push('/LandingPage');
+  }
 
   const handleReset = () => {
     setActiveStep(0);
@@ -143,6 +177,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   return (
       <>
       <Menu/>
+<TimeCounter/>
     <div className={classes.root}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>
         {steps.map((label, index) => {
@@ -208,7 +243,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                   </Typography>
                 ) : (
                   <Button variant="contained" color="primary" onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+                    {completedSteps() === totalSteps() - 1 ? <Button onClick={HandleSave}>Finish</Button> : 'Complete Step'}
                   </Button>
                 ))}
             </div>
@@ -219,3 +254,5 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     </>
   );
 }
+
+

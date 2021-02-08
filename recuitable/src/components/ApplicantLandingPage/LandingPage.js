@@ -9,13 +9,13 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import LandingPageCard from "./LandingPageCard"
 import Footer from "../../components/Footer/Footer";
 import LandingPageMenu from "../../components/MenuBar/MenuBarLandingPage";
 import { useHistory } from "react-router-dom";
 import JobService from "../../Service/JobService";
+import Interview from "../InterViewProceses/LandingPageInterview"
 const category = [
     {
       value: 'IT',
@@ -25,37 +25,7 @@ const category = [
     },
   ];
 
-  // const data = [
-  //   {
-  //     city: 'BENGALURU',
-  //     country:'INDIA',
-  //     position:'FRONT END DEVELOPER',
-  //     jobcategory:"TECHNICAL SPECIALIST",
-  //     level:'Entry Level'
-  //   },
-  //   {
-  //       city: 'Shivamogga',
-  //       country:'INDIA',
-  //       position:'DATA-BASE SPECIALIST',
-  //       jobcategory:"TECHNICAL SPECIALIST",
-  //       level:'Entry Level'
-  //     },
-  //     {
-  //       city: 'Tumakuru',
-  //       country:'INDIA',
-  //       position:'APPLICATION DEVELOPER',
-  //       jobcategory:"TECHNICAL SPECIALIST",
-  //       level:'Entry Level'
-  //     },
-  //     {
-  //       city: 'HASSAN',
-  //       country:'INDIA',
-  //       position:'BACK-END DEVELOPER',
-  //       jobcategory:"TECHNICAL SPECIALIST",
-  //       level:'Entry Level'
-  //     },
-  // ];
-
+  
 const useStyles = makeStyles((theme) => ({
     root1:{
         flexGrow: 1,
@@ -82,7 +52,7 @@ const LandingPage=()=>{
       };
 
       const handleRedirect=()=>{
-        history.push("/registration");
+        history.push("/Interview");
       }
       const[data,setData]=useState([]);
       useEffect(() => {
@@ -122,7 +92,7 @@ const LandingPage=()=>{
      <div className='row' style={{marginLeft:"20px"}}>
     <h2>Tell us more about yourself and we'll keep you up-to-date regarding upcoming</h2>
     <h4>events and career opportunities that match your interests.</h4>
-    <Button variant="contained" color="primary" style={{width:'180px'}} onClick={handleRedirect}>JOIN NOW</Button>
+    <Button variant="contained" color="primary" style={{width:'180px'}} onClick={handleRedirect}>TAKE TEST</Button>
      </div> 
      <div className='row' style={{margin:"20px"}}>
      <img src={adduser} alt="Girl in a jacket" style={{height:'100px'}}/>
