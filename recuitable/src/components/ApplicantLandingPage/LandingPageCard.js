@@ -50,10 +50,10 @@ export default function RecipeReviewCard({jobdetails}) {
   return (
     <Card className={classes.root}>
       <CardContent>
-      <Typography variant="body2" gutterBottom align='left' style={{margin:'10px'}}>{jobdetails.country} | {jobdetails.city}</Typography>
-      <Typography variant="h5" gutterBottom align='left' style={{margin:'10px',color:'tan'}}>{jobdetails.position}</Typography> 
-      <Typography variant='subtitle1' gutterBottom align='left' style={{marginTop:'20px'}}>{jobdetails.jobcategory}</Typography>
-      <Typography variant="caption" display="block" gutterBottom align='left' style={{marginTop:'30px'}}>{jobdetails.level}</Typography>
+      <Typography variant="body2" gutterBottom align='left' style={{margin:'10px'}}>INDIA | {jobdetails.location}</Typography>
+      <Typography variant="h5" gutterBottom align='left' style={{margin:'10px',color:'tan'}}>{jobdetails.jobPosition.name}</Typography> 
+      <Typography variant='subtitle1' gutterBottom align='left' style={{marginTop:'20px'}}>{jobdetails.jobPosition.description}</Typography>
+      <Typography variant="caption" display="block" gutterBottom align='left' style={{marginTop:'30px'}}>{jobdetails.organization.orgName}</Typography>
      
       </CardContent>
       <CardActions disableSpacing>

@@ -5,7 +5,7 @@ const USER_API_BASE_URL = 'http://localhost:8080/jobc';
 class JobService {
 
     fetchUsers() {
-        return axios.get(USER_API_BASE_URL+`/getall`);
+        return axios.get(USER_API_BASE_URL+`/alljob`);
     }
 
     fetchUserById(userId) {

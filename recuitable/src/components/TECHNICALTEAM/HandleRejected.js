@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import ApplicationService from "../../Service/ApplicationService";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -27,17 +29,8 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(ApplicationID, ApplicantName, ProfileLink, RecuiterId, REVOKE) {
-  return { ApplicationID, ApplicantName, ProfileLink , RecuiterId, REVOKE};
-}
 
-const rows = [
-  createData(1, 'MADHUSUDAN', 'LINK',1, 'BUTTON'),
-  createData(2, 'SHIV', 'LINK',1, 'BUTTON'),
-  createData(3, 'SWAGATA','LINK',1, 'BUTTON'),
-  createData(4, 'UMESH','LINK',1, 'BUTTON'),
-  createData(5, 'VISWA','LINK',1, 'BUTTON'),
-];
+
 
 const useStyles = makeStyles({
   table: {
@@ -47,7 +40,26 @@ const useStyles = makeStyles({
 
 export default function CustomizedTables() {
   const classes = useStyles();
+  const[data,setData]=useState([]);
+useEffect(() => {
+ retrieveUsers();
+  },[]);
 
+  const retrieveUsers = async () => {
+   await ApplicationService.fetchUsers()
+      .then(response => {
+         setData(response.data);
+        // console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const handleAccept=(id)=>{
+    ApplicationService.AcceptUser(id);
+    retrieveUsers();
+  }
   return (
     <>
     <Typography align='center'>REJECTED APPLICATION LIST</Typography>
@@ -57,23 +69,28 @@ export default function CustomizedTables() {
           <TableRow>
             <StyledTableCell>APPLICATION ID</StyledTableCell>
             <StyledTableCell align="right">APPLICANT NAME</StyledTableCell>
-            <StyledTableCell align="right">PROFILE LINK</StyledTableCell>
-            <StyledTableCell align="right">RECUITER ID</StyledTableCell>
+            <StyledTableCell align="right">Email ID</StyledTableCell>
+            <StyledTableCell align="right">RESUME LINK</StyledTableCell>
             <StyledTableCell align="right">REVOKE</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {data.map((row) => (
+             <>
+             {row.status==='Reject' &&
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.ProfileLink}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="primary">REVOKE
+              <StyledTableCell align="right">{row.applicantmodel.firstName}</StyledTableCell>
+              <StyledTableCell align="right">{row.applicantmodel.email}</StyledTableCell>
+              {/* <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell> */}
+              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
+              <StyledTableCell align="right"><Button  onClick={() => handleAccept(row.id)} variant="contained" color="primary">REVOKE
 </Button></StyledTableCell>
             </StyledTableRow>
+}
+            </>
           ))}
         </TableBody>
       </Table>

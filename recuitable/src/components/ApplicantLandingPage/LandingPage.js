@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import './LandingPage.css';
 import DesktopViewImg from "../Images/Careers-Banner.png";
 import DesktopViewImg1 from "../Images/career-banner1.jpg";
@@ -15,6 +15,7 @@ import LandingPageCard from "./LandingPageCard"
 import Footer from "../../components/Footer/Footer";
 import LandingPageMenu from "../../components/MenuBar/MenuBarLandingPage";
 import { useHistory } from "react-router-dom";
+import JobService from "../../Service/JobService";
 const category = [
     {
       value: 'IT',
@@ -24,36 +25,36 @@ const category = [
     },
   ];
 
-  const data = [
-    {
-      city: 'BENGALURU',
-      country:'INDIA',
-      position:'FRONT END DEVELOPER',
-      jobcategory:"TECHNICAL SPECIALIST",
-      level:'Entry Level'
-    },
-    {
-        city: 'Shivamogga',
-        country:'INDIA',
-        position:'DATA-BASE SPECIALIST',
-        jobcategory:"TECHNICAL SPECIALIST",
-        level:'Entry Level'
-      },
-      {
-        city: 'Tumakuru',
-        country:'INDIA',
-        position:'APPLICATION DEVELOPER',
-        jobcategory:"TECHNICAL SPECIALIST",
-        level:'Entry Level'
-      },
-      {
-        city: 'HASSAN',
-        country:'INDIA',
-        position:'BACK-END DEVELOPER',
-        jobcategory:"TECHNICAL SPECIALIST",
-        level:'Entry Level'
-      },
-  ];
+  // const data = [
+  //   {
+  //     city: 'BENGALURU',
+  //     country:'INDIA',
+  //     position:'FRONT END DEVELOPER',
+  //     jobcategory:"TECHNICAL SPECIALIST",
+  //     level:'Entry Level'
+  //   },
+  //   {
+  //       city: 'Shivamogga',
+  //       country:'INDIA',
+  //       position:'DATA-BASE SPECIALIST',
+  //       jobcategory:"TECHNICAL SPECIALIST",
+  //       level:'Entry Level'
+  //     },
+  //     {
+  //       city: 'Tumakuru',
+  //       country:'INDIA',
+  //       position:'APPLICATION DEVELOPER',
+  //       jobcategory:"TECHNICAL SPECIALIST",
+  //       level:'Entry Level'
+  //     },
+  //     {
+  //       city: 'HASSAN',
+  //       country:'INDIA',
+  //       position:'BACK-END DEVELOPER',
+  //       jobcategory:"TECHNICAL SPECIALIST",
+  //       level:'Entry Level'
+  //     },
+  // ];
 
 const useStyles = makeStyles((theme) => ({
     root1:{
@@ -83,7 +84,21 @@ const LandingPage=()=>{
       const handleRedirect=()=>{
         history.push("/registration");
       }
-
+      const[data,setData]=useState([]);
+      useEffect(() => {
+       retrieveUsers();
+        },[]);
+      
+        const retrieveUsers = async () => {
+         await JobService.fetchUsers()
+            .then(response => {
+               setData(response.data);
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        };
 
     return (
         <>

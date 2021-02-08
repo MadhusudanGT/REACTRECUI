@@ -175,6 +175,7 @@ calllocalstorge();
           id: 1,
           otherInfo:education.schoolName,
           jobId: 1,
+          status: "Waiting"
         }
  
     ApplicationService.addUser(appljson);

@@ -4,17 +4,17 @@ const USER_API_BASE_URL ="http://localhost:8080/appc";
 
 class ApplicationService {
 
-    // fetchUsers() {
-    //     return axios.get(USER_API_BASE_URL+`/getall`);
-    // }
+    fetchUsers() {
+        return axios.get(USER_API_BASE_URL+`/allapplication`);
+    }
 
-    // fetchUserById(userId) {
-    //     return axios.get(USER_API_BASE_URL+`/users/${userId}`);
-    // }
+    AcceptUser(userId) {
+        return axios.get(USER_API_BASE_URL+`/accept/${userId}`);
+    }
 
-    // deleteUser(userId) {
-    //     return axios.delete(USER_API_BASE_URL+`users/${userId}`);
-    // }
+    RejectUser(userId) {
+        return axios.get(USER_API_BASE_URL+`/reject/${userId}`);
+    }
 
     addUser(user) {
         return axios.post(USER_API_BASE_URL+`/create/`, user);

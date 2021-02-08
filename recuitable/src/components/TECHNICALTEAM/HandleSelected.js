@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Typography from '@material-ui/core/Typography';
+import ApplicationService from "../../Service/ApplicationService";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -48,7 +49,26 @@ const useStyles = makeStyles({
 
 export default function CustomizedTables() {
   const classes = useStyles();
+  const[data,setData]=useState([]);
+useEffect(() => {
+ retrieveUsers();
+  },[]);
 
+  const retrieveUsers = async () => {
+   await ApplicationService.fetchUsers()
+      .then(response => {
+         setData(response.data);
+        // console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+  const handleReject=(id)=>{
+    ApplicationService.RejectUser(id);
+    retrieveUsers();
+    // console.log("reject candidate"+id)
+  }
   return (
     <>
     <Typography align='center'>SELETED APPLICATION LIST</Typography>
@@ -58,22 +78,26 @@ export default function CustomizedTables() {
           <TableRow>
             <StyledTableCell>ApplicationID</StyledTableCell>
             <StyledTableCell align="right">ApplicantName</StyledTableCell>
-            <StyledTableCell align="right">RecuiterId</StyledTableCell>
+            <StyledTableCell align="right">Email ID</StyledTableCell>
             <StyledTableCell align="right">Resume</StyledTableCell>
             <StyledTableCell align="right">REJECT</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {data.map((row) => (
+             <>
+             {row.status==='Accepted' &&
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
+              <StyledTableCell align="right">{row.applicantmodel.firstName}</StyledTableCell>
+              <StyledTableCell align="right">{row.applicantmodel.email}</StyledTableCell>
               <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">REJECT</Button></StyledTableCell>
+              <StyledTableCell align="right"><Button onClick={() => handleReject(row.id)}variant="contained" color="secondary">REJECT</Button></StyledTableCell>
             </StyledTableRow>
+}
+            </>
           ))}
         </TableBody>
       </Table>
