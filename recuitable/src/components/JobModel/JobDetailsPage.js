@@ -145,7 +145,7 @@ const jobjson=
 }
 
 // console.log(jobjson)
-JobService.addUser(jobjson)
+JobService.createjob(jobjson)
 console.log("success");
 }
 

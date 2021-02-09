@@ -16,8 +16,8 @@ class JobService {
         return axios.delete(USER_API_BASE_URL+`users/${userId}`);
     }
 
-    addUser(user) {
-        return axios.post(USER_API_BASE_URL+`/create/`, user);
+    createjob(data) {
+        return axios.post(USER_API_BASE_URL+`/create/`, data);
     }
 
     editUser(user) {

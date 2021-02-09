@@ -11,7 +11,7 @@ import FinalRound from "./FinalRound";
 import Questions from "./Questions";
 import TimeCounter from "./TimeCount";
 import { useHistory } from "react-router-dom";
-
+import axios from 'axios';
 import UserTestService from "../../Service/UserTestService";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,50 +114,53 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
+  
+
   let history = useHistory();
   const handleComplete = () => {
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
-
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
     if (completed.size !== totalSteps() - skippedSteps()) {
       handleNext();
     }
+    if(completedSteps() === totalSteps() - 1){
+      let time=localStorage.getItem('minutes')+':'+localStorage.getItem('seconds');
+      let score=localStorage.getItem('score');
+      let details=localStorage.getItem('step2');
+          const ansjson={
+            "answerDetials":details,
+            "applicationTest": localStorage.getItem('seconds'),
+            "atm": {
+              "applicationId": localStorage.getItem('seconds'),
+              "appltest": {
+                "code": localStorage.getItem('seconds'),
+                "duration": localStorage.getItem('seconds'),
+                "maxscore": localStorage.getItem('score')
+              },
+              "endTime": localStorage.getItem('seconds'),
+              "startTime": localStorage.getItem('seconds'),
+              "testid": localStorage.getItem('seconds')
+            },
+            "pass": true,
+            "recruiterid": localStorage.getItem('seconds'),
+            "totalGrades": localStorage.getItem('seconds')
+          }
+          console.log(ansjson)
+          handleAnswer(ansjson)
+          // UserTestService.addUser(ansjson).then((res)=>{
+          //   console.log(res.data);
+          // })
+          console.log("success"+ansjson)
+          localStorage.clear();
+          history.push('/LandingPage');
+        }
 
   };
 
-  const HandleSave=()=>{
-
-    const ansjson={
-      answerDetials: localStorage.getItem('step2'),
-      applicationTest: 1,
-      atm: {
-        applicationId: 1,
-        appltest: {
-          code: localStorage.getItem('step3'),
-          duration:localStorage.getItem('minutes')+':'+localStorage.getItem('seconds'),
-          maxscore: localStorage.getItem('score')
-        },
-        endTime:localStorage.getItem('minutes'),
-        startTime:30,
-        testid: 1
-      },
-      pass: true,
-      recruiterid: 1,
-      totalGrades: 5
-    }
-    console.log(ansjson)
-    UserTestService.addUser(ansjson).then((res)=>{
-      console.log(res.data);
-    })
-    console.log("success")
-    localStorage.clear();
-    history.push('/LandingPage');
+  const URL = 'http://localhost:8080/Answers/saveanswers';
+  const handleAnswer=(data)=>{
+    return axios.post(URL,data);
   }
 
   const handleReset = () => {
@@ -243,7 +246,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                   </Typography>
                 ) : (
                   <Button variant="contained" color="primary" onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? <Button onClick={HandleSave}>Finish</Button> : 'Complete Step'}
+                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
                   </Button>
                 ))}
             </div>
