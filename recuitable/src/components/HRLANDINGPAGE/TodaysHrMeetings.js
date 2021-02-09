@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -14,6 +14,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import ScheduledMeetings from "../../Service/ScheduledMeetings";
+
 const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -50,17 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(ApplicationID, ApplicantName, RecuiterId, Resume,RESCHULIED) {
-  return { ApplicationID, ApplicantName, RecuiterId , Resume,RESCHULIED};
-}
 
-const rows = [
-  createData(1, 'MADHUSUDAN', 1,'DOWNLOAD','BUTTON'),
-  createData(2, 'SHIV', 1,'DOWNLOAD', 'BUTTON'),
-  createData(3, 'SWAGATA',1,'DOWNLOAD', 'BUTTON'),
-  createData(4, 'UMESH',1,'DOWNLOAD',  'BUTTON'),
-  createData(5, 'VISWA',1,'DOWNLOAD', 'BUTTON'),
-];
 export default function ControlledAccordions() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -68,6 +60,52 @@ export default function ControlledAccordions() {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  const [row,setSceduled]=useState([]);
+  useEffect(()=>{
+    getMeetings();
+  },[])
+  const getMeetings = async () => {
+    await ScheduledMeetings.fetchUsers()
+       .then(response => {
+        setSceduled(response.data);
+         console.log(response);
+       })
+       .catch(e => {
+         console.log(e);
+       });
+   };
+   const [openUpdate, setOpenUpdate] = React.useState(false);
+   const[UpdateData,setUpdateData]=useState([]);
+   const handleReschuled=(id,data)=>{
+     setUpdateData(data);
+console.log(id+'...........'+UpdateData)
+setOpenUpdate(true);
+   }
+
+   const handleReschuledClose = () => {
+    setOpenUpdate(false);
+  };
+
+  const handleUpdate=(id,data)=>{
+    let time=data.MeetingDate+'T'+data.MeetingTime+':'+'00';
+    let dateObj = new Date(time);
+    const updatejson={
+      "id":id,
+      "applicantId": data.ApplicantId,
+  "meetingDescription": data.MeetingDescription,
+  "meetingName": data.MeetingName,
+  "platformLink": data.Platform,
+  "recuiterId": data.RecuiterId,
+  "scheduledDate": data.MeetingDate,
+  "scheduledTime": dateObj,
+
+  "schedulestatus": "Scheduled"
+    }
+console.log(updatejson)
+ScheduledMeetings.editUser(id,updatejson);
+  }
+
 
   return (
     <div className={classes.root}>
@@ -82,27 +120,29 @@ export default function ControlledAccordions() {
         </AccordionSummary>
         <AccordionDetails>
         
-    <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{marginTop:'20px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
+            <StyledTableCell>ApplicantID</StyledTableCell>
+            <StyledTableCell align="right">MEETING NAME</StyledTableCell>
             <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
+            <StyledTableCell align="right">MEETING DATE</StyledTableCell>
+            <StyledTableCell align="right">MEETING TIME</StyledTableCell>
+            <StyledTableCell align="right">RESCHULIE MEETINGS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {row.map((row) => (
+            <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.applicantId}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
+              <StyledTableCell align="right">{row.meetingName}</StyledTableCell>
+              <StyledTableCell align="right">{row.recuiterId}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id,row)}>RESCHULIED</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -122,34 +162,35 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-  
-    <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{marginTop:'20px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
+            <StyledTableCell>ApplicantID</StyledTableCell>
+            <StyledTableCell align="right">MEETING NAME</StyledTableCell>
             <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
+            <StyledTableCell align="right">MEETING DATE</StyledTableCell>
+            <StyledTableCell align="right">MEETING TIME</StyledTableCell>
+            <StyledTableCell align="right">RESCHULIE MEETINGS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {row.map((row) => (
+            <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.applicantId}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
+              <StyledTableCell align="right">{row.meetingName}</StyledTableCell>
+              <StyledTableCell align="right">{row.recuiterId}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id,row)}>RESCHULIED</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-        </AccordionDetails>
+            </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
         <AccordionSummary
@@ -165,27 +206,29 @@ export default function ControlledAccordions() {
         <AccordionDetails>
           
       
-    <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{marginTop:'20px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
+            <StyledTableCell>ApplicantID</StyledTableCell>
+            <StyledTableCell align="right">MEETING NAME</StyledTableCell>
             <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
+            <StyledTableCell align="right">MEETING DATE</StyledTableCell>
+            <StyledTableCell align="right">MEETING TIME</StyledTableCell>
+            <StyledTableCell align="right">RESCHULIE MEETINGS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {row.map((row) => (
+            <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.applicantId}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
+              <StyledTableCell align="right">{row.meetingName}</StyledTableCell>
+              <StyledTableCell align="right">{row.recuiterId}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id,row)}>RESCHULIED</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

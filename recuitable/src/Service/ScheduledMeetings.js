@@ -24,6 +24,13 @@ class JobService {
         return axios.put(USER_API_BASE_URL + `/update/${id}`, user);
     }
 
+    scheduledMeeting(userId) {
+        return axios.get(USER_API_BASE_URL+`/scheduled/${userId}`);
+    }
+
+    rescheduledMeeting(userId) {
+        return axios.get(USER_API_BASE_URL+`/rescheduled/${userId}`);
+    }
 }
 
 export default new JobService();

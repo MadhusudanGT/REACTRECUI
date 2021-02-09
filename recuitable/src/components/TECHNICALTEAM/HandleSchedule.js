@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles,makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import * as moment from 'moment';
+import { Formik, Form } from "formik";
+import * as yup from "yup";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import ScheduledMeetings from "../../Service/ScheduledMeetings";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,187 +20,182 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import GetAppIcon from '@material-ui/icons/GetApp';
+
 const StyledTableCell = withStyles((theme) => ({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
     },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
-  
-  const StyledTableRow = withStyles((theme) => ({
-    root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
-    },
-  }))(TableRow);
+  },
+}))(TableRow);
+
+
+let SignupSchema = yup.object().shape({
+    MeetingName: yup.string()
+    .min(2, 'Too Short!')
+       .max(70, 'Too Long!')
+       .required("This field is required."),
+       MeetingDescription: yup.string()
+       .min(10, 'Too Short!')
+          .max(70, 'Too Long!')
+          .required("This field is required."),
+          Platform: yup.string()
+          .min(10, 'Too Short!')
+             .max(70, 'Too Long!')
+             .required("direct or online interview is required."),
+                 MeetingDate: yup.date()
+        .min(new Date())
+        .required(),
+        ApplicantId:yup.number()
+        .min(1, 'Too Short!')
+           .max(5, 'Too Long!')
+           .required("required."),
+           RecuiterId:yup.number()
+           .min(1, 'Too Short!')
+              .max(5, 'Too Long!')
+              .required("required."),
+  });
+
   
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
+    "@global": {
+        body: {
+          backgroundColor: theme.palette.common.white
+        }
+      },
+      paper: {
+        marginTop: theme.spacing(8),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      },
+      avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main
+      },
+      form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(3)
+      },
+      submit: {
+        margin: theme.spacing(3, 0, 2)
+      },    
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  table: {
-    minWidth: 700,
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
-function createData(ApplicationID, ApplicantName, RecuiterId, Resume,RESCHULIED) {
-  return { ApplicationID, ApplicantName, RecuiterId , Resume,RESCHULIED};
-}
-
-const rows = [
-  createData(1, 'MADHUSUDAN', 1,'DOWNLOAD','BUTTON'),
-  createData(2, 'SHIV', 1,'DOWNLOAD', 'BUTTON'),
-  createData(3, 'SWAGATA',1,'DOWNLOAD', 'BUTTON'),
-  createData(4, 'UMESH',1,'DOWNLOAD',  'BUTTON'),
-  createData(5, 'VISWA',1,'DOWNLOAD', 'BUTTON'),
-];
-export default function ControlledAccordions() {
+export default function TransitionsModal() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleOpen = () => {
+    setOpen(true);
   };
 
-  return (
-    <div className={classes.root}>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography className={classes.heading} color='primary'>INTERVIEWS SCHEDULES</Typography>
-          <Typography className={classes.secondaryHeading}color='primary'>THIS IS FOR OVER ALL INTERVIEW SCHEDULES</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-        
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
-            <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
-              <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography className={classes.heading} color='primary'>MEETINGS SCHEDULES INFORMATION</Typography>
-          <Typography className={classes.secondaryHeading} color='primary'>
-            ANY MEETINGS FROM COMPANY SIDE
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const saveScheduled=(data)=>{
+    let time=data.MeetingDate+'T'+data.MeetingTime+':'+'00';
+    let dateObj = new Date(time);
+    console.log(dateObj);
+    console.log(time)
+    const json={
+      "applicantId": data.ApplicantId,
+  "meetingDescription": data.MeetingDescription,
+  "meetingName": data.MeetingName,
+  "platformLink": data.Platform,
+  "recuiterId": data.RecuiterId,
+  "scheduledDate": data.MeetingDate,
+  "scheduledTime": dateObj,
+  "schedulestatus": "Scheduled"
+    }
+    ScheduledMeetings.create(json);
+    console.log("success")
+  }
+  const [row,setSceduled]=useState([]);
+  useEffect(()=>{
+    getMeetings();
+  },[])
+  const getMeetings = async () => {
+    await ScheduledMeetings.fetchUsers()
+       .then(response => {
+        setSceduled(response.data);
+         console.log(response);
+       })
+       .catch(e => {
+         console.log(e);
+       });
+   };
+
+   const handleReschuled=(id)=>{
+ScheduledMeetings.rescheduledMeeting(id);
+   }
+
   
-    <TableContainer component={Paper}>
+
+  return (
+    <div>
+      <Button type="button" onClick={handleOpen}  variant="contained"
+              color="primary">
+        SCHEULED
+      </Button>
+       <TableContainer component={Paper} style={{marginTop:'20px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
+            <StyledTableCell>ApplicantID</StyledTableCell>
+            <StyledTableCell align="right">MEETING NAME</StyledTableCell>
             <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
+            <StyledTableCell align="right">MEETING DATE</StyledTableCell>
+            <StyledTableCell align="right">MEETING TIME</StyledTableCell>
+            <StyledTableCell align="right">RESCHULIE MEETINGS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
+          {row.map((row) => (
+            <>
+            {row.schedulestatus==='Scheduled' &&
+            <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
+                {row.applicantId}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
+              <StyledTableCell align="right">{row.meetingName}</StyledTableCell>
+              <StyledTableCell align="right">{row.recuiterId}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id)}>RESCHULIED</Button></StyledTableCell>
             </StyledTableRow>
+             }
+             </>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography className={classes.heading} color='primary'>OTHER SCHEDULES</Typography>
-          <Typography className={classes.secondaryHeading}color='primary'>
-            ANY TYPE OF MEETINGS ASSIGNED TO TECHNICAL TEAM
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          
-      
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>ApplicationID</StyledTableCell>
-            <StyledTableCell align="right">ApplicantName</StyledTableCell>
-            <StyledTableCell align="right">RecuiterId</StyledTableCell>
-            <StyledTableCell align="right">Resume</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIED</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.ApplicationID}>
-              <StyledTableCell component="th" scope="row">
-                {row.ApplicationID}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.ApplicantName}</StyledTableCell>
-              <StyledTableCell align="right">{row.RecuiterId}</StyledTableCell>
-              <StyledTableCell align="right"><GetAppIcon color='primary'/></StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary">RESCHULIED</Button></StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-        </AccordionDetails>
-      </Accordion>
+           
     </div>
+    // -----
+
+    
   );
 }

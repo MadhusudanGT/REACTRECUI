@@ -15,7 +15,8 @@ import LandingPageAuth from "./components/ApplicantLandingPage/LandingPageForUna
 import ApplicantProfile from "./components/ApplicantProfile/ApplicantProfile";
 import TechnicalLandingPage from "./components/TECHNICALTEAM/TechnicalLandingPage";
 import HrLandingPage from "./components/HRLANDINGPAGE/HrLandingPge";
-import TimeCounter from "./components/InterViewProceses/TimeCount"
+import TimeCounter from "./components/InterViewProceses/TimeCount";
+import HandleTechnicalTeam from "./components/HRLANDINGPAGE/HandleTechnicalTeam";
 function App() {
   return (
     <div className="App">
@@ -37,6 +38,7 @@ function App() {
               <Route path="/TechnicalTeam" exact component={TechnicalLandingPage}/>
               <Route path="/HrPage" exact component={HrLandingPage}/>
               <Route path="/TimeCount" exact component={TimeCounter}/>
+              <Route path="/TechnicalPage" exact component={HandleTechnicalTeam}/>
               </React.Fragment>
           </Switch>
         </div>
