@@ -16,12 +16,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ApplicationService from "../../Service/ApplicationService";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 function Alert(props) {
@@ -70,18 +64,47 @@ useEffect(() => {
 
   const handleAccept=(id)=>{
     ApplicationService.AcceptUser(id);
-// console.log("accept candidate"+id)
+    retrieveUsers();
+    handleClickSnackbar();
   }
 
   const handleReject=(id)=>{
     ApplicationService.RejectUser(id);
-    // console.log("reject candidate"+id)
+    retrieveUsers();
+    handleClickSnackbar();
   }
 const handleDownload=()=>{
   console.log("download resume")
 }
+
+const [openSnackbar, setOpenSnackbar] = React.useState(false);
+const [state, setState] = React.useState({
+  open: false,
+  vertical: 'top',
+  horizontal: 'center',
+});
+const { vertical, horizontal} = state;
+const handleClickSnackbar = () => {
+  setOpenSnackbar(true);
+};
+
+const handleCloseSnackbar = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpenSnackbar(false);
+};
 return (
 <>
+<div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+       APPLICATION ACCEPTED SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
 <TableContainer component={Paper}>
 <Table stickyHeader aria-label="sticky table">
 <TableHead>

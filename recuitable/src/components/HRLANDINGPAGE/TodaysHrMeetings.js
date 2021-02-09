@@ -13,9 +13,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import ScheduledMeetings from "../../Service/ScheduledMeetings";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -104,10 +108,38 @@ setOpenUpdate(true);
     }
 console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
+handleClickSnackbar();
+getMeetings();
   }
-
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
 
   return (
+    <>
+    <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+      MEETING SCHEDULED SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
     <div className={classes.root}>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
@@ -237,5 +269,6 @@ ScheduledMeetings.editUser(id,updatejson);
         </AccordionDetails>
       </Accordion>
     </div>
+    </>
   );
 }

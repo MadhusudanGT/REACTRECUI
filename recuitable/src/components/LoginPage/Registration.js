@@ -1,18 +1,27 @@
 import React from 'react';
 import {Grid,Paper,Avatar,TextField,Button,Typography,Link} from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Formik,Form,Field,ErrorMessage} from 'formik';
 import RegService from "../../Service/RegService";
 import {FormHelperText} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import * as Yup from 'yup';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { withStyles,makeStyles } from '@material-ui/core/styles';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+}));
 const Registration=()=>{
+  const classes = useStyles();
 const paperStyle={padding:"40px 30px",width:450,margin:"20px auto"}
 const btnStyle={margin:"20px 5px"}
 // const [value, setValue] = React.useState('female');
@@ -63,7 +72,35 @@ const handleSignIn = () => {
   history.push("/login");
 };
 
+const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
+
 return(
+  <>
+  <div className={classes.root}>
+    <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+     open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+      <Alert onClose={handleCloseSnackbar} severity="success">
+     APPLICANT REJECTED SUCCESSFULLY
+      </Alert>
+    </Snackbar>
+  </div>
 <Grid>
 <Paper elevation={10} style={paperStyle}>
 <Grid align="center">
@@ -102,6 +139,7 @@ label="I accept the terms and conditions" helperText={<ErrorMessage name="termsA
 </Formik>
 </Paper>
 </Grid>
+</>
 )
 }
 export default Registration;

@@ -114,7 +114,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const Close = () => {
-  window.location="/"
+  window.location="/HrPage"
 }
 
 const Jobcreate=(e)=>{
@@ -146,11 +146,32 @@ const jobjson=
 
 // console.log(jobjson)
 JobService.createjob(jobjson)
+handleClickSnackbar();
 console.log("success");
 }
 
+const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   return (
     <>
+    <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+     NEW JOB REQUIREMENT UPDATED SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
         <MenuBar/>
         <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Job Details</Typography>
         <Formik

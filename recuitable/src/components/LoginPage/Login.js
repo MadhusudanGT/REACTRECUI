@@ -16,8 +16,22 @@ import RegService from "../../Service/RegService";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import LandingPage from "../ApplicantLandingPage/LandingPage";
+import { withStyles,makeStyles } from '@material-ui/core/styles';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+}));
 const Login = () => {
+  const classes = useStyles();
   let history = useHistory();
   const paperStyle = { padding: 20, width: 280, margin: "55px auto" };
   const avatarStyle = { backgroundColor: "#AF0069" };
@@ -41,6 +55,7 @@ const Login = () => {
     if (RegService.fetchUsers(regjson)) {
       history.push("/LandingPage");
     }
+    handleClickSnackbar();
     console.log("login sucessfully done");
     setTimeout(() => {
       props.resetForm();
@@ -57,8 +72,34 @@ const Login = () => {
   const handleForgetPass = () => {
     history.push("/ForgetPassword");
   };
-
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   return (
+    <>
+    <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+      USER LOGIN SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
     <Grid>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
@@ -117,6 +158,7 @@ const Login = () => {
         </Typography>
       </Paper>
     </Grid>
+    </>
   );
 };
 export default Login;

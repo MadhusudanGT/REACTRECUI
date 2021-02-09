@@ -20,7 +20,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -150,11 +154,39 @@ export default function TransitionsModal() {
 
    const handleReschuled=(id)=>{
 ScheduledMeetings.rescheduledMeeting(id);
+handleClickSnackbar();
+getMeetings();
    }
-
+   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+   const [state, setState] = React.useState({
+     open: false,
+     vertical: 'top',
+     horizontal: 'center',
+   });
+   const { vertical, horizontal} = state;
+   const handleClickSnackbar = () => {
+     setOpenSnackbar(true);
+   };
+   
+   const handleCloseSnackbar = (event, reason) => {
+     if (reason === 'clickaway') {
+       return;
+     }
+   
+     setOpenSnackbar(false);
+   };
   
 
   return (
+    <>
+     <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+       RESCHULED THE MEETING SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
     <div>
       <Button type="button" onClick={handleOpen}  variant="contained"
               color="primary">
@@ -195,7 +227,7 @@ ScheduledMeetings.rescheduledMeeting(id);
            
     </div>
     // -----
-
+</>
     
   );
 }

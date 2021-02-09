@@ -11,6 +11,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import ApplicationService from "../../Service/ApplicationService";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -59,9 +65,37 @@ useEffect(() => {
   const handleAccept=(id)=>{
     ApplicationService.AcceptUser(id);
     retrieveUsers();
+    handleClickSnackbar();
   }
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+const [state, setState] = React.useState({
+  open: false,
+  vertical: 'top',
+  horizontal: 'center',
+});
+const { vertical, horizontal} = state;
+const handleClickSnackbar = () => {
+  setOpenSnackbar(true);
+};
+
+const handleCloseSnackbar = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpenSnackbar(false);
+};
   return (
     <>
+    <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+       APPLICATION REVOKED SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
     <Typography align='center'>REJECTED APPLICATION LIST</Typography>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">

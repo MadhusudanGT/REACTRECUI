@@ -12,7 +12,11 @@ import Questions from "./Questions";
 import TimeCounter from "./TimeCount";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import UserTestService from "../../Service/UserTestService";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -153,6 +157,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
           // })
           console.log("success"+ansjson)
           localStorage.clear();
+          handleClickSnackbar();
           history.push('/LandingPage');
         }
 
@@ -176,10 +181,35 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   function isStepComplete(step) {
     return completed.has(step);
   }
-
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   return (
       <>
       <Menu/>
+      <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+      USER LOGIN SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
 <TimeCounter/>
     <div className={classes.root}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>

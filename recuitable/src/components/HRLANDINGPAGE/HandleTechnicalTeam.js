@@ -22,6 +22,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import HandleTechnicalTeamService from "../../Service/HandleTechnicalTeam";
 import Menu from "../MenuBar/Menu";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -107,6 +113,8 @@ export default function TransitionsModal() {
         "lastName": data.position
     }
     HandleTechnicalTeamService.create(json);
+    handleClickSnackbar();
+    getMeetings();
     console.log("success",json)
   }
   const [row,setSceduled]=useState([]);
@@ -128,7 +136,8 @@ export default function TransitionsModal() {
    const[UpdateData,setUpdateData]=useState([]);
    const handleReschuled=(id,data)=>{
      setUpdateData(data);
-console.log(id+'...........'+UpdateData)
+// console.log(id+'...........'+UpdateData)
+getMeetings();
 setOpenUpdate(true);
    }
 
@@ -136,9 +145,35 @@ setOpenUpdate(true);
     setOpenUpdate(false);
   };
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   return (
       <>
       <Menu/>
+      <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+      RECUITER CREATED SUCCESSFULLY
+        </Alert>
+      </Snackbar>
+    </div>
     <div>
       <Button type="button" onClick={handleOpen}  variant="contained" style={{marginTop:'20px'}}
               color="primary">
