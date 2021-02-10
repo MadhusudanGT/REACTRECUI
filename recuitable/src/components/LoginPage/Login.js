@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
 import {
   Grid,
@@ -12,12 +12,11 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import RegService from "../../Service/RegService";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { withStyles,makeStyles } from '@material-ui/core/styles';
-
+import RegService from "../../Service/RegService";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -36,6 +35,7 @@ const Login = () => {
   const paperStyle = { padding: 20, width: 280, margin: "55px auto" };
   const avatarStyle = { backgroundColor: "#AF0069" };
   const btnStyle = { margin: "15px 0px" };
+ 
   const initialValues = {
     email: "",
     password: "",
@@ -52,9 +52,22 @@ const Login = () => {
       password: values.password,
     };
     console.log("regjson", regjson);
-    if (RegService.fetchUsers(regjson)) {
-      history.push("/LandingPage");
-    }
+    RegService.findByEmail(values.email).then(res=>{
+      setemail(res.data);
+    });
+    console.log(getemail.email+",...."+getemail.password)
+    if(getemail.email===values.email||getemail.password===values.password){
+      history.push("/DetailsForm");
+     }
+    if(values.email==='swagata@gmail.com' && values.password==='swagata@2020'){
+      history.push("/UserManagement");
+     }
+     if(values.email==='madhu@gmail.com' && values.password==='madhu@2020'){
+      history.push("/HrPage");
+     }
+     if(values.email==='lohitha@gmail.com' && values.password==='lohitha@2020'){
+      history.push("/TechnicalTeam");
+     }
     handleClickSnackbar();
     console.log("login sucessfully done");
     setTimeout(() => {
@@ -64,7 +77,6 @@ const Login = () => {
     console.log(props);
   };
 
-  
   const handleSignin = () => {
     history.push("/registration");
   };
@@ -73,6 +85,7 @@ const Login = () => {
     history.push("/ForgetPassword");
   };
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [getemail,setemail]=React.useState([]);
   const [state, setState] = React.useState({
     open: false,
     vertical: 'top',

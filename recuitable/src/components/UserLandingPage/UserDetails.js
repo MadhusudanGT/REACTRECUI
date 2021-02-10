@@ -181,7 +181,7 @@ calllocalstorge();
     ApplicationService.addUser(appljson);
     console.log("success"+appljson) 
         localStorage.clear();
-   
+        handleReset();
       }
          }
  

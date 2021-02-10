@@ -12,7 +12,7 @@ import * as yup from "yup";
 import DataService from "../../Service/service";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import { useHistory } from "react-router-dom";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 
  const UpdateProfileForm= ({data}) => {
   const classes = useStyles();
+  let history = useHistory();
   const [state, setState] = React.useState({
     open: false,
     vertical: 'top',
@@ -80,7 +81,7 @@ const useStyles = makeStyles(theme => ({
   const { vertical, horizontal} = state;
 
   const Close = () => {
-    window.location="/"
+    history.push("/UserManagement");
   }
 
   const [open, setOpen] = React.useState(false);

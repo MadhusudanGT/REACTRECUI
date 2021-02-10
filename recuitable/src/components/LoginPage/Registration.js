@@ -41,11 +41,11 @@ termsAndCondition:false
 }
 const validationSchema=Yup.object().shape({
 firstName:Yup.string().min(3,'Its too short').required('Required'),
-lastName:Yup.string().min(3,'Its too short').required('Required'),
+lastName:Yup.string().min(2,'Its too short').required('Required'),
 email:Yup.string().email('Please enter valid email').required('Required'),
 phoneNumber:Yup.number().min(10,'Phone number length should be 10 digits').typeError('Enter valid phone number').required('Required'),
 currentLocation:Yup.string().min(3,'Its too short').required('Required'),
-password:Yup.string().min(8,'Pssword minimum length should be 8').required('Required'),
+password:Yup.string().min(8,'Pssword minimum length should be 8').max(16).required('Required'),
 termsAndCondition:Yup.string().oneOf(['true'],'Please Accept terms and condition')
 })
 const onSubmit=(values,props)=>{
@@ -58,18 +58,20 @@ lastName: values.lastName,
 password: values.password,
 phoneNo: values.phoneNumber
 }
+let response=RegService.findByEmail(values.email);
+console.log("this is response"+response.data);
 RegService.addUser(regjson);
-alert('Logged In successfully');
-console.log("sucessfully done");
+handleClickSnackbar();
+handleSignIn();
 setTimeout(()=>{props.resetForm()
 props.setSubmitting(false)},
 2000)
-console.log(props)
+// console.log(props)
 }
 
 let history = useHistory();
 const handleSignIn = () => {
-  history.push("/login");
+  history.push("/");
 };
 
 const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -97,7 +99,7 @@ return(
     <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
      open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
       <Alert onClose={handleCloseSnackbar} severity="success">
-     APPLICANT REJECTED SUCCESSFULLY
+    USER REGISTRAED SUCCESSFULLY
       </Alert>
     </Snackbar>
   </div>
