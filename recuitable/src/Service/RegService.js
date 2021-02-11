@@ -14,8 +14,7 @@
 
 import axios from 'axios';
 
-const USER_API_BASE_URL = 'http://localhost:8080/reg';
-
+const USER_API_BASE_URL ="https://recruitermanagementsystem.herokuapp.com/reg";
 class RegService {
 
 fetchUsers() {
