@@ -87,7 +87,9 @@ console.log(id+'...........'+UpdateData)
 setOpenUpdate(true);
    }
 
-   const handleReschuledClose = () => {
+   const handleReschuledClose = (id,data) => {
+     ScheduledMeetings.rescheduledMeeting(id);
+     handleClickSnackbar();
     setOpenUpdate(false);
   };
 

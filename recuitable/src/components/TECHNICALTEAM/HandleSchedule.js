@@ -207,7 +207,7 @@ getMeetings();
         <TableBody>
           {row.map((row) => (
             <>
-            {row.schedulestatus==='Scheduled' &&
+            {row.meetingStatus==='Scheduled'&&
             <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
                 {row.applicantId}

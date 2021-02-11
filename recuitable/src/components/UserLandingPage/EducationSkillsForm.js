@@ -1,21 +1,19 @@
 import React, { useState ,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
 import { Formik, Form, Field, ErrorMessage  } from "formik";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
-import Checkbox from '@material-ui/core/Checkbox';
+import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 let Schema = yup.object().shape({
   schoolName: yup.string()
   .min(4, 'Too Short!')
@@ -108,8 +106,38 @@ const [educationDeatails,seteducationDeatails]=useState([]);
       let storge=JSON.parse(localStorage.getItem('education'));
       return storge?storge:[];
     });
+
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
+
     return(
       <>
+      <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
+        </Alert>
+      </Snackbar>
+    </div>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>SECONDARY EDUCATION DEATILS (10th)</Typography>
         <Formik
           initialValues={{
@@ -135,6 +163,9 @@ const [educationDeatails,seteducationDeatails]=useState([]);
           onSubmit={values => {
             console.log(values)
             localStorage.setItem('education',JSON.stringify({...values}))
+            setsnackcolor("success");
+              setResponse("EDUCATION DEATAILS SAVED SUCCESFULLY");
+              handleClickSnackbar(); 
           }}
         >
           {({ errors, handleChange, touched }) => (

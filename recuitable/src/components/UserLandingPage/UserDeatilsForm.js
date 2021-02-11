@@ -1,11 +1,5 @@
-import React, { useState ,useEffect,useReducer} from 'react';
+import React, { useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Card from '@material-ui/core/Card';
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
@@ -13,9 +7,14 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
-import Checkbox from '@material-ui/core/Checkbox';
-import { Formik, Form, Field, ErrorMessage  } from "formik";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Formik, Form} from "formik";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const addressRegex = /^[a-zA-Z0-9][a-zA-Z0-9 .,-]*$/;
 
@@ -32,13 +31,6 @@ let Schema = yup.object().shape({
     .string()
     .email()
     .required("This field is required."),
-    // dob:yup.string().test(
-    //     "dob",
-    //     "Age must be above 18",
-    //     value => {
-    //       return moment().diff(moment(value),'years') >= 18;
-    //     }
-    //   ),
       phoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
       summary: yup.string()
       .min(10, 'Too Short!')
@@ -102,8 +94,38 @@ const  UserDeatilsForm=()=>{
       return storge?storge:[];
     });
 
+    
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
+
     return(
 <>
+<div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
+        </Alert>
+      </Snackbar>
+    </div>
 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>Basic Details</Typography>
         <Formik
           initialValues={{
@@ -124,6 +146,9 @@ const  UserDeatilsForm=()=>{
             console.log(values)
             setuserdeatils({...values});
             localStorage.setItem('userdetails',JSON.stringify({...values}))
+            setsnackcolor("success");
+              setResponse("USER DETAILS SAVED SUCCESFULLY");
+              handleClickSnackbar(); 
           }}
         >
           {({ errors, handleChange, touched }) => (

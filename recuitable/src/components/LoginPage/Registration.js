@@ -76,12 +76,12 @@ const Registration = () => {
     };
     RegService.findByEmail(values.email).then(res=>{
 if(res.status===200){
-  setResponse("Email ID is Alredy Exist..!!!");
+  setResponse("Email ID is Already Exist..!!!");
   setsnackcolor('error');
   handleClickSnackbar();
 }
 if(res.status&&res.data===''){
-  setResponse("USER REGISTRAED SUCCESSFULLY");
+  setResponse("USER REGISTERED SUCCESSFULLY");
   setsnackcolor('success');
   RegService.addUser(regjson);
   setTimeout(()=>{props.resetForm()
@@ -216,8 +216,9 @@ if(res.status&&res.data===''){
                   <ErrorMessage name="termsAndCondition" />
                 </FormHelperText>
                 <Button type="submit" color="primary" variant="contained" 
-                              disabled={props.isSubmitting} style={btnStyle} 
-                              fullWidth>{props.isSubmitting?"Loading":"Login"}</Button>
+                              // disabled={props.isSubmitting} 
+                              style={btnStyle} 
+                              fullWidth>{props.isSubmitting?"Sign UP":"Sign UP"}</Button>
                 <Typography>
                   Already have an account?
                   <Link onClick={handleSignIn}>Sign In</Link>

@@ -11,6 +11,13 @@ import DocumentForm from "./DocumentForm";
 import EducationSkillsForm from "./EducationSkillsForm";
 import ApplicationService from "../../Service/ApplicationService";
 import { useHistory } from "react-router-dom";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -178,7 +185,17 @@ calllocalstorge();
           status: "Waiting"
         }
  
-    ApplicationService.addUser(appljson);
+    ApplicationService.addUser(appljson).then(res=>{
+      if(res.status===200){
+        setsnackcolor("success");
+        setResponse("USER information SAVED SUCCESFULLY");
+        handleClickSnackbar(); 
+      }else{
+        setResponse("ERROR IN SERVER")
+        setsnackcolor("error");
+        handleClickSnackbar();
+      }
+    });
     console.log("success"+appljson) 
         localStorage.clear();
         handleReset();
@@ -200,8 +217,37 @@ calllocalstorge();
     return completed.has(step);
   }
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
+
   return (
       <>
+      <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
+        </Alert>
+      </Snackbar>
+    </div>
       <Menu/>
     <div className={classes.root}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>

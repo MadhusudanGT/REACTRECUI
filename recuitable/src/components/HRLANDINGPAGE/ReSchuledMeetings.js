@@ -179,8 +179,7 @@ setOpenUpdate(true);
   "recuiterId": data.RecuiterId,
   "scheduledDate": data.MeetingDate,
   "scheduledTime": dateObj,
-
-  "schedulestatus": "Scheduled"
+  "meetingStatus": "Scheduled"
     }
 console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
@@ -237,7 +236,7 @@ handleClickSnackbar();
         <TableBody>
           {row.map((row) => (
              <>
-             {row.schedulestatus==='ReScheduled' &&
+             {row.meetingStatus==='ReScheduled' &&
             <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
                 {row.applicantId}

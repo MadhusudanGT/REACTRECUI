@@ -49,12 +49,12 @@ const Footer = () => {
         {/* <EmailRoundedIcon/>
         <PhoneAndroidRoundedIcon/> 
         <StorefrontRoundedIcon/> */}
-        <span> exampe123@email.com</span><tr/>
-        <span>  9199******99</span><tr/>
+        <span> madhusudangt97@gmail.com</span><tr/>
+        <span>  919986223399</span><tr/>
         <span> 9981******88</span><tr/>
         </Grid>
         <Grid item xs={12}>------------------------------------------------------------------------------</Grid>
-        <Grid item xs={12}>@Copy Right 2020</Grid>
+        <Grid item xs={12}>@Copy Right Madhu GT 2020</Grid>
       </Grid>
 
     </div>  

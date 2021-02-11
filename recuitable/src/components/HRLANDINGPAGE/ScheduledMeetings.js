@@ -180,7 +180,7 @@ setOpenUpdate(true);
   "scheduledDate": data.MeetingDate,
   "scheduledTime": dateObj,
 
-  "schedulestatus": "Scheduled"
+  "meetingStatus": "Scheduled"
     }
 console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
@@ -234,6 +234,8 @@ handleClickSnackbar();
         </TableHead>
         <TableBody>
           {row.map((row) => (
+              <>
+              {row.meetingStatus==='Scheduled'&&
             <StyledTableRow key={row.applicantId}>
               <StyledTableCell component="th" scope="row">
                 {row.applicantId}
@@ -244,6 +246,8 @@ handleClickSnackbar();
               <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
               <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id,row)}>RESCHULIED</Button></StyledTableCell>
             </StyledTableRow>
+          }
+             </>
           ))}
         </TableBody>
       </Table>

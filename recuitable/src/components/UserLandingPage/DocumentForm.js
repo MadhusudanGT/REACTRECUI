@@ -1,10 +1,5 @@
 import React, { useState ,useEffect,useReducer} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import axios from "axios";
 import Card from '@material-ui/core/Card';
 import * as yup from "yup";
@@ -13,11 +8,13 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
-import Checkbox from "@material-ui/core/Checkbox";
-import EducationDetails from "./EducationSkillsForm";
-import UserDeatils from "./UserDeatilsForm";
-import { Formik, Form, Field, ErrorMessage  } from "formik";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Formik, Form} from "formik";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 let Schema = yup.object().shape({
   ProjectName: yup.string()
   .min(2, 'Too Short!')
@@ -57,10 +54,7 @@ const  UserDeatilsForm=()=>{
 
   const handleSubmit = async e => {
     e.preventDefault();
-    //if await is removed, console log will be called before the uploadFile() is executed completely.
-    //since the await is added, this will pause here then console log will be called
     let res = await uploadFile(file);
- 
   };
 
   const uploadFile = async file => {
@@ -68,10 +62,30 @@ const  UserDeatilsForm=()=>{
     formData.append("file", file);
 
     return await axios.post(UPLOAD_ENDPOINT, formData).then(res=>{
-      console.log(res);
+   console.log('DOCUMENT FORM')
     });
   };
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   const handleOnChange = e => {
     console.log(e.target.files[0]);
     setFile(e.target.files[0]);
@@ -110,6 +124,14 @@ const  UserDeatilsForm=()=>{
   });
     return(
 <>
+<div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
+        </Alert>
+      </Snackbar>
+    </div>
 <div style={{marginTop:"20px"}}>
 <form onSubmit={handleSubmit}>
       <Typography>UPLOAD RESUME</Typography>
@@ -149,9 +171,10 @@ const  UserDeatilsForm=()=>{
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
-       
             localStorage.setItem('document',JSON.stringify({...values}));
-            
+              setsnackcolor("success");
+              setResponse("DOCUMENT SAVED SUCCESFULLY");
+              handleClickSnackbar();  
           }}
         >
           {({ errors, handleChange, touched }) => (
