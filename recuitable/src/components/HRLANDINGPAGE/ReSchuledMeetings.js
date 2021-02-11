@@ -133,7 +133,7 @@ export default function TransitionsModal() {
   "recuiterId": data.RecuiterId,
   "scheduledDate": data.MeetingDate,
   "scheduledTime": dateObj,
-  "schedulestatus": "Scheduled"
+  "meetingStatus": "Scheduled"
     }
     ScheduledMeetings.create(json);
     console.log("success")
@@ -623,7 +623,7 @@ handleClickSnackbar();
                 className={classes.submit}
               >
                 Update
-              </Button>
+              </Button>&nbsp;&nbsp;&nbsp;
               <Button color="secondary"
               
               variant="contained"
@@ -638,7 +638,7 @@ handleClickSnackbar();
       </Modal>
 
     </div>
-    // -----
+
 
     </>
   );

@@ -30,14 +30,14 @@ const Footer = () => {
           <br/>
         <span>Developers</span><tr/>
         <span>Business Partners</span><tr/>
-        <span>Supproting People</span><tr/>
+        <span>Supporting People</span><tr/>
         </Grid>
 
         <Grid item xs={12} sm={4}>
        Connect with us<th/>
         <br/>
         <span> Support</span><tr/>
-        <span>Branchs</span><tr/>
+        <span>Branches</span><tr/>
         <span>About Odigo Tech</span><tr/>
         
         </Grid>

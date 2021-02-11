@@ -105,10 +105,12 @@ setOpenUpdate(true);
   "scheduledDate": data.MeetingDate,
   "scheduledTime": dateObj,
 
-  "schedulestatus": "Scheduled"
+  "meetingStatus": "Scheduled"
     }
 console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
+getMeetings();
+handleClickSnackbar();
   }
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);

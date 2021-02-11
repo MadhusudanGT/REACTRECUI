@@ -28,11 +28,11 @@ function App() {
               <Route path="/DetailsForm" component={UserDeatailsForm}/>
               <Route path="/InterviewProcess" component={UserInterviewForm}/>
               <Route path="/interview" component={InterviewProcess}/>
-              <Route path="/" exact component={Login}/>
+              <Route path="/Login" exact component={Login}/>
               <Route path="/ForgetPassword" exact component={ForgetPassword}/>
               <Route path="/LandingPage" exact component={LandingPage}/>
               <Route path="/registration" exact component={Registration}/>
-              <Route path="/LandingPageAuth" exact component={LandingPageAuth}/>
+              <Route path="/" exact component={LandingPageAuth}/>
               <Route path="/JobDetailsPage" exact component={JobDetailsPage}/>
               <Route path="/ApplicantProfile" exact component={ApplicantProfile}/>
               <Route path="/TechnicalTeam" exact component={TechnicalLandingPage}/>

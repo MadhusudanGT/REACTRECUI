@@ -57,6 +57,7 @@ const Login = () => {
           props.resetForm();
           props.setSubmitting(false);
         }, 2000);
+        localStorage.setItem('emailid',res.data.email);
         history.push("/DetailsForm");
        }
        else{

@@ -209,7 +209,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="JobTitle"
-                    label="JobTitle"
+                    label="JOB TITLE"
                     autoFocus
                     helperText={
                       errors.JobTitle && touched.JobTitle
@@ -227,7 +227,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="JobDescription"
-                    label="JobDescription"
+                    label="JOB DESCRIPTION"
                     autoFocus
                     helperText={
                       errors.firstJobDescription && touched.JobDescription
@@ -246,7 +246,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="salary"
-                    label="salary"
+                    label="SALARY"
                     autoFocus
                     helperText={
                       errors.salary && touched.salary
@@ -264,7 +264,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="location"
-                    label="location"
+                    label="LOCATION"
                     autoFocus
                     helperText={
                       errors.location && touched.location
@@ -282,7 +282,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="NoOfVacanci"
-                    label="NoOfVacanci"
+                    label="NO OF VACANCIES"
                     autoFocus
                     helperText={
                       errors.NoOfVacanci && touched.NoOfVacanci
@@ -310,7 +310,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="orgName"
-                    label="orgName"
+                    label="ORGANIZATION NAME"
                     autoFocus
                     helperText={
                       errors.orgName && touched.orgName
@@ -328,7 +328,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="orgDescription"
-                    label="orgDescription"
+                    label="ORGANIZATION DESCRIPTION"
                     autoFocus
                     helperText={
                       errors.orgDescription && touched.orgDescription
@@ -348,7 +348,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="StartingDate"
-                    label="StartingDate"
+                    label="STARTING DATE"
                     autoFocus
                     type="date"
                     autoComplete="startingDate"
@@ -372,7 +372,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="platname"
-                    label="platformName"
+                    label="PLATFORM NAME"
                     autoFocus
                     helperText={
                       errors.platname && touched.platname
@@ -390,7 +390,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="platdescription"
-                    label="PlatformDescription"
+                    label="PLATFORM DESCRIPTION"
                     autoFocus
                     helperText={
                       errors.platdescription && touched.platdescription
@@ -419,7 +419,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="ContactEmail"
-                    label="ContactEmail"
+                    label="CONTACT EMAIL"
                     autoFocus
                     helperText={
                       errors.ContactEmail && touched.ContactEmail
@@ -437,7 +437,7 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
                     fullWidth
                     onChange={handleChange}
                     id="phoneNumber"
-                    label="phoneNumber"
+                    label="PHONE NUMBER"
                     autoFocus
                     helperText={
                       errors.phoneNumber && touched.phoneNumber
@@ -510,15 +510,15 @@ const [openSnackbar, setOpenSnackbar] = React.useState(false);
         
               <Button
                 type="submit"
-                fullWidth
+                style={{width:'100px'}}
                 variant="contained"
                 color="primary"
                 className={classes.submit}
               >
                 Save
-              </Button>
+              </Button>&nbsp;&nbsp;&nbsp;
               <Button color="secondary"
-              fullWidth
+          
               variant="contained"
               color="primary"
                onClick={Close}>CANCEL</Button>

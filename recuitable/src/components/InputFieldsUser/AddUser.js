@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import DataService from "../../Service/service";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import { useHistory } from "react-router-dom";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -43,6 +43,7 @@ const [state, setState] = React.useState({
   vertical: 'top',
   horizontal: 'center',
 });
+let history = useHistory();
 const { vertical, horizontal} = state;
   const submitValue = () => {
     const frmdetails = {
@@ -67,7 +68,7 @@ const updateUser=(id,data)=>{
 }
 
 const Close = () => {
-  window.location="/"
+  window.location="/UserManagement";
 }
 
 const [open, setOpen] = React.useState(false);

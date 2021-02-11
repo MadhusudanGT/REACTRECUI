@@ -32,7 +32,10 @@ import HandleRejected from "./HandleRejected";
 import HandleSchedule from "./HandleSchedule";
 import HandleSelected from "./HandleSelected";
 import HandleTodaySch from "./HandleTodaySch";
-
+import { useHistory } from "react-router-dom";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Button from '@material-ui/core/Button';
+import LockIcon from '@material-ui/icons/Lock';
 const drawerWidth = 240;
 
 function getStepContent(step) {
@@ -131,8 +134,10 @@ export default function MiniDrawer() {
     setOpen(false);
   };
   const [activeStep, setActiveStep] = React.useState(1);
-
-
+  let history = useHistory();
+  const handleLogOut=()=>{
+    history.push('/');
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -142,8 +147,8 @@ export default function MiniDrawer() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
-          <IconButton
+         <Toolbar>
+        <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -154,9 +159,16 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            TECHNICAL TEAM PAGE
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <AccountCircleIcon/>
+          </IconButton>
+          <Typography>
+          ODIGO TECH TECHNICAL TEAM PAGE
+          </Typography>&nbsp;
+          <Typography className={classes.title}>
+
           </Typography>
+          <Button style={{color:'white',marginLeft:'900px'}} color="inherit"  onClick={handleLogOut}><LockIcon style={{color:'red'}}/>  LogOut</Button>
         </Toolbar>
       </AppBar>
       <Drawer

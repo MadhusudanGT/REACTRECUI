@@ -17,7 +17,7 @@ import ApplicationService from "../../Service/ApplicationService";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import GetAppIcon from '@material-ui/icons/GetApp';
-
+import { useHistory } from "react-router-dom";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -61,9 +61,10 @@ useEffect(() => {
         console.log(e);
       });
   };
-
+  let history = useHistory();
   const handleAccept=(id)=>{
     ApplicationService.AcceptUser(id);
+    history.push("/HrPage")
     retrieveUsers();
     handleClickSnackbar();
   }

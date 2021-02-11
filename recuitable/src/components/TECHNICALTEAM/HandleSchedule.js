@@ -132,7 +132,7 @@ export default function TransitionsModal() {
   "recuiterId": data.RecuiterId,
   "scheduledDate": data.MeetingDate,
   "scheduledTime": dateObj,
-  "schedulestatus": "Scheduled"
+  "meetingStatus": "Scheduled"
     }
     ScheduledMeetings.create(json);
     console.log("success")
@@ -154,8 +154,9 @@ export default function TransitionsModal() {
 
    const handleReschuled=(id)=>{
 ScheduledMeetings.rescheduledMeeting(id);
-handleClickSnackbar();
 getMeetings();
+handleClickSnackbar();
+
    }
    const [openSnackbar, setOpenSnackbar] = React.useState(false);
    const [state, setState] = React.useState({
@@ -183,14 +184,14 @@ getMeetings();
       <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
        open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success">
-       RESCHULED THE MEETING SUCCESSFULLY
+       RESCHEDULED THE MEETING SUCCESSFULLY
         </Alert>
       </Snackbar>
     </div>
     <div>
       <Button type="button" onClick={handleOpen}  variant="contained"
               color="primary">
-        SCHEULED
+        SCHEDULED 
       </Button>
        <TableContainer component={Paper} style={{marginTop:'20px'}}>
       <Table className={classes.table} aria-label="customized table">
@@ -198,10 +199,10 @@ getMeetings();
           <TableRow>
             <StyledTableCell>ApplicantID</StyledTableCell>
             <StyledTableCell align="right">MEETING NAME</StyledTableCell>
-            <StyledTableCell align="right">RecuiterId</StyledTableCell>
+            <StyledTableCell align="right">RECRUITER ID</StyledTableCell>
             <StyledTableCell align="right">MEETING DATE</StyledTableCell>
             <StyledTableCell align="right">MEETING TIME</StyledTableCell>
-            <StyledTableCell align="right">RESCHULIE MEETINGS</StyledTableCell>
+            <StyledTableCell align="right">RESCHEDULED  MEETINGS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -216,7 +217,7 @@ getMeetings();
               <StyledTableCell align="right">{row.recuiterId}</StyledTableCell>
               <StyledTableCell align="right">{row.scheduledDate}</StyledTableCell>
               <StyledTableCell align="right">{row.scheduledTime}</StyledTableCell>
-              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id)}>RESCHULIED</Button></StyledTableCell>
+              <StyledTableCell align="right"><Button variant="contained" color="secondary" onClick={() => handleReschuled(row.id)}>RESCHEDULED </Button></StyledTableCell>
             </StyledTableRow>
              }
              </>
@@ -226,7 +227,7 @@ getMeetings();
     </TableContainer>
            
     </div>
-    // -----
+  
 </>
     
   );

@@ -108,7 +108,7 @@ const LandingPage=()=>{
           Search</Button>
  
       </div>
-      <div style={{margin:'20px'}}>
+      {/* <div style={{margin:'20px'}}>
       <TextField
           id="standard-select-currency"
           select
@@ -159,7 +159,7 @@ const LandingPage=()=>{
           ))}
         </TextField>
       </div>
-
+ */}
 
 <div className={classes.root1}>
       <Grid container spacing={3}>

@@ -72,6 +72,7 @@ const handleDeleteBoxOpen = (e) => {
   setOpenDilogBox(true);
   setUserName(e.firstName);
   setUserId(e.id);
+  
 };
 
 const handleDeleteBoxClose = () => {
@@ -117,6 +118,7 @@ const deleteUser =(id)=>{
  retrieveUsers();
  console.log(getUser)
  handleClickSnackbar();
+ window.location="/UserManagement";
 }
 
 useEffect(() => {

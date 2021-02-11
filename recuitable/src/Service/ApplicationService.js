@@ -24,6 +24,11 @@ class ApplicationService {
     //     return axios.put(USER_API_BASE_URL + `/update/${user.id}`, user);
     // }
 
+    FindByEmail(email) {
+        return axios.get(USER_API_BASE_URL+`/findByEmail/${email}`);
+    }
+
+
 }
 
 export default new ApplicationService();

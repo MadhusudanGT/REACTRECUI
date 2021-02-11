@@ -91,6 +91,7 @@ const  UserDeatilsForm=()=>{
 
     const[userdeatils,setuserdeatils]=useState(()=>{
       let storge=JSON.parse(localStorage.getItem('userdetails'));
+  
       return storge?storge:[];
     });
 
@@ -144,7 +145,9 @@ const  UserDeatilsForm=()=>{
           validationSchema={Schema}
           onSubmit={values => {
             console.log(values)
+        
             setuserdeatils({...values});
+            localStorage.setItem('emailvalue',values.email)
             localStorage.setItem('userdetails',JSON.stringify({...values}))
             setsnackcolor("success");
               setResponse("USER DETAILS SAVED SUCCESFULLY");
@@ -166,7 +169,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.firstName}
                     onChange={handleChange}
                     id="firstName"
-                    label="firstName"
+                    label="FIRST NAME"
                     autoFocus
                     helperText={
                       errors.firstName && touched.firstName
@@ -185,7 +188,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.lastName}
                     onChange={handleChange}
                     id="lastName"
-                    label="lastName"
+                    label="LAST NAME"
                     autoFocus
                     helperText={
                       errors.lastName && touched.lastName
@@ -205,7 +208,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.email}
                     onChange={handleChange}
                     id="email"
-                    label="email"
+                    label="EMAIL ID"
                     autoFocus
                     helperText={
                       errors.email && touched.email
@@ -224,7 +227,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.phoneNumber}
                     onChange={handleChange}
                     id="phoneNumber"
-                    label="phoneNumber"
+                    label="PHONE NO"
                     autoFocus
                     helperText={
                       errors.phoneNumber && touched.phoneNumber
@@ -243,7 +246,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.summary}
                     onChange={handleChange}
                     id="summary"
-                    label="summary"
+                    label="SUMMARY"
                     autoFocus
                     helperText={
                       errors.summary && touched.summary
@@ -272,7 +275,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.street1}
                     onChange={handleChange}
                     id="street1"
-                    label="street1"
+                    label="ADDRESS LINE1"
                     autoFocus
                     helperText={
                       errors.street1 && touched.street1
@@ -291,7 +294,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.street2}
                     onChange={handleChange}
                     id="street2"
-                    label="street2"
+                    label="ADDRESS LINE2"
                     autoFocus
                     helperText={
                       errors.street2 && touched.street2
@@ -312,7 +315,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.city}
                     onChange={handleChange}
                     id="city"
-                    label="city"
+                    label="CITY"
                     autoFocus
                     helperText={
                       errors.city && touched.city
@@ -331,7 +334,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdeatils.state}
                     onChange={handleChange}
                     id="state"
-                    label="state"
+                    label="STATE"
                     autoFocus
                     helperText={
                       errors.state && touched.state

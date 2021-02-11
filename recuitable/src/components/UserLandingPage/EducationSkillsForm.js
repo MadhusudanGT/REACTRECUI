@@ -138,7 +138,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
         </Alert>
       </Snackbar>
     </div>
-<Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>SECONDARY EDUCATION DEATILS (10th)</Typography>
+<Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>SECONDARY EDUCATION DETAILS (10th)</Typography>
         <Formik
           initialValues={{
           schoolName:'',
@@ -164,7 +164,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
             console.log(values)
             localStorage.setItem('education',JSON.stringify({...values}))
             setsnackcolor("success");
-              setResponse("EDUCATION DEATAILS SAVED SUCCESFULLY");
+              setResponse("EDUCATION DETAILS SAVED SUCCESFULLY");
               handleClickSnackbar(); 
           }}
         >
@@ -183,7 +183,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.schoolName}
                     onChange={handleChange}
                     id="schoolName"
-                    label="schoolName"
+                    label="SCHOOL NAME"
                     autoFocus
                     helperText={
                       errors.schoolName && touched.schoolName
@@ -202,7 +202,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.schoolBoard}
                     onChange={handleChange}
                     id="schoolBoard"
-                    label="schoolBoard"
+                    label="SCHOOL BOARD"
                     autoFocus
                     helperText={
                       errors.schoolBoard && touched.schoolBoard
@@ -222,7 +222,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.completedYear}
                     onChange={handleChange}
                     id="completedYear"
-                    label="completedYear"
+                    label="COMPLETED YEAR"
                     autoFocus
                     helperText={
                       errors.completedYear && touched.completedYear
@@ -241,7 +241,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.percentage}
                     onChange={handleChange}
                     id="percentage"
-                    label="percentage(%)"
+                    label="PERCENTAGE(%)"
                     autoFocus
                     helperText={
                       errors.percentage && touched.percentage
@@ -260,7 +260,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.place}
                     onChange={handleChange}
                     id="place"
-                    label="place"
+                    label="PLACE"
                     autoFocus
                     helperText={
                       errors.place && touched.place
@@ -275,7 +275,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                 </CardContent>
                 </Card>
                 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>
-                HIGHER SECONDARY EDUCATION DEATILS (12th)</Typography>
+                HIGHER SECONDARY EDUCATION DETAILS (12th)</Typography>
                   <Card className={classes.root} style={{margin:'20px'}}>
                 <CardContent>
                 <Grid container spacing={2}>   
@@ -289,7 +289,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.collageName}
                     onChange={handleChange}
                     id="collageName"
-                    label="collageName"
+                    label="COLLEGE NAME"
                     autoFocus
                     helperText={
                       errors.collageName && touched.collageName
@@ -308,7 +308,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.collageBoard}
                     onChange={handleChange}
                     id="collageBoard"
-                    label="collageBoard"
+                    label="COLLEGE BOARD"
                     autoFocus
                     helperText={
                       errors.collageBoard && touched.collageBoard
@@ -328,7 +328,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.completedYear1}
                     onChange={handleChange}
                     id="completedYear1"
-                    label="completedYear"
+                    label="COMPLETED YEAR"
                     autoFocus
                     helperText={
                       errors.completedYear1 && touched.completedYear1
@@ -347,7 +347,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.percentage1}
                     onChange={handleChange}
                     id="percentage1"
-                    label="percentage(%)"
+                    label="PERCENTAGE(%)"
                     autoFocus
                     helperText={
                       errors.percentage1 && touched.percentage1
@@ -366,7 +366,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.place1}
                     onChange={handleChange}
                     id="place1"
-                    label="place"
+                    label="PLACE"
                     autoFocus
                     helperText={
                       errors.place1 && touched.place1
@@ -381,7 +381,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                 </Card>
                 {/* ------- */}
                 <Typography align='left' style={{margin:'20px',fontSize:'20px',color:'black'}}>
-                GRADUCATION DEATILS</Typography>
+                GRADUCATION DETAILS</Typography>
                   <Card className={classes.root} style={{margin:'20px'}}>
                 <CardContent>
                 <Grid container spacing={2}>   
@@ -395,7 +395,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.collageName1}
                     onChange={handleChange}
                     id="collageName1"
-                    label="collageName"
+                    label="COLLEGE NAME"
                     autoFocus
                     helperText={
                       errors.collageName1 && touched.collageName1
@@ -414,7 +414,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.collageBoard1}
                     onChange={handleChange}
                     id="collageBoard1"
-                    label="collageBoard"
+                    label="COLLEGE BOARD"
                     autoFocus
                     helperText={
                       errors.collageBoard1 && touched.collageBoard1
@@ -434,7 +434,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.completedYear2}
                     onChange={handleChange}
                     id="completedYear2"
-                    label="completedYear"
+                    label="COMPLETED YEAR"
                     autoFocus
                     helperText={
                       errors.completedYear2 && touched.completedYear2
@@ -453,7 +453,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.percentage2}
                     onChange={handleChange}
                     id="percentage2"
-                    label="percentage(%)"
+                    label="PERCENTAGE(%)"
                     autoFocus
                     helperText={
                       errors.percentage2 && touched.percentage2
@@ -472,7 +472,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
                     defaultValue={education.place2}
                     onChange={handleChange}
                     id="place2"
-                    label="place"
+                    label="PLACE"
                     autoFocus
                     helperText={
                       errors.place2 && touched.place2

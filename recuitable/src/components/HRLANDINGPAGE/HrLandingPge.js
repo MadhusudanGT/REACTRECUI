@@ -35,6 +35,10 @@ import ReSchuledMeetings from "./ReSchuledMeetings";
 import ScheduledMeetings from "./ScheduledMeetings";
 import TodaysHrMeetings from "./TodaysHrMeetings";
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Button from '@material-ui/core/Button';
+import LockIcon from '@material-ui/icons/Lock';
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -131,12 +135,14 @@ export default function MiniDrawer() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  let history = useHistory();
   const handleDrawerClose = () => {
     setOpen(false);
   };
   const [activeStep, setActiveStep] = React.useState(1);
-
+  const handleLogOut=()=>{
+    history.push('/');
+  }
 
   return (
     <div className={classes.root}>
@@ -147,7 +153,7 @@ export default function MiniDrawer() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        {/* <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -163,6 +169,32 @@ export default function MiniDrawer() {
             HR
              PAGE
           </Typography>
+          <Typography  align="left" noWrap>
+           LOG OUT
+          </Typography>
+        </Toolbar> */}
+        <Toolbar>
+        <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+          >
+            <MenuIcon />
+          </IconButton>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <AccountCircleIcon/>
+          </IconButton>
+          <Typography >
+           ODIGO TECH
+          </Typography>&nbsp;&nbsp;&nbsp;
+          <Typography className={classes.title}>
+            WELCOME TO HR PAGE 
+          </Typography>
+          <Button style={{color:'white',marginLeft:'900px'}} color="inherit"  onClick={handleLogOut}><LockIcon style={{color:'red'}}/>  LogOut</Button>
         </Toolbar>
       </AppBar>
       <Drawer

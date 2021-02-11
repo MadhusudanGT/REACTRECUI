@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['User Deatils', 'Education Deatils and Skills', 'Document Deatils'];
+  return ['User Details', 'Education Details and Skills', 'Document Details'];
 }
 
 function getStepContent(step) {
@@ -137,6 +137,7 @@ const calllocalstorge=()=>{
     // setuserdeatils(JSON.parse(localStorage.getItem('userdetails')));
     // setDocument(JSON.parse(localStorage.getItem('document')));
 calllocalstorge();
+
     const newCompleted = new Set(completed);
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
@@ -152,6 +153,7 @@ calllocalstorge();
         setEducation(JSON.parse(localStorage.getItem('education')));
     setuserdeatils(JSON.parse(localStorage.getItem('userdetails')));
     setDocument(JSON.parse(localStorage.getItem('document')));
+
       }
       else{
         const  appljson={
@@ -178,6 +180,7 @@ calllocalstorge();
           ],
           appliedDate:userdocument.LastUpdate,
           education:education.schoolName,
+          emailID:userdeatils.email,
           experience:userdocument.experience,
           id: 1,
           otherInfo:education.schoolName,
@@ -197,7 +200,9 @@ calllocalstorge();
       }
     });
     console.log("success"+appljson) 
-        localStorage.clear();
+        localStorage.removeItem('education');
+        localStorage.removeItem('userdetails');
+        localStorage.removeItem('document');
         handleReset();
       }
          }

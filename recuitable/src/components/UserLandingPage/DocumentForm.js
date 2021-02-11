@@ -192,7 +192,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdocument.experience}
                     onChange={handleChange}
                     id="experience"
-                    label="experience"
+                    label="EXPERIENCE"
                     autoFocus
                     helperText={
                       errors.experience && touched.experience
@@ -212,7 +212,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdocument.ProjectName}
                     onChange={handleChange}
                     id="ProjectName"
-                    label="ProjectName"
+                    label="PROJECT NAME"
                     autoFocus
                     helperText={
                       errors.ProjectName && touched.ProjectName
@@ -232,7 +232,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdocument.ProjectDescription}
                     onChange={handleChange}
                     id="ProjectDescription"
-                    label="ProjectDescription"
+                    label="PROJECT DESCRIPTION"
                     autoFocus
                     helperText={
                       errors.ProjectDescription && touched.ProjectDescription
@@ -270,7 +270,7 @@ const  UserDeatilsForm=()=>{
                     defaultValue={userdocument.Document}
                     onChange={handleChange}
                     id="Document"
-                    label="Document INFORAMTION"
+                    label="DOCUMENT INFORMATION"
                     autoFocus
                     helperText={
                       errors.Document && touched.Document

@@ -19,7 +19,7 @@ const HandleHrDashBoard=()=>{
         <>
           <Button type="submit" variant="contained" color='primary'style={{margin:'20px'}}
             onClick={handleRecuiter}>
-                CREATE RECUITER
+                CREATE RECRUITER
               </Button>
 
               <Button type="submit" variant="contained" color='primary' style={{margin:'20px'}}

@@ -299,7 +299,7 @@ handleClickSnackbar();
                     fullWidth
                     onChange={handleChange}
                     id="ApplicantId"
-                    label="ApplicantId"
+                    label="APPLICANT ID"
                     autoFocus
                     helperText={
                       errors.ApplicantId && touched.ApplicantId
@@ -317,7 +317,7 @@ handleClickSnackbar();
                     fullWidth
                     onChange={handleChange}
                     id="RecuiterId"
-                    label="RecuiterId"
+                    label="RECRUITER ID"
                     autoFocus
                     helperText={
                       errors.RecuiterId && touched.RecuiterId
@@ -335,7 +335,7 @@ handleClickSnackbar();
                     fullWidth
                     onChange={handleChange}
                     id="MeetingName"
-                    label="MeetingName"
+                    label="MEETING NAME"
                     autoFocus
                     helperText={
                       errors.MeetingName && touched.MeetingName
@@ -351,7 +351,7 @@ handleClickSnackbar();
                     fullWidth
                     onChange={handleChange}
                     id="MeetingDescription"
-                    label="MeetingDescription"
+                    label="MEETING DESCRIPTION"
                     name="MeetingDescription"
                     autoComplete="lname"
                     helperText={
@@ -368,7 +368,7 @@ handleClickSnackbar();
                     fullWidth
                     onChange={handleChange}
                     id="Platform"
-                    label="Platform"
+                    label="PLATFORM"
                     name="Platform"
                     autoComplete="Platform"
                     helperText={
@@ -384,7 +384,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     id="MeetingDate"
                     label="MeetingDate"
-                    name="MeetingDate"
+                    name="MEETING DATE"
                     type="date"
                     autoComplete="MeetingDate"
                     className={classes.textField}
@@ -404,7 +404,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     id="MeetingTime"
                     label="MeetingTime"
-                    name="MeetingTime"
+                    name="MEETING TIME"
                     type="time"
                     defaultValue="10:30"
                     autoComplete="MeetingTime"
@@ -426,7 +426,7 @@ handleClickSnackbar();
                 className={classes.submit}
               >
                 Save
-              </Button>
+              </Button>&nbsp;&nbsp;&nbsp;
               <Button color="secondary"
               
               variant="contained"
@@ -457,7 +457,7 @@ handleClickSnackbar();
         <Fade in={openUpdate}>
           <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-          SCEHULE MEETING
+          SCHEDULED MEETING
         </Typography>
         <Formik
           initialValues={{
@@ -488,7 +488,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.applicantId}
                     id="ApplicantId"
-                    label="ApplicantId"
+                    label="APPLICANT ID"
                     autoFocus
                     helperText={
                       errors.ApplicantId && touched.ApplicantId
@@ -507,7 +507,7 @@ handleClickSnackbar();
                     defaultValue={UpdateData.recuiterId}
                     onChange={handleChange}
                     id="RecuiterId"
-                    label="RecuiterId"
+                    label="RECRUITER ID"
                     autoFocus
                     helperText={
                       errors.RecuiterId && touched.RecuiterId
@@ -526,7 +526,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.meetingName}
                     id="MeetingName"
-                    label="MeetingName"
+                    label="MEETING NAME"
                     autoFocus
                     helperText={
                       errors.MeetingName && touched.MeetingName
@@ -543,7 +543,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.meetingDescription}
                     id="MeetingDescription"
-                    label="MeetingDescription"
+                    label="MEETING DESCRIPTION"
                     name="MeetingDescription"
                     autoComplete="lname"
                     helperText={
@@ -561,7 +561,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.platformLink}
                     id="Platform"
-                    label="Platform"
+                    label="PLATFORM"
                     name="Platform"
                     autoComplete="Platform"
                     helperText={
@@ -577,7 +577,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.scheduledDate}
                     id="MeetingDate"
-                    label="MeetingDate"
+                    label="MEETING DATE"
                     name="MeetingDate"
                     type="date"
                     autoComplete="MeetingDate"
@@ -598,7 +598,7 @@ handleClickSnackbar();
                     onChange={handleChange}
                     defaultValue={UpdateData.scheduledTime}
                     id="MeetingTime"
-                    label="MeetingTime"
+                    label="MEETING TIME"
                     name="MeetingTime"
                     type="time"
                     defaultValue="10:30"
@@ -621,7 +621,7 @@ handleClickSnackbar();
                 className={classes.submit}
               >
                 Update
-              </Button>
+              </Button>&nbsp;&nbsp;&nbsp;
               <Button color="secondary"
               
               variant="contained"
@@ -636,7 +636,7 @@ handleClickSnackbar();
       </Modal>
 
     </div>
-    // -----
+    
 
     </>
   );
