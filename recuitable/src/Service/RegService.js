@@ -26,7 +26,7 @@ return axios.post(USER_API_BASE_URL+`/create/`, user);
 }
 
 findByEmail(email) {
-    return axios.get(USER_API_BASE_URL+`/findByMail/${email}`);
+    return axios.get(USER_API_BASE_URL+`/findByEmail/${email}`);
 }
 
 // editUser(user) {

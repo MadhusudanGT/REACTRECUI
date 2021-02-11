@@ -43,22 +43,29 @@ const Login = () => {
   };
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Please enter valid email").required("Required"),
-    password: Yup.string().required("Required"),
+    password: Yup.string().min(8).max(16).required("Required"),
   });
-  const onSubmit = (values, props) => {
-    console.log(values);
+  const onSubmit = async(values, props) => {
     const regjson = {
       email: values.email,
       password: values.password,
     };
-    console.log("regjson", regjson);
-    RegService.findByEmail(values.email).then(res=>{
-      setemail(res.data);
-    });
-    console.log(getemail.email+",...."+getemail.password)
-    if(getemail.email===values.email||getemail.password===values.password){
-      history.push("/DetailsForm");
-     }
+  await  RegService.findByEmail(values.email).then(res=>{
+      if(res.data.email===values.email&&res.data.password===values.password){
+        setsnackcolor("success");
+        setResponse("LOGIN SUCCESS");
+        handleClickSnackbar();
+        setTimeout(() => {
+          props.resetForm();
+          props.setSubmitting(false);
+        }, 2000);
+        history.push("/DetailsForm");
+       }
+       else{
+        setResponse("please check the email ID or password")
+        setsnackcolor("error");
+        handleClickSnackbar();
+       }});
     if(values.email==='swagata@gmail.com' && values.password==='swagata@2020'){
       history.push("/UserManagement");
      }
@@ -68,13 +75,6 @@ const Login = () => {
      if(values.email==='lohitha@gmail.com' && values.password==='lohitha@2020'){
       history.push("/TechnicalTeam");
      }
-    handleClickSnackbar();
-    console.log("login sucessfully done");
-    setTimeout(() => {
-      props.resetForm();
-      props.setSubmitting(false);
-    }, 2000);
-    console.log(props);
   };
 
   const handleSignin = () => {
@@ -85,7 +85,8 @@ const Login = () => {
     history.push("/ForgetPassword");
   };
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [getemail,setemail]=React.useState([]);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
   const [state, setState] = React.useState({
     open: false,
     vertical: 'top',
@@ -108,8 +109,8 @@ const Login = () => {
     <div className={classes.root}>
       <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
        open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="success">
-      USER LOGIN SUCCESSFULLY
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
         </Alert>
       </Snackbar>
     </div>
@@ -148,6 +149,7 @@ const Login = () => {
                 fullWidth
                 required
               />
+              
               <Typography style={{ marginTop: "10px" }}>
               <Link onClick={handleForgetPass}> Forget password ?</Link>
               </Typography>
