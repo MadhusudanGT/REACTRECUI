@@ -62,7 +62,7 @@ const  UserDeatilsForm=()=>{
     formData.append("file", file);
 
     return await axios.post(UPLOAD_ENDPOINT, formData).then(res=>{
-   console.log('DOCUMENT FORM')
+   handleClickSnackbar();
     });
   };
 

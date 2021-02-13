@@ -36,6 +36,8 @@ import { useHistory } from "react-router-dom";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import LockIcon from '@material-ui/icons/Lock';
+
+
 const drawerWidth = 240;
 
 function getStepContent(step) {
@@ -55,7 +57,7 @@ function getStepContent(step) {
                   case 6:
                          return <HandleTodaySch/>;
       default:
-        return 'Unknown step';
+        return <HandleDashboard/>;
     }
 }
 
@@ -125,7 +127,6 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };

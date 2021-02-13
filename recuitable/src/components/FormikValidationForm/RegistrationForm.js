@@ -97,7 +97,7 @@ const handleClose = (event, reason) => {
 };
 
 const Close = () => {
-  window.location="/UserManagement";
+  history.push("/UserManagement");
 }
 
 const  createUser= async (data)=>{

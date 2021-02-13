@@ -68,7 +68,7 @@ const updateUser=(id,data)=>{
 }
 
 const Close = () => {
-  window.location="/UserManagement";
+  history.push("/UserManagement");
 }
 
 const [open, setOpen] = React.useState(false);

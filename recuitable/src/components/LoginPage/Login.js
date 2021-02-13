@@ -17,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import RegService from "../../Service/RegService";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import { Base64 } from 'js-base64';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -48,8 +48,13 @@ const Login = () => {
       email: values.email,
       password: values.password,
     };
+
   await  RegService.findByEmail(values.email).then(res=>{
-      if(res.data.email===values.email&&res.data.password===values.password){
+    
+      var decode = Base64.decode(res.data.password);
+      console.log("decode"+decode);
+    
+      if(res.data.email===values.email&&decode===values.password){
         setsnackcolor("success");
         setResponse("LOGIN SUCCESS");
         handleClickSnackbar();
@@ -58,7 +63,13 @@ const Login = () => {
           props.setSubmitting(false);
         }, 2000);
         localStorage.setItem('emailid',res.data.email);
-        history.push("/DetailsForm");
+        if(res.data.registredStatus==="NotRegistred"){
+          history.push("/DetailsForm");
+        }
+        else{
+          history.push("/LandingPage");
+        }
+        
        }
        else{
         setResponse("please check the email ID or password")

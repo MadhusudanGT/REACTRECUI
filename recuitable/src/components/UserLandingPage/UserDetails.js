@@ -13,7 +13,7 @@ import ApplicationService from "../../Service/ApplicationService";
 import { useHistory } from "react-router-dom";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import RegService from "../../Service/RegService";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -191,6 +191,11 @@ calllocalstorge();
     ApplicationService.addUser(appljson).then(res=>{
       if(res.status===200){
         setsnackcolor("success");
+        RegService.findByEmail(localStorage.getItem('emailid')).then(res=>{
+          ApplicationService.findRegisteredApplication(res.data.id).then(reg=>{
+            console.log(reg.data)
+          })
+        })
         setResponse("USER information SAVED SUCCESFULLY");
         handleClickSnackbar(); 
       }else{

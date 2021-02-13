@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -114,7 +115,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const Close = () => {
-  window.location="/HrPage"
+ history.push("/HrPage");
 }
 
 const Jobcreate=(e)=>{
@@ -149,7 +150,7 @@ JobService.createjob(jobjson)
 handleClickSnackbar();
 console.log("success");
 }
-
+let history = useHistory();
 const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const handleClickSnackbar = () => {
     setOpenSnackbar(true);

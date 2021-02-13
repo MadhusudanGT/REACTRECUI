@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const USER_API_BASE_URL ="https://recruitermanagementsystem.herokuapp.com/appc";
+// const USER_API_BASE_URL ="http://localhost:8080/appc";
 
 class ApplicationService {
 
@@ -28,6 +29,9 @@ class ApplicationService {
         return axios.get(USER_API_BASE_URL+`/findByEmail/${email}`);
     }
 
+    findRegisteredApplication(userId) {
+        return axios.get(USER_API_BASE_URL+`/registreed/${userId}`);
+    }
 
 }
 

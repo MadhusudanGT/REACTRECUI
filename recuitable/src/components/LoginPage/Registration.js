@@ -66,6 +66,7 @@ const Registration = () => {
     ),
   });
   const onSubmit = (values, props) => {
+    
     const regjson = {
       address: values.currentLocation,
       email: values.email,
@@ -73,7 +74,9 @@ const Registration = () => {
       lastName: values.lastName,
       password: values.password,
       phoneNo: values.phoneNumber,
+      registredStatus:"NotRegistred"
     };
+    
     RegService.findByEmail(values.email).then(res=>{
 if(res.status===200){
   setResponse("Email ID is Already Exist..!!!");

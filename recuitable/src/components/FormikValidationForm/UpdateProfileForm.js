@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
   const { vertical, horizontal} = state;
 
   const Close = () => {
-    window.location="/UserManagement";
+    history.push("/UserManagement");
   }
 
   const [open, setOpen] = React.useState(false);

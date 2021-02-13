@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +12,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { useHistory } from "react-router-dom";
-import ApplicantProfile from "../ApplicantProfile/ApplicantProfile"
+import UserProfile from "../ApplicantProfile/UserProfile";
+import ApplicantService from "../../Service/ApplicationService";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -45,14 +46,30 @@ export default function MenuAppBar() {
   let history = useHistory();
 
     const handleProfile = () => {
-    history.push("/ApplicantProfile");
+    history.push("/profile");
   };
 
   const handleLogOut=()=>{
     history.push('/');
   }
+useEffect(()=>{
+service();
+})
+const[profile,setProfile]=useState([]);
+const service=()=>{
+  if(localStorage.getItem('emailid')&&localStorage.getItem('applicationemail')){
+    ApplicantService.FindByEmail(localStorage.getItem('applicationemail')).then(res=>{
+setProfile(res);
+    })
+  }else{
+    ApplicantService.FindByEmail(localStorage.getItem('applicationemail')).then(ser=>{
+      setProfile(ser);
+          })
+  }
 
+}
   return (
+    <>
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
@@ -94,5 +111,6 @@ export default function MenuAppBar() {
         </Toolbar>
       </AppBar>
     </div>
+    </>
   );
 }

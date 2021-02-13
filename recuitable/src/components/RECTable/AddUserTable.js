@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import DataService from "../../Service/service";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import { useHistory } from "react-router-dom";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -66,9 +66,9 @@ const createUser=(data)=>{
 DataService.create(data);
 handleClick();
 }
-
+let history = useHistory();
 const Close = () => {
-  window.location="/"
+  history.push("/");
 }
 
 const [open, setOpen] = React.useState(false);
