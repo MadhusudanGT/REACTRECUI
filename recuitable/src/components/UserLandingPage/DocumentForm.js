@@ -50,7 +50,7 @@ const  UserDeatilsForm=()=>{
 
 
   const UPLOAD_ENDPOINT =
-    "http://localhost:8080/file/uploadFile";
+    "https://recruitermanagementsystem.herokuapp.com/file/uploadFile";
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -62,8 +62,8 @@ const  UserDeatilsForm=()=>{
     formData.append("file", file);
 
     return await axios.post(UPLOAD_ENDPOINT, formData).then(res=>{
-   handleClickSnackbar();
     });
+    handleClickSnackbar();
   };
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -87,7 +87,6 @@ const  UserDeatilsForm=()=>{
     setOpenSnackbar(false);
   };
   const handleOnChange = e => {
-    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   };
 
@@ -134,7 +133,7 @@ const  UserDeatilsForm=()=>{
     </div>
 <div style={{marginTop:"20px"}}>
 <form onSubmit={handleSubmit}>
-      <Typography>UPLOAD RESUME</Typography>
+      <Typography>UPLOAD RESUME(optional)</Typography>
       <Button
   variant="contained"
   component="label"
@@ -170,7 +169,6 @@ const  UserDeatilsForm=()=>{
           }}
           validationSchema={Schema}
           onSubmit={values => {
-            console.log(values)
             localStorage.setItem('document',JSON.stringify({...values}));
               setsnackcolor("success");
               setResponse("DOCUMENT SAVED SUCCESFULLY");

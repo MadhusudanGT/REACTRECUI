@@ -90,7 +90,7 @@ setOpen(false);
 const handleDelete=(id)=>{
   deleteUser(id);
   retrieveUsers();
-    console.log("user deleted with id:=",id);
+    // console.log("user deleted with id:=",id);
 }
 
 const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -108,7 +108,7 @@ const handleCloseSnackbar = (event, reason) => {
 };
 
 const handleEdit=(e)=>{
-console.log("edit",e);
+// console.log("edit",e);
 setData(e);
 setOpen(true);
 }
@@ -116,7 +116,7 @@ setOpen(true);
 const deleteUser =(id)=>{
  DataService.remove(id);
  retrieveUsers();
- console.log(getUser)
+//  console.log(getUser)
  handleClickSnackbar();
  window.location="/UserManagement";
 }
@@ -129,7 +129,7 @@ useEffect(() => {
    await DataService.getAll()
       .then(response => {
          setUserData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -144,7 +144,7 @@ retrieveUsers();
       DataService.search(searchTerm).then(responce=>{
         setSearch(responce.data);
         setUserData(responce.data);
-        console.log(getSearch)
+        // console.log(getSearch)
        
     });
     }

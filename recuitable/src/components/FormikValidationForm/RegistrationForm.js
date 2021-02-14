@@ -101,10 +101,9 @@ const Close = () => {
 }
 
 const  createUser= async (data)=>{
-  console.log(data);
 let response=await DataService.create(data);
 
-console.log("response of create"+JSON.stringify(response.data))
+// console.log("response of create"+JSON.stringify(response.data))
 setresponse(response.data)
 setOpen(false);
 handleClick(true)
@@ -156,7 +155,7 @@ handleClick();
           }}
           validationSchema={SignupSchema}
           onSubmit={values => {
-            console.log(values);
+            // console.log(values);
 createUser(values)
           }}
         >

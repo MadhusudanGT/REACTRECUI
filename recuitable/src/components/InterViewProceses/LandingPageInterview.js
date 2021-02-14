@@ -163,7 +163,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
 
   };
 
-  const URL = 'http://localhost:8080/Answers/saveanswers';
+  const URL = 'https://recruitermanagementsystem.herokuapp.com/Answers/saveanswers';
   const handleAnswer=(data)=>{
     return axios.post(URL,data);
   }

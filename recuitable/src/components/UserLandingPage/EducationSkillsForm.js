@@ -161,7 +161,7 @@ const [educationDeatails,seteducationDeatails]=useState([]);
           }}
           validationSchema={Schema}
           onSubmit={values => {
-            console.log(values)
+            
             localStorage.setItem('education',JSON.stringify({...values}))
             setsnackcolor("success");
               setResponse("EDUCATION DETAILS SAVED SUCCESFULLY");

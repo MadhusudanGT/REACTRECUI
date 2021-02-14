@@ -11,7 +11,12 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import axios from "axios";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -53,11 +58,10 @@ export default function DetailedAccordion() {
   const [file, setFile] = useState(null);
 
   const handleOnChange = e => {
-    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   };
   const UPLOAD_ENDPOINT =
-    "http://localhost:8080/file/uploadFile";
+    "https://recruitermanagementsystem.herokuapp.com/file/uploadFile";
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -71,6 +75,8 @@ export default function DetailedAccordion() {
     return await axios.post(UPLOAD_ENDPOINT, formData).then(res=>{
    console.log('DOCUMENT FORM')
     });
+    setsnackcolor("success");
+              setResponse("RESUME SAVED SUCCESFULLY");
   };
 
 const handleClose=()=>{
@@ -90,8 +96,36 @@ const handleDelete = (e) => {
     console.info('You clicked the delete icon.'+e.skill);
   };
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [response,setResponse]=React.useState([]);
+  const [snackcolor,setsnackcolor]=React.useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal} = state;
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+  
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+  
+    setOpenSnackbar(false);
+  };
   return (
       <>
+      <div className={classes.root}>
+      <Snackbar  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}
+       open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackcolor}>
+     {response}
+        </Alert>
+      </Snackbar>
+    </div>
     <div className={classes.root}>
       <Accordion defaultExpanded>
         <AccordionSummary

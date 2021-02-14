@@ -144,8 +144,7 @@ const  UserDeatilsForm=()=>{
           }}
           validationSchema={Schema}
           onSubmit={values => {
-            console.log(values)
-        
+     
             setuserdeatils({...values});
             localStorage.setItem('emailvalue',values.email)
             localStorage.setItem('userdetails',JSON.stringify({...values}))

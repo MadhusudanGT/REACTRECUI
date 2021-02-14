@@ -99,7 +99,7 @@ const handleClose = (event, reason) => {
 };
 
   const updateUser=(id,data)=>{
-    console.log(id+"/////"+JSON.stringify(data))
+    // console.log(id+"/////"+JSON.stringify(data))
     DataService.update(id,JSON.stringify(data));
     handleClick();
     Close();
@@ -133,7 +133,7 @@ const handleClose = (event, reason) => {
           }}
           validationSchema={SignupSchema}
           onSubmit={values => {
-            console.log(values);
+            // console.log(values);
             updateUser(values.id,values)
           }}
         >

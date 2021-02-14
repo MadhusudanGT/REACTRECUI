@@ -99,11 +99,11 @@ export default function ControlledAccordions(props) {
   const [file, setFile] = useState(null);
 
   const handleOnChange = e => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   };
   const UPLOAD_ENDPOINT =
-    "http://localhost:8080/file/uploadFile";
+    "https://recruitermanagementsystem.herokuapp.com/file/uploadFile";
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -140,8 +140,8 @@ const[reg,setReg]=useState([]);
       setReg(regdata.data);
     })
   }
-console.log(data);
-console.log(reg);
+// console.log(data);
+// console.log(reg);
   return (
     <div className={classes.root}>
       <MenuBar />

@@ -123,8 +123,8 @@ export default function TransitionsModal() {
   const saveScheduled=(data)=>{
     let time=data.MeetingDate+'T'+data.MeetingTime+':'+'00';
     let dateObj = new Date(time);
-    console.log(dateObj);
-    console.log(time)
+    // console.log(dateObj);
+    // console.log(time)
     const json={
       "applicantId": data.ApplicantId,
   "meetingDescription": data.MeetingDescription,
@@ -148,7 +148,7 @@ export default function TransitionsModal() {
     await ScheduledMeetings.fetchUsers()
        .then(response => {
         setSceduled(response.data);
-         console.log(response);
+        //  console.log(response);
        })
        .catch(e => {
          console.log(e);
@@ -159,7 +159,7 @@ export default function TransitionsModal() {
    const[UpdateData,setUpdateData]=useState([]);
    const handleReschuled=(id,data)=>{
      setUpdateData(data);
-console.log(id+'...........'+UpdateData)
+// console.log(id+'...........'+UpdateData)
 setOpenUpdate(true);
    }
 
@@ -181,7 +181,7 @@ setOpenUpdate(true);
   "scheduledTime": dateObj,
   "meetingStatus": "Scheduled"
     }
-console.log(updatejson)
+// console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
 getMeetings();
 handleClickSnackbar();
@@ -285,7 +285,7 @@ handleClickSnackbar();
           }}
           validationSchema={SignupSchema}
           onSubmit={values => {
-            console.log(values);
+            // console.log(values);
             saveScheduled(values);
           }}
         >

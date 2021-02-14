@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './LandingPage.css';
-import DesktopViewImg from "../Images/Careers-Banner.png";
 import DesktopViewImg1 from "../Images/career-banner1.jpg";
 import MobileViewImg from "../Images/carrer2.jpg";
 import adduser from "../Images/adduser.png";
@@ -9,13 +8,12 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import LandingPageCard from "./LandingPageCard"
 import Footer from "../../components/Footer/Footer";
 import LandingMenu from "../../components/MenuBar/MenuBarLandingAuth";
 import { useHistory } from "react-router-dom";
 import JobService from "../../Service/JobService";
-import Interview from "../InterViewProceses/LandingPageInterview"
+
 const category = [
     {
       value: 'IT',
@@ -63,7 +61,7 @@ const LandingPage=()=>{
          await JobService.fetchUsers()
             .then(response => {
                setData(response.data);
-              console.log(response.data);
+           
             })
             .catch(e => {
               console.log(e);

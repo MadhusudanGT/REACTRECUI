@@ -55,19 +55,19 @@ setOpen(false);
 
 const handleDelete=(id)=>{
   deleteUser(id);
-    console.log("user deleted with id:=",id);
+    // console.log("user deleted with id:=",id);
     
 }
 
 const handleEdit=(e)=>{
-console.log("edit",e);
+// console.log("edit",e);
 setData(e);
 setOpen(true);
 }
 
 const deleteUser =(id)=>{
  DataService.remove(id);
- console.log(getUser)
+//  console.log(getUser)
 }
 
 
@@ -79,7 +79,7 @@ useEffect(() => {
    await DataService.getAll()
       .then(response => {
          setUserData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(e => {
         console.log(e);

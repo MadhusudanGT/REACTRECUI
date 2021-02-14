@@ -73,7 +73,7 @@ export default function ControlledAccordions() {
     await ScheduledMeetings.fetchUsers()
        .then(response => {
         setSceduled(response.data);
-         console.log(response);
+        //  console.log(response);
        })
        .catch(e => {
          console.log(e);
@@ -83,7 +83,7 @@ export default function ControlledAccordions() {
    const[UpdateData,setUpdateData]=useState([]);
    const handleReschuled=(id,data)=>{
      setUpdateData(data);
-console.log(id+'...........'+UpdateData)
+// console.log(id+'...........'+UpdateData)
 setOpenUpdate(true);
    }
 
@@ -108,7 +108,7 @@ setOpenUpdate(true);
 
   "meetingStatus": "Scheduled"
     }
-console.log(updatejson)
+// console.log(updatejson)
 ScheduledMeetings.editUser(id,updatejson);
 handleClickSnackbar();
 getMeetings();

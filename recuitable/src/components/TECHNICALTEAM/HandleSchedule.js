@@ -122,8 +122,8 @@ export default function TransitionsModal() {
   const saveScheduled=(data)=>{
     let time=data.MeetingDate+'T'+data.MeetingTime+':'+'00';
     let dateObj = new Date(time);
-    console.log(dateObj);
-    console.log(time)
+    // console.log(dateObj);
+    // console.log(time)
     const json={
       "applicantId": data.ApplicantId,
   "meetingDescription": data.MeetingDescription,
@@ -145,7 +145,7 @@ export default function TransitionsModal() {
     await ScheduledMeetings.fetchUsers()
        .then(response => {
         setSceduled(response.data);
-         console.log(response);
+        //  console.log(response);
        })
        .catch(e => {
          console.log(e);

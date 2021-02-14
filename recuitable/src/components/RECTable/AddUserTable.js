@@ -56,13 +56,13 @@ const { vertical, horizontal} = state;
         'createdAt':createdAt,
         'updatedAt':updatedAt
     }
-    console.log(frmdetails);
+    // console.log(frmdetails);
     createUser(frmdetails);
     setOpen(false);
 }
 
 const createUser=(data)=>{
-    console.log(data);
+    // console.log(data);
 DataService.create(data);
 handleClick();
 }

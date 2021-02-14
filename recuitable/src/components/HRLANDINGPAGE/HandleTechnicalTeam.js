@@ -113,7 +113,7 @@ export default function TransitionsModal() {
     HandleTechnicalTeamService.create(json);
     handleClickSnackbar();
     getMeetings();
-    console.log("success",json)
+    console.log("success")
   }
   const [row,setSceduled]=useState([]);
   useEffect(()=>{
@@ -123,7 +123,7 @@ export default function TransitionsModal() {
     await HandleTechnicalTeamService.fetchUsers()
        .then(response => {
         setSceduled(response.data);
-         console.log(response);
+        //  console.log(response);
        })
        .catch(e => {
          console.log(e);
@@ -230,7 +230,7 @@ setOpenUpdate(true);
           }}
           validationSchema={SignupSchema}
           onSubmit={values => {
-            console.log(values);
+            // console.log(values);
             saveScheduled(values);
           }}
         >

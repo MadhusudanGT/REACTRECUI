@@ -49,10 +49,19 @@ const Login = () => {
       password: values.password,
     };
 
+    if(values.email==='swagata@gmail.com' && values.password==='swagata@2020'){
+      history.push("/UserManagement");
+     }
+     if(values.email==='madhu@gmail.com' && values.password==='madhu@2020'){
+      history.push("/HrPage");
+     }
+     if(values.email==='lohitha@gmail.com' && values.password==='lohitha@2020'){
+      history.push("/TechnicalTeam");
+     }
   await  RegService.findByEmail(values.email).then(res=>{
     
       var decode = Base64.decode(res.data.password);
-      console.log("decode"+decode);
+      // console.log("decode"+decode);
     
       if(res.data.email===values.email&&decode===values.password){
         setsnackcolor("success");
@@ -76,15 +85,6 @@ const Login = () => {
         setsnackcolor("error");
         handleClickSnackbar();
        }});
-    if(values.email==='swagata@gmail.com' && values.password==='swagata@2020'){
-      history.push("/UserManagement");
-     }
-     if(values.email==='madhu@gmail.com' && values.password==='madhu@2020'){
-      history.push("/HrPage");
-     }
-     if(values.email==='lohitha@gmail.com' && values.password==='lohitha@2020'){
-      history.push("/TechnicalTeam");
-     }
   };
 
   const handleSignin = () => {

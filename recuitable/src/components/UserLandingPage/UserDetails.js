@@ -193,7 +193,7 @@ calllocalstorge();
         setsnackcolor("success");
         RegService.findByEmail(localStorage.getItem('emailid')).then(res=>{
           ApplicationService.findRegisteredApplication(res.data.id).then(reg=>{
-            console.log(reg.data)
+       
           })
         })
         setResponse("USER information SAVED SUCCESFULLY");
@@ -204,7 +204,7 @@ calllocalstorge();
         handleClickSnackbar();
       }
     });
-    console.log("success"+appljson) 
+    // console.log("success"+appljson) 
         localStorage.removeItem('education');
         localStorage.removeItem('userdetails');
         localStorage.removeItem('document');
